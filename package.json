@@ -4,16 +4,27 @@
   "description": "Repository for Advent of Code 2020",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EldoranDev/AdventOfCode2020.git"
   },
   "author": "Marcel Behrmann <info@eldoran.dev>",
-  "license": "ISC",
+  "license": "mit",
   "bugs": {
     "url": "https://github.com/EldoranDev/AdventOfCode2020/issues"
   },
-  "homepage": "https://github.com/EldoranDev/AdventOfCode2020#readme"
+  "homepage": "https://github.com/EldoranDev/AdventOfCode2020#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.6",
+    "@types/node-fetch": "^2.5.7",
+    "@types/yargs": "^15.0.9",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "yargs": "^16.1.0"
+  }
 }
