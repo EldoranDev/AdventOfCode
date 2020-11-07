@@ -1,0 +1,19 @@
+{
+  "name": "adventofcode-2020",
+  "version": "1.0.0",
+  "description": "Repository for Advent of Code 2020",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EldoranDev/AdventOfCode2020.git"
+  },
+  "author": "Marcel Behrmann <info@eldoran.dev>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EldoranDev/AdventOfCode2020/issues"
+  },
+  "homepage": "https://github.com/EldoranDev/AdventOfCode2020#readme"
+}
