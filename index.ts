@@ -42,6 +42,7 @@ yargs(process.argv.slice(2))
         try {
             module = (await import(`./src/days/${day}-${args.part}`)).default as implementation;
         } catch (e) {
+            console.log(e);
             console.error('Day has no implementation yet');
             return;
         }
