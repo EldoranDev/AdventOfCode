@@ -5,8 +5,7 @@ export default function (input: string[]) {
         for (let j  = 0; j < expenses.length; j++) {
             for (let k = 0; k < expenses.length; k++) {
                 if (expenses[i] + expenses[j] + expenses[k] === 2020) {
-                    console.log(expenses[i]*expenses[j] * expenses[k]);
-                    return;
+                    return expenses[i]*expenses[j] * expenses[k];
                 }
             }
         }

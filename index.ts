@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import clipboard from 'clipboardy';
+import * as clipboard  from 'clipboardy';
 
 type implementation = (input: string[]) => string;
 
@@ -59,7 +59,9 @@ yargs(process.argv.slice(2))
         
         const result = module(lines.slice(0, lines.length-1));
 
-        await clipboard.write(result);
+        await clipboard.write(result.toString());
+
+        console.log(result);
     })
     .argv;
     
