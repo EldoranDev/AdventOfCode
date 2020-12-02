@@ -1,9 +1,4 @@
-import { string } from "yargs";
-
 export default function (input: string[]) {
-    
-    
-
     const lines = input.filter((line) => {
         const parts = line.split(' ')
 
