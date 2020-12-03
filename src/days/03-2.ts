@@ -1,11 +1,15 @@
 export default function (input: string[]) {
-    return (
-        checkSlope(1, 1, input) *
-        checkSlope(3, 1, input) *
-        checkSlope(5, 1, input) *
-        checkSlope(7, 1, input) *
-        checkSlope(1, 2, input)
-    );
+    type slope = { x: number, y: number };
+
+    const slopes: slope[] = [
+        { x: 1, y: 1},
+        { x: 3, y: 1},
+        { x: 5, y: 1},
+        { x: 7, y: 1},
+        { x: 1, y: 2},
+    ]
+
+    return slopes.reduce((carry, s) => carry * checkSlope(s.x, s.y, input), 1);
 };
 
 function checkSlope(_x: number, _y: number, input: string[]): number {
