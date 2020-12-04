@@ -1,10 +1,6 @@
-type Passport = Record<string, any>;
+type Passport = Record<string, string>;
 
-const REQUIRED = [
-    'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'
-]
-
-const RULES = {
+const RULES: Record<string, (val: string) => boolean> = {
     byr: (val: string) => Number(val) >= 1920 && Number(val) <= 2002,
     iyr: (val: string) => Number(val) >= 2010 && Number(val) <= 2020,
     eyr: (val: string) => Number(val) >= 2020 && Number(val) <= 2030,
@@ -12,7 +8,7 @@ const RULES = {
         const res = val.match(/([0-9]*)(cm|in)/);
 
         if (res === null) return false;
-        
+
         switch(res[2]) {
             case 'cm':
                 return Number(res[1]) >= 150 && Number(res[1]) <= 193;
