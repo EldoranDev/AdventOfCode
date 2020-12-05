@@ -34,6 +34,9 @@ yargs(process.argv.slice(2))
             describe: 'Part of day to execute',
             default: 1,
         })
+        .option('test', {
+            boolean: true,
+        });
     }, 
     async (args) => {
         const day = (args.day.toString()).padStart(2, '0');
@@ -48,8 +51,14 @@ yargs(process.argv.slice(2))
             return;
         }
 
+        let file = `${day}.in`;
+
+        if (args.test) {
+            file += '-test';
+        }
+
         const input = readFileSync(
-            resolve(__dirname, 'inputs', `${day}.in`),
+            resolve(__dirname, 'inputs', file),
             {
                 encoding: 'utf-8'
             }

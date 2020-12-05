@@ -2,64 +2,43 @@ export default function (input: string[]) {
     let ids = [];
 
     for (const pass of input) {
-      let upper = 127;
-      let lower = 0;
-  
-      let row = 0;
-      let column = 0;
-  
-      for (let i = 0; i < 7; i++) {
-          let direction = pass.charAt(i);
-          
-          let diff = ((upper - lower )/2) | 0;
-          diff++;
-          
-          if (direction === 'F') {
-              upper -= diff;
-          }
-  
-          if (direction === 'B') {
-              lower += diff;
-          }
-      }
-  
-      row = lower;
-  
-      upper = 7;
-      lower = 0;
-  
-      for (let i = 0; i < 3; i++) {
-          let direction = pass.charAt(7+i);
-          
-          let diff = ((upper - lower )/2) | 0;
-          diff++;
-          
-          if (direction === 'L') {
-             upper -= diff;
-          }
-  
-          if (direction === 'R') {
-              lower += diff;
-          }
-      }
-  
-      column = lower;
-  
-      let id = row * 8 + column;
-      ids.push(id);
+        let row = binarySearch(pass.substr(0, 7), 0, 127, { lower: 'F', upper: 'B' });
+        let column = binarySearch(pass.substr(7), 0, 7, { lower: 'L', upper: 'R' });   
 
-
+        ids.push(row * 8 + column);
     }
 
     ids.sort((a, b) => a - b);
-    const offset = ids[0];
 
     for (let i = 0; i <= ids.length; i++) {
-        if (ids[i] !== i + offset) {
-            console.log(ids[i-1], ids[i], ids[i+1]);
-            return i + offset;
+        if (ids[i] !== i + ids[0]) {
+            return i + ids[0];
         }
     }
   
     return ids[0];
   };
+
+type searchSettings = { lower: string, upper: string };
+
+function binarySearch(input: string, _lower: number, _upper: number, settings: searchSettings): number {
+    let upper = _upper;
+    let lower = _lower;
+
+    for (let i = 0; i < input.length; i++) {
+        let direction = input.charAt(i);
+        
+        let diff = ((upper - lower )/2) | 0;
+        diff++;
+        
+        if (direction === settings.lower) {
+           upper -= diff;
+        }
+
+        if (direction === settings.upper) {
+            lower += diff;
+        }
+    }
+
+    return lower;
+}
