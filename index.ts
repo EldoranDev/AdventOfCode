@@ -3,6 +3,9 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import * as clipboard  from 'clipboardy';
 
+import { performance } from 'perf_hooks';
+import observerPerformance from './src/app/performance';
+
 type implementation = (input: string[]) => string;
 
 yargs(process.argv.slice(2))
@@ -36,12 +39,25 @@ yargs(process.argv.slice(2))
         })
         .option('test', {
             boolean: true,
-        });
+            default: false,
+        })
+        .option('perf', {
+            boolean: true,
+            default: false,
+        })
     }, 
     async (args) => {
+        if (args.perf) {
+            observerPerformance();
+        }
+
+        performance.mark('start-exec');
+
         const day = (args.day.toString()).padStart(2, '0');
 
         let module: implementation;
+
+        performance.mark('mod-load-start');
 
         try {
             module = (await import(`./src/days/${day}-${args.part}`)).default as implementation;
@@ -51,6 +67,9 @@ yargs(process.argv.slice(2))
             return;
         }
 
+        performance.mark('mod-load-end');
+
+        performance.mark('input-start')
         let file = `${day}.in`;
 
         if (args.test) {
@@ -65,12 +84,19 @@ yargs(process.argv.slice(2))
         );
         
         const lines = input.split('\n');
+
+        performance.mark('input-end');
         
+        performance.mark('exec-start');
         const result = module(lines.slice(0, lines.length-1));
+        performance.mark('exec-end');
 
         await clipboard.write(result.toString());
+
+        performance.measure('Module Loading', 'mod-load-start', 'mod-load-end');
+        performance.measure('Input Loading', 'input-start', 'input-end');
+        performance.measure('Execution','exec-start', 'exec-end');
 
         console.log(result);
     })
     .argv;
-    
