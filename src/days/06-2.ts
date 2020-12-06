@@ -1,25 +1,17 @@
+import { getLineGroups } from '../lib/input';
+
 export default function (input: string[]) {
-    let count = 0;
-    let group: Set<string> = new Set<string>();
-    
-    for (let i = 0; i < input.length; i++) {
-        const line = input[i].trim();
+    return getLineGroups(input).reduce((count, group) => {
+        const anwers = new Set<string>(group[0].split('').filter(q => q !== '\r'));
 
-        if (line === '') {
-            count += group.size;
-            group = new Set<string>(
-                input[++i].split('').filter(q => q !== '\r')
-            );
-
-            continue;
-        }
-
-        for (let q of group.keys()) {
-            if (!line.includes(q)) {
-                group.delete(q);
+        for (let i = 1; i < group.length; i++) {
+            for (let q of anwers.keys()) {
+                if (!group[i].includes(q)) {
+                    anwers.delete(q);
+                }
             }
         }
-    }
 
-    return count;
+        return count + anwers.size;
+    }, 0);
 };

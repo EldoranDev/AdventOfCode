@@ -1,17 +1,13 @@
-export default function (input: string[]) {
-    let count = 0;
+import { getLineGroups } from '../lib/input';
 
-    let group: Set<string> = new Set<string>();
-    
-    for (let line of input) {
-        if (line.trim() === '') {
-            count += group.size;
-            group = new Set<string>();
-            continue;
+export default function (input: string[]) {
+    return getLineGroups(input).reduce((count, group) => {
+        const anwers = new Set<string>();
+
+        for (let line of group) {
+            line.split('').filter(q => q !== '\r').forEach((q) => anwers.add(q));
         }
 
-        line.split('').filter(q => q !== '\r').forEach((q) => group.add(q));
-    }
-
-    return count + group.size;
+        return count + anwers.size;
+    }, 0);
 };
