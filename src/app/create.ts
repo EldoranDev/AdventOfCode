@@ -4,7 +4,9 @@ import { resolve } from 'path';
 import { createWriteStream, readFileSync, writeFileSync } from 'fs';
 
 const template = 
-`export default function (input: string[]) {
+`import { } from '../lib/input';
+
+export default function (input: string[]) {
 
 };`;
 
