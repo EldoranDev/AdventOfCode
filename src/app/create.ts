@@ -25,6 +25,8 @@ export async function create(args) {
         resolve(__dirname, '..', '..', 'inputs', `${day}.in`)
     );
 
+    writeFileSync(resolve(__dirname, '..', '..', 'inputs', `${day}.in-test`), '');
+
     response.body.pipe(file);
 
     writeFileSync(
