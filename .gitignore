@@ -1,5 +1,8 @@
 .session
 
+*.in
+*.in-test
+
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,linux,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,vscode,linux,windows
 
