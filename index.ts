@@ -25,7 +25,17 @@ yargs(process.argv.slice(2))
     async (args) => {
         const cmd = await import('./src/app/create');
         
-        cmd.create(args);
+        await cmd.create(args);
+    })
+    .command('get [day]', 'Get input for day', (y) => {
+        y
+        .positional('day', {
+            describe: 'Day to execute',
+            default: (new Date()).getDay() + 1,
+        })
+    }, async (args) => {
+        const cmd = await import('./src/app/get');
+        await cmd.get(args);
     })
     .command('run [day] [part]', 'Run implementation of day', (y) => {
         y
