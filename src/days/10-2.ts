@@ -1,10 +1,8 @@
 import { mapToNumber } from '../lib/input';
 
 export default function (input: string[]) {
-    const adapters = mapToNumber(input).sort((a, b) => b - a);
-
-    adapters.push(0);
-
+    const adapters = [0, ...mapToNumber(input)].sort((a, b) =>  b - a);
+    
     let ways: Record<number, number> = {};
 
     ways[adapters[0] + 3] = 1;
