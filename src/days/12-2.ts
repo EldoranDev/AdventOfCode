@@ -2,8 +2,9 @@ import { } from '../lib/input';
 import { Vec2 } from '../lib/math';
 
 export default function (input: string[]) {
+    type Ship = { pos: Vec2, wp: Vec2};
 
-    const ship: { pos: Vec2, wp: Vec2 } = { 
+    const ship: Ship = { 
         pos: new Vec2(),
         wp: new Vec2(10, 1) 
     };
