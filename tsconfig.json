@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "baseUrl": ".",
+        "paths": {
+            "@lib": ["./src/lib"]
+        }
     }
 }
