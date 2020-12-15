@@ -1,40 +1,27 @@
 import { } from '../lib/input';
 
 export default function (input: string[]) {
-    let startingNumbers = input[0].split(',');
+    let startingNumbers = input[0].split(',').map(n => Number(n));
+    const COUNT = 30_000_000;
 
-    let history: Record<string, number[]> = {};
+    let history: number[] = new Array(COUNT);
 
     for (let i = 0; i < startingNumbers.length; i++) {
-        history[startingNumbers[i]] = [i];
-        console.log(startingNumbers[i]);
+        history[startingNumbers[i]] = i;
     }
 
     let lastNumber = startingNumbers[startingNumbers.length-1];
+    let newNumber = 0;
 
-    for (let i = startingNumbers.length; i < 30000000; i++) {
-        
-        let num = history[lastNumber];
+    for (let i = startingNumbers.length; i < COUNT; i++) {
+        if (history[lastNumber] === undefined) {
+            history[lastNumber] = i-1;
 
-        if (num.length === 1) {
-            history['0'].push(i);
-            lastNumber = '0';
+            lastNumber = 0;
         } else {
-            lastNumber = (num[num.length-1] - num[num.length-2]).toString();
-
-            if (history[lastNumber] === undefined) {
-                history[lastNumber] = [i];
-            } else {
-                history[lastNumber].push(i);
-
-                if (history[lastNumber].length > 2) {
-                    history[lastNumber].shift();
-                }
-            }
-        }
-
-        if (i % 10000 === 0) {
-            console.log(i, 30000000 - i);
+            newNumber = i - history[lastNumber] - 1;
+            history[lastNumber] = i-1;
+            lastNumber = newNumber;
         }
     }
 
