@@ -1,4 +1,4 @@
-import { getLineGroups } from '../lib/input';
+import { getLineGroups } from '@lib/input';
 
 export default function (input: string[]) {
     return getLineGroups(input).reduce((count, group) => {

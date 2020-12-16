@@ -1,4 +1,4 @@
-import { mapToNumber } from '../lib/input';
+import { mapToNumber } from '@lib/input';
 
 const PREAMBLE_LENGTH = 25;
 

@@ -1,4 +1,4 @@
-import { mapToNumber } from '../lib/input';
+import { mapToNumber } from '@lib/input';
 
 export default function (input: string[]) {
     const numbers = mapToNumber(input);

@@ -70,7 +70,7 @@ yargs(process.argv.slice(2))
         performance.mark('mod-load-start');
 
         try {
-            module = (await import(`./src/days/${day}-${args.part}`)).default as implementation;
+            module = (await import(`./src/days/${args.year}/${day}-${args.part}`)).default as implementation;
         } catch (e) {
             console.log(e);
             console.error('Day has no implementation yet');
@@ -87,7 +87,7 @@ yargs(process.argv.slice(2))
         }
 
         const input = readFileSync(
-            resolve(__dirname, 'inputs', file),
+            resolve(__dirname, 'inputs', args.year.toString(), file),
             {
                 encoding: 'utf-8'
             }

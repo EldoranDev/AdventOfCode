@@ -1,10 +1,10 @@
 import { resolve } from 'path';
-import { writeFileSync } from 'fs';
+import { writeFileSync, accessSync, mkdirSync } from 'fs';
 
 import provideInput from './provider/input';
 
 const template = 
-`import { } from '../lib/input';
+`import { } from '@lib/input';
 
 export default function (input: string[]) {
 
@@ -15,15 +15,23 @@ export async function create(args) {
 
     await provideInput(args.year, args.day);
 
+    let path = resolve(__dirname, '..', 'days', args.year.toString());
+
+    try {
+        accessSync(path);
+    } catch (e) {
+        mkdirSync(path);
+    }
+
     writeFileSync(
-        resolve(__dirname, '..', 'days', `${dayPadded}-1.ts`), template,
+        resolve(path, `${dayPadded}-1.ts`), template,
         {
             encoding: 'utf-8',
         }
     );
 
     writeFileSync(
-        resolve(__dirname, '..', 'days', `${dayPadded}-2.ts`), template,
+        resolve(path, `${dayPadded}-2.ts`), template,
         {
             encoding: 'utf-8',
         }

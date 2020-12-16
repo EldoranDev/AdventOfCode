@@ -4,7 +4,7 @@
   "description": "Repository for Advent of Code 2020",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node -r tsconfig-paths/register index.ts",
     "test": "jest"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.0.5"
   },
   "dependencies": {

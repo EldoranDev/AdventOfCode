@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { resolve } from 'path';
-import { createWriteStream, readFileSync, writeFileSync } from 'fs';
+import { createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync } from 'fs';
 
 export default async (year: number, day: number) => {
     const session = readFileSync(
@@ -16,11 +16,19 @@ export default async (year: number, day: number) => {
 
     const fileName = (day.toString()).padStart(2, '0');
 
+    let path = resolve(__dirname, '..', '..', '..', 'inputs', year.toString());
+
+    try {
+        accessSync(path);
+    } catch (e) {
+        mkdirSync(path);
+    }
+
     const file = createWriteStream(
-        resolve(__dirname, '..', '..', '..', 'inputs', `${fileName}.in`)
+        resolve(path, `${fileName}.in`)
     );
 
-    writeFileSync(resolve(__dirname, '..', '..', '..', 'inputs', `${fileName}.in-test`), '');
+    writeFileSync(resolve(path, `${fileName}.in-test`), '');
 
     response.body.pipe(file);
 }

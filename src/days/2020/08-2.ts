@@ -1,5 +1,4 @@
-import { resourceLimits } from 'worker_threads';
-import { } from '../lib/input';
+import { } from '@lib/input';
 
 type Op = { op: string, param: number };
 type Result = { loop: boolean, acc: number };

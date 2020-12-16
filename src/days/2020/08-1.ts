@@ -1,4 +1,4 @@
-import { } from '../lib/input';
+import { } from '@lib/input';
 
 export default function (input: string[]) {
     const ops = input.map((line) => { 

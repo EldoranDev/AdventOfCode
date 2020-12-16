@@ -1,4 +1,4 @@
-import { } from '../lib/input';
+import { } from '@lib/input';
 
 export default function (input: string[]) {
     let deps = input[1].split(',').map((d) => Number(d));

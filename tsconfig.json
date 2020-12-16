@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
+        "moduleResolution": "node",
         "downlevelIteration": true,
         "baseUrl": ".",
         "paths": {
-            "@lib": ["./src/lib"]
+            "@lib/*": ["./src/lib/*"]
         }
     }
 }

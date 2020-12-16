@@ -1,4 +1,4 @@
-import { } from '../lib/input';
+import { } from '@lib/input';
 
 const R_MEM = /mem\[([0-9]*)\] = ([0-9]*)/;
 

@@ -1,5 +1,5 @@
-import { } from '../lib/input';
-import { Vec2 } from '../lib/math';
+import { } from '@lib/input';
+import { Vec2 } from '@lib/math';
 
 export default function (input: string[]) {
     type Ship = { pos: Vec2, wp: Vec2};
