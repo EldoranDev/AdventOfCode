@@ -93,12 +93,16 @@ yargs(process.argv.slice(2))
             }
         );
         
-        const lines = input.split('\n');
+        let lines = input.split('\n');
+
+        if (lines[lines.length-1].trim().length === 0) {
+            lines = lines.slice(0, lines.length-1);
+        }
 
         performance.mark('input-end');
         
         performance.mark('exec-start');
-        const result = module(lines.slice(0, lines.length-1));
+        const result = module(lines);
         performance.mark('exec-end');
 
         await clipboard.write(result.toString());
