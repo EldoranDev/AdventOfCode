@@ -1,4 +1,4 @@
-import { } from '../lib/input';
+import { } from '@lib/input';
 
 type range = { min: number, max: number };
 type ruleSet = range[];
