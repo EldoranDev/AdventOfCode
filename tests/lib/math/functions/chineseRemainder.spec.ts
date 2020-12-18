@@ -16,10 +16,4 @@ describe('Math Function: chineseRemainer', () => {
 
         expect(answer).toBe(47);
     });
-
-    it ('should solve wikipedia sample', () => {
-        const answer = chineseRemainder([2, 3, 4, 5, 6, 7], [1, 1, 1, 1, 1, 0]);
-
-        expect(answer).toBe(47);
-    });
 });
