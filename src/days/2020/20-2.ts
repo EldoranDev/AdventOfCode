@@ -1,6 +1,6 @@
 import { getLineGroups } from '@lib/input';
 import { Vec2 } from '@lib/math';
-import { flipHorizontal, flipVertical, getColumn } from '@lib/array2d';
+import { flipHorizontal, flipVertical, getColumn, rotateClockwise } from '@lib/array2d';
 import { equals } from '@lib/array';
 
 type Tile = { id: number, data: boolean[][] , borders: boolean[][], neighbors: Tile[] };
@@ -109,7 +109,7 @@ function getMonsterCount(image: boolean[][], monster: Monster): number {
             return count;
         }
 
-        image = rotateCW(image);
+        image = rotateClockwise(image);
     }
 
     image = flipHorizontal(image);
@@ -121,7 +121,7 @@ function getMonsterCount(image: boolean[][], monster: Monster): number {
             return count;
         }
 
-        image = rotateCW(image);
+        image = rotateClockwise(image);
     }
 }
 
@@ -215,7 +215,7 @@ function alignLeft(border: boolean[], tile: Tile) {
         !equals(border, getColumn(tile.data, 0))
         && !equals(rb, getColumn(tile.data, 0))
     ) {
-        tile.data = rotateCW(tile.data);
+        tile.data = rotateClockwise(tile.data);
     }
 
     if (!equals(border, getColumn(tile.data, 0))) {
@@ -230,7 +230,7 @@ function alignTop(border: boolean[], tile: Tile) {
         !equals(border, tile.data[0])
         && !equals(rb, tile.data[0])
     ) {
-        tile.data = rotateCW(tile.data);
+        tile.data = rotateClockwise(tile.data);
     }
 
     if (!equals(border, tile.data[0])) {
@@ -248,7 +248,7 @@ function alignInitialCorner(grid: Tile[][]) {
         !equals(c.data[c.data.length-1], bottom)
         && !equals(c.data[c.data.length-1], bottom.reverse())
     ) {
-        c.data = rotateCW(c.data);
+        c.data = rotateClockwise(c.data);
     }
 
     if (
@@ -267,25 +267,6 @@ function getMatching(border: boolean[], tiles: Tile[]): Tile|null {
     }
 
     return null;
-}
-
-function rotateCW(mat: boolean[][]): boolean[][] {
-    const M = mat.length;
-    const N = mat[0].length;
-
-    const nd: boolean[][] = [];
-
-    for (let r = 0; r < M; r++) {
-        for (let c = 0; c < N; c++) {
-            if (nd[c] === undefined) {
-                nd[c] = [];
-            }
-
-            nd[c][M-1-r] = mat[r][c];
-        }
-    }
-
-    return nd;
 }
 
 function getBorders(data: boolean[][]): boolean[][] {
