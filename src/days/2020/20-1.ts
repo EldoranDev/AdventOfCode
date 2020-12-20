@@ -3,11 +3,6 @@ import { timeLog } from 'console';
 
 type Tile = { id: number, data: boolean[][] , borders: string[] };
 
-const LEFT = 0;
-const TOP = 1;
-const RIGHT = 2;
-const BOT = 3;
-
 export default function (input: string[]) {
     const ip = getLineGroups(input);
 
