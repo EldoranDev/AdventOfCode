@@ -1,5 +1,7 @@
 import { getLineGroups } from '@lib/input';
 import { Vec2 } from '@lib/math';
+import { flipHorizontal, flipVertical, getColumn } from '@lib/array2d';
+import { equals } from '@lib/array';
 
 type Tile = { id: number, data: boolean[][] , borders: boolean[][], neighbors: Tile[] };
 type Monster = { height: number, width: number, offsets: Vec2[] };
@@ -210,13 +212,13 @@ function alignLeft(border: boolean[], tile: Tile) {
     let rb = [...border].reverse();
 
     while (
-        !equal(border, getColumn(tile.data, 0))
-        && !equal(rb, getColumn(tile.data, 0))
+        !equals(border, getColumn(tile.data, 0))
+        && !equals(rb, getColumn(tile.data, 0))
     ) {
         tile.data = rotateCW(tile.data);
     }
 
-    if (!equal(border, getColumn(tile.data, 0))) {
+    if (!equals(border, getColumn(tile.data, 0))) {
         tile.data = flipVertical(tile.data);
     }
 }
@@ -225,13 +227,13 @@ function alignTop(border: boolean[], tile: Tile) {
     let rb = [...border].reverse();
 
     while (
-        !equal(border, tile.data[0])
-        && !equal(rb, tile.data[0])
+        !equals(border, tile.data[0])
+        && !equals(rb, tile.data[0])
     ) {
         tile.data = rotateCW(tile.data);
     }
 
-    if (!equal(border, tile.data[0])) {
+    if (!equals(border, tile.data[0])) {
         tile.data = flipHorizontal(tile.data);
     }
 }
@@ -243,15 +245,15 @@ function alignInitialCorner(grid: Tile[][]) {
     let c = grid[0][0];
 
     while (
-        !equal(c.data[c.data.length-1], bottom)
-        && !equal(c.data[c.data.length-1], bottom.reverse())
+        !equals(c.data[c.data.length-1], bottom)
+        && !equals(c.data[c.data.length-1], bottom.reverse())
     ) {
         c.data = rotateCW(c.data);
     }
 
     if (
-        !equal(getColumn(c.data, c.data.length-1), right)
-        && !equal(getColumn(c.data, c.data.length-1), right.reverse())
+        !equals(getColumn(c.data, c.data.length-1), right)
+        && !equals(getColumn(c.data, c.data.length-1), right.reverse())
     ) {
         c.data = flipHorizontal(c.data);
     }
@@ -259,26 +261,12 @@ function alignInitialCorner(grid: Tile[][]) {
 
 function getMatching(border: boolean[], tiles: Tile[]): Tile|null {
     for (let tile of tiles) {
-        if (tile.borders.filter((b) => equal(border, b) || equal(border, b.reverse())).length > 0) {
+        if (tile.borders.filter((b) => equals(border, b) || equals(border, b.reverse())).length > 0) {
             return tile;
         }
     }
 
     return null;
-}
-
-function flipHorizontal(mat: boolean[][]): boolean[][] {
-    let nm: boolean[][] = [];
-
-    for (let r = 0; r < mat.length; r++) {
-        nm[r] = [...mat[r]].reverse();
-    }
-
-    return nm;
-}
-
-function flipVertical(mat: boolean[][]): boolean[][] {
-    return mat.reverse();
 }
 
 function rotateCW(mat: boolean[][]): boolean[][] {
@@ -300,16 +288,6 @@ function rotateCW(mat: boolean[][]): boolean[][] {
     return nd;
 }
 
-function getColumn (data: boolean[][], column: number): boolean[] {
-    const c: boolean[] = [];
-
-    for (let r = 0; r < data.length; r++) {
-        c[r] = data[r][column];
-    }
-
-    return c;
-}
-
 function getBorders(data: boolean[][]): boolean[][] {
     let borders: boolean[][] = [];
 
@@ -329,34 +307,6 @@ function getBorders(data: boolean[][]): boolean[][] {
     return borders;
 }
 
-function print(tile: Tile): void {
-    console.log(`Tile ${tile.id}: `);
-
-    for (let y = 0; y < tile.data.length; y++) {
-        for (let x = 0; x < tile.data[y].length; x++) {
-            process.stdout.write(tile.data[y][x] ? '#' : '.');
-        }
-        process.stdout.write('\n');
-    }
-}
-
-function printGrid(grid: Tile[][]): void {
-    for (let y = 0; y < grid.length; y++) {
-        for (let x = 0; x < grid[y].length; x++) {
-            process.stdout.write(grid[y][x].id.toString() + ' ');
-        }
-        process.stdout.write('\n');
-    }
-}
-
-function printImage(img: boolean[][]): void {
-    for (let y = 0; y < img.length; y++) {
-        for (let x = 0; x < img[y].length; x++) {
-            process.stdout.write(img[y][x] ? '#' : '.');
-        }
-        process.stdout.write('\n');
-    }
-}
 
 function findNeighbors(tile: Tile, tiles: Tile[]): Tile[] {
     const neighbors: Tile[] = [];
@@ -372,23 +322,13 @@ function findNeighbors(tile: Tile, tiles: Tile[]): Tile[] {
     return neighbors;
 }
 
-function equal(a: boolean[], b: boolean[]): boolean {
-    for (let i = 0; i < a.length; i++) {
-        if (a[i] !== b[i]) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 function findMatching(a: boolean[][], b: boolean[][]): boolean[]|null {
     for (let ab of a) {
         for (let bb of b) {
             if (
-                equal(ab, bb)
-                || equal(ab, bb.reverse())
-                || equal(ab.reverse(), bb)
+                equals(ab, bb)
+                || equals(ab, bb.reverse())
+                || equals(ab.reverse(), bb)
             ) {
                 return ab
             }
