@@ -17,4 +17,28 @@ describe('Vec2', () => {
         expect(res.x).toBe(4);
         expect(res.y).toBe(6);
     });
+
+    it ('should subtract component wise', () => {
+        const a = new Vec2(1, 2);
+        const b = new Vec2(3, 5);
+
+        const res = Vec2.sub(a, b);
+
+        expect(res.x).toBe(-2);
+        expect(res.y).toBe(-3);
+    });
+
+    it ('should be equal if components are the same', () => {
+        const a = new Vec2(1, 2);
+        const b = new Vec2(1, 2);
+
+        expect(a.equals(b)).toBe(true);
+    });
+
+    it ('should not be equal if components are differnt', () => {
+        const a = new Vec2(1, 2);
+        const b = new Vec2(1, 3);
+
+        expect(a.equals(b)).toBe(false);
+    });
 });

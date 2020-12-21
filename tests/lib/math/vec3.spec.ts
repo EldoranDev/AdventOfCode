@@ -19,4 +19,15 @@ describe('Vec2', () => {
         expect(res.y).toBe(6);
         expect(res.z).toBe(8);
     });
+
+    it ('should subtract component wise', () => {
+        const a = new Vec3(1, 2, 3);
+        const b = new Vec3(3, 5, 7);
+
+        const res = Vec3.sub(a, b);
+
+        expect(res.x).toBe(-2);
+        expect(res.y).toBe(-3);
+        expect(res.z).toBe(-4);
+    });
 });

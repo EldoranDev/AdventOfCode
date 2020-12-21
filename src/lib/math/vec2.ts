@@ -25,6 +25,10 @@ export default class Vec2 {
         return this;
     }
 
+    public equals(b: Vec2): boolean {
+        return this.x === b.x && this.y === b.y;
+    }
+
     public rotate(rotation: number, mode: 'rad'|'deg' = 'deg') {
         let rads = rotation;
 
