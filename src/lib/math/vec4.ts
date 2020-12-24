@@ -1,4 +1,6 @@
-export default class Vec4 {
+import IVec from "./IVec";
+
+export default class Vec4 implements IVec {
     constructor(
         public x: number = 0,
         public y: number = 0,
@@ -39,6 +41,10 @@ export default class Vec4 {
 
     public clone(): Vec4 {
         return new Vec4(this.x, this.y, this.z, this.w);
+    }
+
+    public toString(): string {
+        return `V4(${this.x}|${this.y}|${this.z}|${this.w})`;
     }
 
     public static add(a: Vec4, b: Vec4) {

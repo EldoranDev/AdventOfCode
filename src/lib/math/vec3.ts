@@ -1,3 +1,5 @@
+import IVec from './IVec';
+
 export default class Vec3 {
     constructor(
         public x: number = 0,

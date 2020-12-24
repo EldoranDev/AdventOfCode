@@ -1,4 +1,6 @@
-export default class Vec2 {
+import IVec from './IVec';
+
+export default class Vec2 implements IVec {
     constructor(
         public x: number = 0,
         public y: number = 0
@@ -27,6 +29,10 @@ export default class Vec2 {
 
     public equals(b: Vec2): boolean {
         return this.x === b.x && this.y === b.y;
+    }
+
+    public toString(): string {
+        return `V2(${this.x}|${this.y})`;
     }
 
     public rotate(rotation: number, mode: 'rad'|'deg' = 'deg') {
