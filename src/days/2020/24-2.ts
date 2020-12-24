@@ -3,7 +3,6 @@ import { Vec3 } from '@lib/math';
 import { Convay } from '@lib/simulation';
 
 export default function (input: string[]) {
-
     let instructions: string[][] = [];
 
     for (let line of input) {
@@ -69,13 +68,5 @@ export default function (input: string[]) {
         convay.tick();
     }
 
-    let count = 0;
-
-    for (let entry of convay.getState().values()) {
-        if (entry[1]) {
-            count++;
-        }
-    }
-
-    return count;
+    return convay.getActiveCount();
 };

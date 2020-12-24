@@ -1,6 +1,6 @@
 import { } from '@lib/input';
 import { Vec4 } from '@lib/math';
-import { notDeepEqual } from 'assert';
+import { Convay } from '@lib/simulation';
 
 const ROUNDS = 6;
 type Map = boolean[][][][];
@@ -9,26 +9,7 @@ export default function (input: string[]) {
     let world: Map = [];
     const SIZE = input.length+ROUNDS*2;
     
-    for (let z = 0; z < SIZE; z++) {
-        world[z] = [];
-        for (let w = 0; w < SIZE; w++) {
-            world[z][w] = [];
-            for (let y = 0; y < SIZE; y++) {
-                world[z][w][y] = [];
-                for (let x = 0; x < SIZE; x++) {
-                    world[z][w][y][x] = false;
-                }
-            }
-        }
-    }
-
-    for (let y = 0; y < input.length; y++) {
-        for (let x = 0; x < input.length; x++) {
-            world[ROUNDS][ROUNDS][y+ROUNDS][x+ROUNDS] = input[y].charAt(x) === '#'
-        }
-    }
-    
-    let neighbors = [];
+    const neighbors = [];
 
     for (let z = -1; z <= 1; z++) {
         for (let w = -1; w <= 1; w++) {
@@ -42,49 +23,23 @@ export default function (input: string[]) {
         }
     }
 
-    let cubes = 0;
+    let convay = new Convay<Vec4>(
+        (pos) => neighbors.map(n => Vec4.add(pos, n)),
+        (count) => count === 2 || count === 3,
+        (count) => count === 3
+    );
 
-    for (let r = 0; r < ROUNDS; r++) {
-        const tmp: Map = [];
-        cubes = 0;
-
-        for (let z = 0; z < SIZE; z++) {
-            tmp[z] = [];
-            for (let w = 0; w < SIZE; w++) {
-                tmp[z][w] = [];
-                for (let y = 0; y < SIZE; y++) {
-                    tmp[z][w][y] = [];
-                    for (let x = 0; x < SIZE; x++) {
-                        let pos = new Vec4(x, y, z, w);
-
-                        let alive = 0;
-
-                        for (let n of neighbors) {
-                            let np = Vec4.add(pos, n);
-
-                            if (world[np.z] && world[np.z][np.w] && world[np.z][np.w][np.y] && world[np.z][np.w][np.y][np.x]) {
-                                alive++;
-                            }
-                        }
-
-                        if (world[z][w][y][x]) {
-                            tmp[z][w][y][x] = alive === 3 || alive === 2;
-                        } else {
-                            tmp[z][w][y][x] = alive === 3;
-                        }
-
-                        if (tmp[z][w][y][x]) {
-                            cubes++;
-                        }
-                    }
-                }
-            }
+    for (let y = 0; y < input.length; y++) {
+        for (let x = 0; x < input.length; x++) {
+            convay.set(new Vec4(x, y, 0, 0), input[y].charAt(x) === '#');
         }
-
-        world = tmp;
+    }
+    
+    for (let round = 0; round < ROUNDS; round++) {
+        convay.tick();
     }
 
-    return cubes;
+    return convay.getActiveCount();
 };
 
 function print(world: Map): void {

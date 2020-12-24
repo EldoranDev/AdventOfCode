@@ -44,6 +44,18 @@ export default class Convay<T extends IVec> {
         return this.map;
     }
 
+    public getActiveCount(): number {
+        let count = 0;
+
+        for (let entry of this.map.values()) {
+            if (entry[1]) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     public getStateOfField(coordinate: T): boolean {
         const key = coordinate.toString();
 

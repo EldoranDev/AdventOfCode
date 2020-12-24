@@ -1,5 +1,6 @@
 import { } from '@lib/input';
 import { Vec3 } from '@lib/math';
+import { Convay } from '@lib/simulation';
 
 export default function (input: string[]) {
 
@@ -22,26 +23,23 @@ export default function (input: string[]) {
         instructions.push(tile);
     }
 
-    const DIM = 50;
-    const OFFSET = (DIM/2)|0
-
-    let map: boolean[][][] = new Array(DIM);
-
-    for (let x = 0; x < DIM; x++) {
-        map[x] = new Array(DIM);
-        for (let y = 0; y < DIM; y++) {
-            map[x][y] = new Array(DIM);
-            for (let z = 0; z < DIM; z++) {
-                map[x][y][z] = false;
-            }
-        }
-    }
+    let convay = new Convay<Vec3>(
+        (pos) => [
+            new Vec3(-1, +1, 0),
+            new Vec3(+1, -1, 0),
+            new Vec3(-1, 0, +1),
+            new Vec3(0, -1, +1),
+            new Vec3(0, +1, -1),
+            new Vec3(+1, 0, -1)
+        ].map((offset) => Vec3.add(pos, offset)),
+        (neighbors) => neighbors > 0 && neighbors <= 2,
+        (neighbors) => neighbors === 2
+    );
     
     for (let tile of instructions) {
         let position: Vec3 = new Vec3(0, 0, 0);
 
         for (let move of tile) {
-
             switch(move) {
                 case 'w':
                     position.add(new Vec3(-1, +1, 0));
@@ -64,19 +62,8 @@ export default function (input: string[]) {
             }    
         }
 
-        console.log(`Flipping ${position} from ${map[position.x+OFFSET][position.y+OFFSET][position.z+OFFSET]} to ${!map[position.x+OFFSET][position.y+OFFSET][position.z+OFFSET]}`)
-        map[position.x + OFFSET][position.y+OFFSET][position.z+OFFSET] = !map[position.x+OFFSET][position.y+OFFSET][position.z+OFFSET];
+        convay.set(position, !convay.getStateOfField(position));
     }
-
-    let count = 0;
-
-    for (let x = 0; x < DIM; x++) {
-        for (let y = 0; y < DIM; y++) {
-            for (let z = 0; z < DIM; z++) {
-                count += map[x][y][z] ? 1 : 0;
-            }
-        }
-    }
-
-    return count;
+    
+    return convay.getActiveCount();
 };
