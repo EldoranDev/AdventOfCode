@@ -12,7 +12,6 @@ export default class Convay<T extends IVec> {
         private neighbors: Neighbordetection<T>,
         private activeRule: Rule,
         private inactiveRule: Rule,
-        private removeRule: Rule|null = null,
     ) {}
 
     public set(coordinate: T, value: boolean): void
@@ -29,7 +28,7 @@ export default class Convay<T extends IVec> {
             const neighbors = this.getNeighborsValues(this.neighbors(entry[1][0]));
             const activeNeighbors = neighbors.filter(n => n).length;
 
-            if (entry[1][1]) {
+             if (entry[1][1]) {
                 nap.set(entry[0], [entry[1][0], this.activeRule(activeNeighbors)]);        
 
                 this.addNeighbors(entry[1][0]);
