@@ -37,6 +37,10 @@ export default class Vec3 {
         return new Vec3(this.x, this.y, this.z);
     }
 
+    public toString(): string {
+        return `V3(${this.x}|${this.y}|${this.z})`;
+    }
+
     public static add(a: Vec3, b: Vec3) {
         return a.clone().add(b);
     }
