@@ -4,7 +4,8 @@
         "downlevelIteration": true,
         "baseUrl": ".",
         "paths": {
-            "@lib/*": ["./src/lib/*"]
+            "@lib/*": ["./src/lib/*"],
+            "@2019/*": ["./src/days/2019/lib/*"],
         }
     }
 }
