@@ -1,0 +1,25 @@
+{
+    "$schema": "https://raw.githubusercontent.com/EldoranDev/AdventOfCodeDashboard/new-version/static/aoc-repo.schema.json",
+    "id": 384199,
+    "language": "typescript",
+    "repo": "https://github.com/EldoranDev/AdventOfCode",
+    "solutions": [
+        { 
+            "year": 2020,
+            "day": 1,
+            "link": [
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/01-1.ts",
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/01-2.ts"
+            ]
+        },
+        {
+            "year": 2020,
+            "day": 2,
+            "link": [
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/02-1.ts",
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/02-2.ts"
+            ]
+        }
+
+    ]
+}
