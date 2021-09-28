@@ -15,7 +15,7 @@ export default function (input: string[]) {
     storage[pos.y][pos.x] = 1;
 
     while (lastNumber < target) {
-        pos.add(moveSeq.next().value as Vec2;);
+        pos.add(moveSeq.next().value as Vec2);
         lastNumber = storage[pos.y][pos.x] = getSum(storage, pos.x, pos.y);
     }
 
