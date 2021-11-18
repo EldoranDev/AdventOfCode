@@ -15,6 +15,9 @@ export const system = createLogger({
     ],
 });
 
-export const logger = createLogger({
-
+export const implementation = createLogger({
+    format: format.simple(),
+    transports: [
+        new transports.Console(),
+    ],
 });

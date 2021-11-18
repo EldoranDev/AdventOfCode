@@ -5,9 +5,10 @@ import * as clipboard  from 'clipboardy';
 
 import { performance } from 'perf_hooks';
 import observerPerformance from './src/app/performance';
-import { system as logger } from './src/app/logger';
+import { system as logger, implementation as implLogger } from './src/app/logger';
+import { Context } from 'src/app/types';
 
-type implementation = (input: string[]) => string;
+type implementation = (input: string[], context: Context) => string;
 
 yargs(process.argv.slice(2))
     .strict()
@@ -56,10 +57,18 @@ yargs(process.argv.slice(2))
             boolean: true,
             default: false,
         })
+        .option('verbose', {
+            boolean: true,
+            default: false,
+        })
     }, 
     async (args) => {
         if (args.perf) {
             observerPerformance();
+        }
+
+        if (!args.verbose) {
+            implLogger.level = 'error';
         }
 
         performance.mark('start-exec');
@@ -91,7 +100,7 @@ yargs(process.argv.slice(2))
         if (args.test) {
             file += '-test';
         }
-        
+
         let input: string;
 
         try {
@@ -122,7 +131,9 @@ yargs(process.argv.slice(2))
         performance.mark('input-end');
         
         performance.mark('exec-start');
-        const result = module(lines);
+        const result = module(lines, {
+            logger: implLogger
+        });
         performance.mark('exec-end');
 
         await clipboard.write(result.toString());

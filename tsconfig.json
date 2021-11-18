@@ -6,6 +6,7 @@
         "downlevelIteration": true,
         "baseUrl": ".",
         "paths": {
+            "@app/*": ["./src/app/*"],
             "@lib/*": ["./src/lib/*"],
             "@2019/*": ["./src/days/2019/lib/*"],
         }

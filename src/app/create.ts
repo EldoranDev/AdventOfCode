@@ -5,8 +5,9 @@ import provideInput from './provider/input';
 
 const template = 
 `import { } from '@lib/input';
+import { Context } from '@app/types';
 
-export default function (input: string[]) {
+export default function (input: string[], context: Context) {
 
 };`;
 
