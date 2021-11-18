@@ -5,6 +5,7 @@ import * as clipboard  from 'clipboardy';
 
 import { performance } from 'perf_hooks';
 import observerPerformance from './src/app/performance';
+import { system as logger } from './src/app/logger';
 
 type implementation = (input: string[]) => string;
 
@@ -72,8 +73,13 @@ yargs(process.argv.slice(2))
         try {
             module = (await import(`./src/days/${args.year}/${day}-${args.part}`)).default as implementation;
         } catch (e) {
-            console.log(e);
-            console.error('Day has no implementation yet');
+            switch (e.code) {
+                case 'MODULE_NOT_FOUND':
+                    logger.error('Day has no implementation yet');
+                    break;
+                default:
+                    console.error(e);
+            }
             return;
         }
 
@@ -85,13 +91,27 @@ yargs(process.argv.slice(2))
         if (args.test) {
             file += '-test';
         }
+        
+        let input: string;
 
-        const input = readFileSync(
-            resolve(__dirname, 'inputs', args.year.toString(), file),
-            {
-                encoding: 'utf-8'
+        try {
+            input = readFileSync(
+                resolve(__dirname, 'inputs', args.year.toString(), file),
+                {
+                    encoding: 'utf-8'
+                }
+            );
+        } catch (e) {
+            switch(e.code) {
+                case 'ENOENT':
+                    logger.error('Input file for day is missing');
+                    break;
+                default:
+                    console.error(e);
+                    break;
             }
-        );
+            return;
+        }
         
         let lines = input.split('\n');
 
@@ -111,6 +131,6 @@ yargs(process.argv.slice(2))
         performance.measure('Input Loading', 'input-start', 'input-end');
         performance.measure('Execution','exec-start', 'exec-end');
 
-        console.log(result);
+        logger.info(`Result: ${result.toString()}`);
     })
     .argv;
