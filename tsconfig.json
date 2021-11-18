@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
         "moduleResolution": "node",
         "downlevelIteration": true,
         "baseUrl": ".",
@@ -7,5 +9,9 @@
             "@lib/*": ["./src/lib/*"],
             "@2019/*": ["./src/days/2019/lib/*"],
         }
+    },
+    "ts-node": {
+        "transpileOnly": true,
+        "transpiler": "ts-node/transpilers/swc-experimental"
     }
 }

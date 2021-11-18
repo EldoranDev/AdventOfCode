@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/EldoranDev/AdventOfCode2020#readme",
   "devDependencies": {
+    "@swc/core": "^1.2.110",
     "@types/clipboardy": "^2.0.1",
     "@types/jest": "^26.0.24",
     "@types/node": "^14.17.19",
