@@ -16,7 +16,15 @@ export const system = createLogger({
 });
 
 export const implementation = createLogger({
-    format: format.simple(),
+    level: 'debug',
+    format: format.combine(
+        format.label({
+            label: '[DAY]',
+        }),
+        format.printf(
+            info => `${info.label}[${info.level}] ${info.message}`
+        )
+    ),
     transports: [
         new transports.Console(),
     ],

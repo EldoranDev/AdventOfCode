@@ -1,12 +1,14 @@
 import yargs from 'yargs';
+import fetch from 'node-fetch';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import * as clipboard  from 'clipboardy';
-
 import { performance } from 'perf_hooks';
+
 import observerPerformance from './src/app/performance';
 import { system as logger, implementation as implLogger } from './src/app/logger';
 import { Context } from 'src/app/types';
+import answerProvider from '@app/provider/answer';
 
 type implementation = (input: string[], context: Context) => string;
 
@@ -25,9 +27,13 @@ yargs(process.argv.slice(2))
         })
     },
     async (args) => {
-        const cmd = await import('./src/app/create');
-        
-        await cmd.create(args);
+        const cmdCreate = await import('./src/app/create');
+        const cmdGet = await import('./src/app/get');
+
+        await Promise.all([
+            cmdCreate.create(args),
+            cmdGet.get(args),
+        ]);
     })
     .command('get [day]', 'Get input for day', (y) => {
         y
@@ -61,6 +67,10 @@ yargs(process.argv.slice(2))
             boolean: true,
             default: false,
         })
+        .option('submit', {
+            boolean: true,
+            default: false,
+        });
     }, 
     async (args) => {
         if (args.perf) {
@@ -99,6 +109,7 @@ yargs(process.argv.slice(2))
 
         if (args.test) {
             file += '-test';
+            args.submit = false;
         }
 
         let input: string;
@@ -131,17 +142,30 @@ yargs(process.argv.slice(2))
         performance.mark('input-end');
         
         performance.mark('exec-start');
-        const result = module(lines, {
-            logger: implLogger
-        });
-        performance.mark('exec-end');
+        try {
+            const result = module(lines, {
+                logger: implLogger
+            });
+            performance.mark('exec-end');
 
-        await clipboard.write(result.toString());
+            if (result == undefined) {
+                logger.error('No result returned');
+                return;
+            }
 
-        performance.measure('Module Loading', 'mod-load-start', 'mod-load-end');
-        performance.measure('Input Loading', 'input-start', 'input-end');
-        performance.measure('Execution','exec-start', 'exec-end');
+            await clipboard.write(result.toString());
 
-        logger.info(`Result: ${result.toString()}`);
+            performance.measure('Module Loading', 'mod-load-start', 'mod-load-end');
+            performance.measure('Input Loading', 'input-start', 'input-end');
+            performance.measure('Execution','exec-start', 'exec-end');
+
+            logger.info(`💬 Result: ${result.toString()}`);
+
+            if (args.submit) {
+                answerProvider(args.year, args.day as number, args.part as number, result.toString());
+            }
+        } catch (e) {
+            logger.error(e);
+        }
     })
     .argv;

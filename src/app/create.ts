@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { writeFileSync, accessSync, mkdirSync } from 'fs';
 
+import { system as logger } from './logger';
 import provideInput from './provider/input';
 
 const template = 
@@ -37,4 +38,6 @@ export async function create(args) {
             encoding: 'utf-8',
         }
     );
+
+    logger.info(`Created solution files for ${args.day} of year ${args.year}`);
 }
