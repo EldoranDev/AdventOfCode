@@ -1,8 +1,8 @@
-export function mapToNumber (input: string[]) {
+export function mapToNumber (input: string[]): number[] {
     return input.map((line) => Number(line));
 }
 
-export function getLineGroups (input: string[]) {
+export function getLineGroups (input: string[]): string[][] {
     const groups: string[][] = [];
     
     input.push('');
