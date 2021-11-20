@@ -8,7 +8,7 @@ const template =
 `import { } from '@lib/input';
 import { Context } from '@app/types';
 
-export default function (input: string[], context: Context) {
+export default function (input: string[], { logger }: Context) {
 
 };`;
 

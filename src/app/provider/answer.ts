@@ -35,6 +35,11 @@ export default async (year: number, day: number, part: number, solution: string)
         logger.error('❌ This is not the correct response');
         return;
     }
+    
+    if (body.includes('You gave an answer too recently')) {
+        logger.error('⏰ Answer submitted to recently');
+        return;
+    }
 
     if (body.includes("That's the right answer!")) {
         logger.info('✅ successfully submited solution');

@@ -78,7 +78,7 @@ yargs(process.argv.slice(2))
         }
 
         if (!args.verbose) {
-            implLogger.level = 'error';
+            implLogger.level = 'info';
         }
 
         performance.mark('start-exec');

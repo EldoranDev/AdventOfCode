@@ -1,5 +1,5 @@
 export default function getColumn<T>(mat: T[][], col: number): T[] {
-    if (mat.length <= col) {
+    if (mat[0].length <= col) {
         return undefined;
     }
 

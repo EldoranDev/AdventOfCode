@@ -6,7 +6,7 @@ export default function (input: string[], { logger }: Context) {
     const roomId = input[0];
     let id = 0;
     
-    let password = [];
+    let password = '';
 
     
 
@@ -16,6 +16,7 @@ export default function (input: string[], { logger }: Context) {
         
         if (current.startsWith('00000')) {
             logger.debug(`Found at ${id} -> ${current} -> ${current.charAt(5)}`);
+
             password += current.charAt(5);
             logger.debug(password);
         }
