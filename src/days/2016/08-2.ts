@@ -57,7 +57,7 @@ export default function (input: string[], { logger }: Context) {
                 }
                 break;
         }
-    }
+    }   
 
     const out = display.reduce((prev: string, current: boolean[]) => {
         let row = current.map((e) => e ? '#' : '.').join('');

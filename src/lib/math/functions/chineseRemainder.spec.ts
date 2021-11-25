@@ -1,4 +1,4 @@
-import chineseRemainder from '../../../../src/lib/math/functions/chineseRemainder';
+import chineseRemainder from './chineseRemainder';
 
 describe('Math Function: chineseRemainer', () => {
     it('should pass sample test', () => {

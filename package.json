@@ -1,22 +1,22 @@
 {
-  "name": "adventofcode-2020",
+  "name": "adventofcode",
   "version": "1.0.0",
-  "description": "Repository for Advent of Code 2020",
-  "main": "index.js",
+  "description": "Advent of Code solutions and library",
+  "main": "index.ts",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register index.ts",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EldoranDev/AdventOfCode2020.git"
+    "url": "git+https://github.com/EldoranDev/AdventOfCode.git"
   },
   "author": "Marcel Behrmann <info@eldoran.dev>",
   "license": "mit",
   "bugs": {
-    "url": "https://github.com/EldoranDev/AdventOfCode2020/issues"
+    "url": "https://github.com/EldoranDev/AdventOfCode/issues"
   },
-  "homepage": "https://github.com/EldoranDev/AdventOfCode2020#readme",
+  "homepage": "https://github.com/EldoranDev/AdventOfCode#readme",
   "devDependencies": {
     "@swc/core": "^1.2.110",
     "@types/clipboardy": "^2.0.1",

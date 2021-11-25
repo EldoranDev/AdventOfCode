@@ -1,4 +1,4 @@
-import { getColumn } from '@lib/array2D';
+import { getColumn } from '@lib/array2d';
 
 describe('Array2D: getColumn', () => {
     it ('should return undefined when out of bounds', () => {

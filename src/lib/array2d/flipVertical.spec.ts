@@ -1,4 +1,4 @@
-import { flipVertical } from '@lib/array2D';
+import { flipVertical } from '@lib/array2d';
 
 describe('Array2D: flipVertical', () => {
     it ('should flip array successfully', () => {
