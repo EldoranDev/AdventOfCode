@@ -41,4 +41,31 @@ describe('Vec2', () => {
 
         expect(a.equals(b)).toBe(false);
     });
+
+    it ('should scale correctly', () => {
+        const a = new Vec2(1, 2);
+
+        a.mult(2);
+
+        expect(a.x).toBe(2);
+        expect(a.y).toBe(4);
+    });
+
+    it ('should be converted to string correctly', () => {
+        const a = new Vec2(2, 4);
+
+        expect(a.toString()).toBe("V2(2|4)");
+    });
+
+    it ('should scale correctly without changing original when static', () => {
+        const a = new Vec2(2, 4);
+
+        const result = Vec2.mult(a, 2);
+
+        expect(a.x).toBe(2);
+        expect(a.y).toBe(4);
+
+        expect(result.x).toBe(4);
+        expect(result.y).toBe(8);
+    });
 });
