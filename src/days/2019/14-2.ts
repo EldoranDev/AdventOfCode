@@ -15,6 +15,8 @@ export default function (input: string[], { logger }: Context) {
         [resource: string]: {
             required: number,
             current: number,
+            limited: boolean,
+            available: number,
         }
     } = {};
 
@@ -41,6 +43,8 @@ export default function (input: string[], { logger }: Context) {
         production[resource] = {
             required: 0,
             current: 0,
+            limited: false,
+            available: 0,
         };
     }
 
@@ -48,9 +52,12 @@ export default function (input: string[], { logger }: Context) {
     production['ORE'] = {
         required: 0,
         current: 0,
-    }
+        limited: true,
+        available: 1000000000000,
+    };
 
     let satisfied = true;
+    let valid = true;
 
     do {
         satisfied = true;
@@ -58,6 +65,12 @@ export default function (input: string[], { logger }: Context) {
         for (let resource of Object.keys(production)) {
             if (resource === 'ORE') {
                 production['ORE'].current = production['ORE'].required;
+                
+                if (production['ORE'].required > production['ORE'].available) {
+                    valid = false;
+                    break;
+                }
+
                 continue;
             }
 
@@ -80,8 +93,15 @@ export default function (input: string[], { logger }: Context) {
                 satisfied = false;
             }
         }
-    } while (!satisfied);
+
+        if (satisfied) {
+            production['FUEL'].required++;
+        }
+
+    } while (valid);
+
+    logger.debug(`ORE: ${production['ORE']}`);
 
     // Naive non working
-    return Math.floor(1000000000000/production['ORE'].required);
+    return production['FUEL'].current - 1;
 };
