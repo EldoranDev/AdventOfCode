@@ -19,7 +19,14 @@
                 "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/02-1.ts",
                 "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2020/02-2.ts"
             ]
+        },
+        {
+            "year": 2021,
+            "day": 1,
+            "link": [
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/01-1.ts",
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/01-2.ts"
+            ]
         }
-
     ]
 }
