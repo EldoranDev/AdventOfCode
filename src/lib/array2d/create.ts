@@ -4,7 +4,7 @@ export default function create<T>(x: number, y: number, initial: T = undefined):
     for (let row = 0; row < y; row++) {
         array[row] = Array.from({ length: x });
 
-        if (initial) {
+        if (initial !== undefined) {
             array[row].fill(initial);
         }
     }
