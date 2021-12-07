@@ -21,7 +21,6 @@ export default function (input: string[], { logger }: Context) {
             }
         }
 
-        logger.debug(fuel);
         if (fuel < usedFuel) {
             position = i;
             usedFuel = fuel;
