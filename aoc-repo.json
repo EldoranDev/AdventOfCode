@@ -68,10 +68,17 @@
             ]
         },{
             "year": 2021,
-            "day": 6,
+            "day": 7,
             "link": [
                 "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/07-1.ts",
                 "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/07-2.ts"
+            ]
+        },{
+            "year": 2021,
+            "day": 8,
+            "link": [
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/08-1.ts",
+                "https://github.com/EldoranDev/AdventOfCode/blob/main/src/days/2021/08-2.ts"
             ]
         }
     ]
