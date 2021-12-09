@@ -1,6 +1,5 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
-import { brotliCompress } from 'zlib';
 
 export default function (input: string[], { logger }: Context) {
     let lines = input.map(l => l.split('|').map(c => c.trim().split(' ')));
