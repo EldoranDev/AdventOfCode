@@ -55,8 +55,6 @@ export default function (input: string[], { logger }: Context) {
 
     logger.debug(`We have ${unmarked} * ${last[1]} as result`);
     return unmarked * last[1];
-
-
 };
 
 function checkIfwon(board: field[][], x: number, y: number): boolean {
