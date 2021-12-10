@@ -5,13 +5,10 @@
   "main": "index.ts",
   "scripts": {
     "prepare": "husky install",
-
     "start": "ts-node -r tsconfig-paths/register index.ts",
     "test": "jest",
-    
     "lint:lib": "eslint ./src/lib --ext .ts",
     "lint:app": "eslint ./src/app --ext .ts"
-    
   },
   "repository": {
     "type": "git",
@@ -21,6 +18,9 @@
   "license": "mit",
   "bugs": {
     "url": "https://github.com/EldoranDev/AdventOfCode/issues"
+  },
+  "lint-staged": {
+    "src/app/*.ts": "npm run lint:app"
   },
   "homepage": "https://github.com/EldoranDev/AdventOfCode#readme",
   "devDependencies": {
@@ -38,6 +38,7 @@
     "eslint-plugin-jest": "^25.3.0",
     "husky": "^7.0.4",
     "jest": "^26.6.3",
+    "lint-staged": "^12.1.2",
     "ts-jest": "^26.5.6",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.11.0",
