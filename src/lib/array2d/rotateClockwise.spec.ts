@@ -1,7 +1,7 @@
 import { rotateClockwise } from '@lib/array2d';
 
 describe('Array2D: rotateClockwise', () => {
-    it ('should rotate correctly', () => {
+    it('should rotate correctly', () => {
         const M = [
             [0, 1],
             [2, 3],
@@ -13,7 +13,7 @@ describe('Array2D: rotateClockwise', () => {
         ]);
     });
 
-    it ('should equal identity when used 4 times', () => {
+    it('should equal identity when used 4 times', () => {
         const M = [
             [0, 1],
             [2, 3],

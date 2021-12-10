@@ -1,4 +1,4 @@
-import { IVec} from "@lib/math";
+import { IVec } from '@lib/math';
 
 type MapKey = string;
 type Neighbordetection<T> = (pos: T) => T[];
@@ -14,32 +14,31 @@ export default class Convay<T extends IVec> {
         private inactiveRule: Rule,
     ) {}
 
-    public set(coordinate: T, value: boolean): void
-    {
+    public set(coordinate: T, value: boolean): void {
         this.map.set(coordinate.toString(), [coordinate, value]);
 
         this.addNeighbors(coordinate);
     }
 
     public tick() {
-        let nap: ConvayMap<T> = new Map();
-                
-        for (let entry of this.map.entries()) {
-            const neighbors = this.getNeighborsValues(this.neighbors(entry[1][0]));
-            const activeNeighbors = neighbors.filter(n => n).length;
+        const nap: ConvayMap<T> = new Map();
 
-             if (entry[1][1]) {
-                nap.set(entry[0], [entry[1][0], this.activeRule(activeNeighbors)]);        
+        for (const entry of this.map.entries()) {
+            const neighbors = this.getNeighborsValues(this.neighbors(entry[1][0]));
+            const activeNeighbors = neighbors.filter((n) => n).length;
+
+            if (entry[1][1]) {
+                nap.set(entry[0], [entry[1][0], this.activeRule(activeNeighbors)]);
 
                 this.addNeighbors(entry[1][0]);
             } else {
-                nap.set(entry[0],[entry[1][0], this.inactiveRule(activeNeighbors)]);
+                nap.set(entry[0], [entry[1][0], this.inactiveRule(activeNeighbors)]);
             }
         }
 
         this.map = nap;
     }
-    
+
     public getState(): ConvayMap<T> {
         return this.map;
     }
@@ -47,7 +46,7 @@ export default class Convay<T extends IVec> {
     public getActiveCount(): number {
         let count = 0;
 
-        for (let entry of this.map.values()) {
+        for (const entry of this.map.values()) {
             if (entry[1]) {
                 count++;
             }
@@ -67,10 +66,12 @@ export default class Convay<T extends IVec> {
     }
 
     private addNeighbors(coordinate: T): void {
-        for (let neighbor of this.neighbors(coordinate)) {
+        for (const neighbor of this.neighbors(coordinate)) {
             const key: MapKey = neighbor.toString();
 
-            if (this.map.has(key)) continue;
+            if (this.map.has(key)) {
+                continue;
+            }
 
             this.map.set(key, [neighbor, false]);
         }
@@ -86,4 +87,3 @@ export default class Convay<T extends IVec> {
         });
     }
 }
-

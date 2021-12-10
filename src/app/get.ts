@@ -11,7 +11,7 @@ export async function get(args) {
                 logger.error('Missing session file');
                 break;
             default:
-                console.error(e);
+                logger.error(e);
         }
     }
 }

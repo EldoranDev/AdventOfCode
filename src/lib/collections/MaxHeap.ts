@@ -1,6 +1,6 @@
-import { Heap, Node} from "./Heap";
+import { Heap, Node } from './Heap';
 
-export class MaxHeap<T> extends Heap<T> {    
+export class MaxHeap<T> extends Heap<T> {
     public push(value: T, prio: number) {
         this.heap.push(new Node(value, prio));
 
@@ -21,7 +21,7 @@ export class MaxHeap<T> extends Heap<T> {
         if (left < this.heap.length && this.heap[biggest].prio < this.heap[left].prio) {
             biggest = left;
         }
-        
+
         if (right < this.heap.length && this.heap[biggest].prio < this.heap[right].prio) {
             biggest = right;
         }
@@ -31,5 +31,4 @@ export class MaxHeap<T> extends Heap<T> {
             this.rebalance(biggest);
         }
     }
-
 }

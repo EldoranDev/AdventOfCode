@@ -1,15 +1,15 @@
-export function mapToNumber (input: string[]): number[] {
+export function mapToNumber(input: string[]): number[] {
     return input.map((line) => Number(line));
 }
 
-export function getLineGroups (input: string[]): string[][] {
+export function getLineGroups(input: string[]): string[][] {
     const groups: string[][] = [];
-    
+
     input.push('');
 
     let group: string[] = [];
-    
-    for (let line of input) {
+
+    for (const line of input) {
         if (line.trim() === '') {
             groups.push(group);
             group = [];
@@ -18,6 +18,6 @@ export function getLineGroups (input: string[]): string[][] {
 
         group.push(line);
     }
- 
+
     return groups;
 }

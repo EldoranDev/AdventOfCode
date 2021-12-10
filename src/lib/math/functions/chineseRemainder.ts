@@ -1,4 +1,4 @@
-export default function chineseRemainder (a: number[], n: number[]): number {
+export default function chineseRemainder(a: number[], n: number[]): number {
     const A = a.reduce((c, v) => c * v, 1);
 
     const Ai = [];
@@ -10,7 +10,7 @@ export default function chineseRemainder (a: number[], n: number[]): number {
 
     for (let i = 0; i < a.length; i++) {
         for (let j = 0; j < Ai[i]; j++) {
-            if (j * Ai[i] % a[i] === 1) {
+            if ((j * Ai[i]) % a[i] === 1) {
                 Xn[i] = j;
                 break;
             }
@@ -24,7 +24,7 @@ export default function chineseRemainder (a: number[], n: number[]): number {
     }
 
     while (sum - A > 0) {
-        sum -= A;    
+        sum -= A;
     }
 
     return sum;

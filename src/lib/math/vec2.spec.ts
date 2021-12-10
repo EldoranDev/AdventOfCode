@@ -8,7 +8,7 @@ describe('Vec2', () => {
         expect(v.y).toBe(0);
     });
 
-    it ('should add component wise', () => {
+    it('should add component wise', () => {
         const a = new Vec2(1, 2);
         const b = new Vec2(3, 4);
 
@@ -18,7 +18,7 @@ describe('Vec2', () => {
         expect(res.y).toBe(6);
     });
 
-    it ('should subtract component wise', () => {
+    it('should subtract component wise', () => {
         const a = new Vec2(1, 2);
         const b = new Vec2(3, 5);
 
@@ -28,21 +28,21 @@ describe('Vec2', () => {
         expect(res.y).toBe(-3);
     });
 
-    it ('should be equal if components are the same', () => {
+    it('should be equal if components are the same', () => {
         const a = new Vec2(1, 2);
         const b = new Vec2(1, 2);
 
         expect(a.equals(b)).toBe(true);
     });
 
-    it ('should not be equal if components are differnt', () => {
+    it('should not be equal if components are differnt', () => {
         const a = new Vec2(1, 2);
         const b = new Vec2(1, 3);
 
         expect(a.equals(b)).toBe(false);
     });
 
-    it ('should scale correctly', () => {
+    it('should scale correctly', () => {
         const a = new Vec2(1, 2);
 
         a.mult(2);
@@ -51,13 +51,13 @@ describe('Vec2', () => {
         expect(a.y).toBe(4);
     });
 
-    it ('should be converted to string correctly', () => {
+    it('should be converted to string correctly', () => {
         const a = new Vec2(2, 4);
 
-        expect(a.toString()).toBe("V2(2|4)");
+        expect(a.toString()).toBe('V2(2|4)');
     });
 
-    it ('should scale correctly without changing original when static', () => {
+    it('should scale correctly without changing original when static', () => {
         const a = new Vec2(2, 4);
 
         const result = Vec2.mult(a, 2);

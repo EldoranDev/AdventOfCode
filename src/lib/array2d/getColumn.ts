@@ -10,5 +10,4 @@ export default function getColumn<T>(mat: T[][], col: number): T[] {
     }
 
     return column;
-
 }

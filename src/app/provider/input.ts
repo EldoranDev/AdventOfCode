@@ -1,7 +1,9 @@
 import fetch from 'node-fetch';
 
 import { resolve } from 'path';
-import { createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync } from 'fs';
+import {
+    createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync,
+} from 'fs';
 
 export default async (year: number, day: number) => {
     const session = readFileSync(
@@ -10,13 +12,13 @@ export default async (year: number, day: number) => {
 
     const response = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, {
         headers: {
-            'Cookie': `session=${session}`,
+            Cookie: `session=${session}`,
         },
     });
 
     const fileName = (day.toString()).padStart(2, '0');
 
-    let path = resolve(__dirname, '..', '..', '..', 'inputs', year.toString());
+    const path = resolve(__dirname, '..', '..', '..', 'inputs', year.toString());
 
     try {
         accessSync(path);
@@ -25,10 +27,10 @@ export default async (year: number, day: number) => {
     }
 
     const file = createWriteStream(
-        resolve(path, `${fileName}.in`)
+        resolve(path, `${fileName}.in`),
     );
 
     writeFileSync(resolve(path, `${fileName}.in-test`), '');
 
     response.body.pipe(file);
-}
+};

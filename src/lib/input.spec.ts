@@ -9,9 +9,8 @@ describe('Input', () => {
     });
 
     it('can detect groups in input', () => {
-        const result = input.getLineGroups(["A", "B", "C", "", "D", "E", "F", "", "G", "H", "I"]);
+        const result = input.getLineGroups(['A', 'B', 'C', '', 'D', 'E', 'F', '', 'G', 'H', 'I']);
 
         expect(result.length).toBe(3);
-
     });
-}); 
+});

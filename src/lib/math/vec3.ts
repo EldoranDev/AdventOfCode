@@ -1,6 +1,6 @@
 import IVec from './IVec';
 
-export default class Vec3 {
+export default class Vec3 implements IVec {
     constructor(
         public x: number = 0,
         public y: number = 0,

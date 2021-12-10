@@ -12,7 +12,7 @@ export abstract class Heap<T> {
         return this.heap.length;
     }
 
-    public peek(): T|null {
+    public peek(): T | null {
         return this.heap[0]?.value;
     }
 
@@ -36,7 +36,7 @@ export abstract class Heap<T> {
     }
 
     protected static parent(index: number): number {
-        return Math.floor((index - 1) / 2);
+        return Math.floor((index - 1) / 2);
     }
 
     protected static leftChild(index: number): number {

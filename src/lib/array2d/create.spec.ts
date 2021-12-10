@@ -1,4 +1,4 @@
-import create from "@lib/array2d/create";
+import create from '@lib/array2d/create';
 
 describe('Array2D: create', () => {
     it('should create in correct dimensions', () => {

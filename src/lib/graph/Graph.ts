@@ -4,12 +4,19 @@ export interface GraphNode {
 
 export class Graph<V extends GraphNode> {
     private nodes: Map<string, V> = new Map<string, V>();
-    private connections: Map<string, Set<string>> = new Map();
-    
-    public getPath(from: string, to: string): V[] {
-        let path = [];
 
-        return path;
+    private connections: Map<string, Set<string>> = new Map();
+
+    public addNode(id: string, node: V): void {
+        this.nodes.set(id, node);
+    }
+
+    public addConnection(from: string, to: string): void {
+        if (!this.connections.has(from)) {
+            this.connections.set(from, new Set<string>());
+        }
+
+        this.connections.get(from).add(to);
     }
 
     public getNode(id: string): V {

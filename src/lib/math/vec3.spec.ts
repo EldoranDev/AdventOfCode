@@ -9,7 +9,7 @@ describe('Vec2', () => {
         expect(v.z).toBe(0);
     });
 
-    it ('should add component wise', () => {
+    it('should add component wise', () => {
         const a = new Vec3(1, 2, 3);
         const b = new Vec3(3, 4, 5);
 
@@ -20,7 +20,7 @@ describe('Vec2', () => {
         expect(res.z).toBe(8);
     });
 
-    it ('should subtract component wise', () => {
+    it('should subtract component wise', () => {
         const a = new Vec3(1, 2, 3);
         const b = new Vec3(3, 5, 7);
 

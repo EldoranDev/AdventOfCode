@@ -10,7 +10,7 @@ export default function rotateClockwise<T>(mat: T[][]): T[][] {
                 nd[c] = [];
             }
 
-            nd[c][M-1-r] = mat[r][c];
+            nd[c][M - 1 - r] = mat[r][c];
         }
     }
 
