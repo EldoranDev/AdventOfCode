@@ -20,7 +20,8 @@
     "url": "https://github.com/EldoranDev/AdventOfCode/issues"
   },
   "lint-staged": {
-    "src/app/*.ts": "npm run lint:app"
+    "src/app/*.ts": "npm run lint:app",
+    "src/lib/*.ts": "npm run lint:lib"
   },
   "homepage": "https://github.com/EldoranDev/AdventOfCode#readme",
   "devDependencies": {
