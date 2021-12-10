@@ -3,7 +3,6 @@ import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
     const CHUNK_START = ['[', '{', '<', '('];
-    const CHUNK_END = [']', '}', '>', ')'];
 
     const PAIR = {
         '[': ']',
