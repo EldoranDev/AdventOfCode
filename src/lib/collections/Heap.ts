@@ -25,6 +25,8 @@ export abstract class Heap<T> {
         return root.value;
     }
 
+    public abstract push(element: T, prio: number): void;
+
     protected abstract rebalance(index: number): void;
 
     protected swap(indexA: number, indexB: number): void {
