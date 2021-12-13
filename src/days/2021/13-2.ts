@@ -31,20 +31,14 @@ export default function (input: string[], { logger }: Context) {
             );
         }
     });
-    
-    const [X, Y] = [...coords.values()].reduce<[number, number]>(
-        (val, current) => [ Math.max(val[0], current.x), Math.max(val[1], current.y)], [0, 0]
-    );
 
-    let output = '\n';
+    console.clear();
 
-    for (let y = 0; y < Y+1; y++) {
-        for (let x = 0; x < X+1; x++) {
-            output += coords.has(new Vec2(x, y)) ? '#' : '.';
-        }
+    [...coords.values()].forEach((v) => {
+        process.stdout.cursorTo(v.x, v.y + 1);
+        process.stdout.write('█');    
+    }); 
 
-        output += '\n';
-    }
+    process.stdout.cursorTo(0, process.stdout.rows);
 
-    logger.info(output);
 };
