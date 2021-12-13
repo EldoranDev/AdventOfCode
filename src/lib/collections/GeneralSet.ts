@@ -1,5 +1,8 @@
 export class GeneralSet<T> {
     private map: Map<string, T> = new Map();
+    constructor(inital: T[] = []) {
+        inital.forEach((v) => this.add(v));
+    }
 
     public add(element: T) {
         this.map.set(element.toString(), element);

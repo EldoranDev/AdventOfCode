@@ -1,71 +1,36 @@
 import { getLineGroups, mapToNumber } from '@lib/input';
 import { Context } from '@app/types';
 import { Vec2 } from '@lib/math';
-import { create } from '@lib/array2d';
 import { GeneralSet } from '@lib/collections';
-
-const Y_FOLD = /fold along y=([0-9]*)/;
-const X_FOLD = /fold along x=([0-9]*)/;
 
 export default function (input: string[], { logger }: Context) {
     let coords = new GeneralSet<Vec2>();
 
     const groups = getLineGroups(input);
-    let maxX = 0;
-    let maxY = 0;
 
-    for (let line of groups[0]) {
-        let [ x, y ] = mapToNumber( line.split(','));
-        
-        if (x > maxX) {
-            maxX = x;
-        }
-
-        if (y > maxY) {
-            maxY = y;
-        }
-
+    groups[0].forEach((line) => {
+        const [x, y] = mapToNumber(line.split(','))
         coords.add(new Vec2(x, y));
-    }
+    }, new GeneralSet<Vec2>());
 
-    for (let i = 0; i < 1; i++) {
-
-        let fold = Y_FOLD.exec(groups[1][i]);
-        if (fold !== null) {
-            coords = foldY(coords, Number(fold[1]));
+    groups[1].slice(0, 1).forEach((instr) => {
+        const [_, axis, index ] = /fold along ([xy])=([0-9]*)/.exec(instr);
+        if (axis === 'x') {
+            coords = new GeneralSet<Vec2>(
+                [...coords.values()].map((v => new Vec2(
+                    v.x < Number(index) ? v.x : 2 * Number(index) - v.x,
+                    v.y
+                )))
+            );
         } else {
-            fold = X_FOLD.exec(groups[1][i])
-            coords = foldX(coords, Number(fold[1]))
+            coords = new GeneralSet<Vec2>(
+                [...coords.values()].map((v => new Vec2(
+                    v.x,
+                    v.y < Number(index) ? v.y : 2 * Number(index) - v.y
+                )))
+            );
         }
-    }
-
+    });
+    
     return coords.size;
 };
-
-function foldX(set: GeneralSet<Vec2>, fold: number): GeneralSet<Vec2> {
-    let newSet = new GeneralSet<Vec2>();
-
-    set.forEach((v) => {
-        if (v.x < fold) {
-            newSet.add(v);
-        } else {
-            newSet.add(new Vec2(2 * fold - v.x, v.y));
-        }
-    });
-
-    return newSet;
-}
-
-function foldY(set: GeneralSet<Vec2>, fold: number): GeneralSet<Vec2> {
-    let newSet = new GeneralSet<Vec2>();
-
-    set.forEach((v) => {
-        if (v.y < fold) {
-            newSet.add(v);
-        } else {
-            newSet.add(new Vec2(v.x, 2 * fold - v.y));
-        }
-    });
-
-    return newSet;
-}
