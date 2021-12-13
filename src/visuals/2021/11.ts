@@ -103,7 +103,7 @@ export default async function (input: string[], { logger }: Context) {
             }
 
             const stream = canvas.createPNGStream()
-            const out = createWriteStream(__dirname + `/11/${frame}.png`);
+            const out = createWriteStream(__dirname + `/11/${frame.toString().padStart(3, '0')}.png`);
             stream.pipe(out);
             
             await new Promise(resolve => out.on("finish", resolve));
