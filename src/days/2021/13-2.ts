@@ -6,15 +6,15 @@ import { GeneralSet } from '@lib/collections';
 export default function (input: string[], { logger }: Context) {
     let coords = new GeneralSet<Vec2>();
 
-    const groups = getLineGroups(input);
+    const [ COORDINATES, FOLDS ] = getLineGroups(input);
 
-    groups[0].forEach((line) => {
+    COORDINATES.forEach((line) => {
         const [x, y] = mapToNumber(line.split(','))
         coords.add(new Vec2(x, y));
     }, new GeneralSet<Vec2>());
 
-    groups[1].forEach((instr) => {
-        const [_, axis, index ] = /fold along ([xy])=([0-9]*)/.exec(instr);
+    FOLDS.forEach((fold) => {
+        const [_, axis, index ] = /fold along ([xy])=([0-9]*)/.exec(fold);
         if (axis === 'x') {
             coords = new GeneralSet<Vec2>(
                 [...coords.values()].map((v => new Vec2(
@@ -40,5 +40,4 @@ export default function (input: string[], { logger }: Context) {
     }); 
 
     process.stdout.cursorTo(0, process.stdout.rows);
-
 };
