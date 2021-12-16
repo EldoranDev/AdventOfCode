@@ -19,8 +19,10 @@ export abstract class Heap<T> {
     public shift(): T {
         const root = this.heap.shift();
 
-        this.heap.unshift(this.heap.pop());
-        this.rebalance(0);
+        if (this.heap.length > 1) {
+            this.heap.unshift(this.heap.pop());
+            this.rebalance(0);
+        }
 
         return root.value;
     }

@@ -1,5 +1,4 @@
 import yargs from 'yargs';
-import fetch from 'node-fetch';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import * as clipboard  from 'clipboardy';
@@ -165,7 +164,7 @@ yargs(process.argv.slice(2))
                 answerProvider(args.year, args.day as number, args.part as number, result.toString());
             }
         } catch (e) {
-            logger.error(e);
+            console.error(e);
         }
     })
     .command('vis [day]', 'Run visualization of day', (y) => {
