@@ -188,7 +188,7 @@ yargs(process.argv.slice(2))
         } catch (e) {
             switch (e.code) {
                 case 'MODULE_NOT_FOUND':
-                    logger.error('Day has no implementation yet');
+                    logger.error('Day has no visuals yet');
                     break;
                 default:
                     console.error(e);
@@ -231,7 +231,7 @@ yargs(process.argv.slice(2))
         }
 
         try {
-            const result = module(lines, {
+            module(lines, {
                 logger: implLogger
             });
         } catch (e) {
