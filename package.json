@@ -51,6 +51,7 @@
   "dependencies": {
     "canvas": "^2.8.0",
     "clipboardy": "^2.3.0",
+    "deepcopy": "^2.1.0",
     "gifencoder": "^2.0.1",
     "node-fetch": "^2.6.6",
     "png-file-stream": "^1.2.1",

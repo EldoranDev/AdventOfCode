@@ -4,6 +4,7 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "downlevelIteration": true,
+        "esModuleInterop": true,
         "baseUrl": ".",
         "paths": {
             "@app/*": ["./src/app/*"],
