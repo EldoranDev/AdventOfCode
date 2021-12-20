@@ -33,7 +33,7 @@ export default function (input: string[], { logger }: Context) {
 
         reduce(N);
 
-        printAddition(A,B,N);
+        // printAddition(A,B,N);
 
         numbers.unshift(N);
     }
@@ -45,7 +45,7 @@ export default function (input: string[], { logger }: Context) {
 
 function reduce(number: TreeNode) {
     while(true) {
-        // print(number);
+        print(number);
 
         // Check Explodes
         let explodeNode = findExplode(number);
@@ -147,7 +147,7 @@ function findExplode(number: TreeNode, cd: number = 0): TreeNode {
 }
 
 function findSplit(number: TreeNode): TreeNode {
-    if (number.left >= 10 || number.right >= 10) {
+    if (number.left >= 10) {
         return number;
     }
 
@@ -161,6 +161,10 @@ function findSplit(number: TreeNode): TreeNode {
         }
     }
 
+    if (number.right >= 10) {
+        return number;
+    }
+    
     if (typeof(number.right) !== 'number') {
         node = findSplit(number.right as TreeNode);
 
@@ -169,7 +173,7 @@ function findSplit(number: TreeNode): TreeNode {
         }
     }
 
-    return node;
+    return null;
 }
 
 function findLeft(number: TreeNode): TreeNode {
