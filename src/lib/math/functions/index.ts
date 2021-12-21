@@ -1,5 +1,3 @@
-import chineseRemainder from './chineseRemainder';
+export { chineseRemainder } from './chineseRemainder';
+export { sum } from './sum';
 
-export {
-    chineseRemainder,
-};

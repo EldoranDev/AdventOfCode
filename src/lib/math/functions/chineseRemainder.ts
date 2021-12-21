@@ -1,4 +1,4 @@
-export default function chineseRemainder(a: number[], n: number[]): number {
+export function chineseRemainder(a: number[], n: number[]): number {
     const A = a.reduce((c, v) => c * v, 1);
 
     const Ai = [];

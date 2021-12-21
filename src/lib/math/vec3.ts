@@ -7,6 +7,11 @@ export default class Vec3 implements IVec {
         public z: number = 0,
     ) {}
 
+
+    public get magnitude() {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z + this.z);
+    }
+
     public add(b: Vec3) {
         this.x += b.x;
         this.y += b.y;
