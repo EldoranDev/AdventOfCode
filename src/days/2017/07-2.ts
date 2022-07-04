@@ -1,11 +1,52 @@
+import { elementsEqual } from '@lib/array';
 import { } from '@lib/input';
 
-type Disk = {
+type DiskType = {
     id: string,
     top: Disk[],
     bottom: Disk,
     weight: number,
 };
+
+class Disk {
+    private ow: number|null = null;
+
+    constructor(
+        public readonly id: string,
+        public top: Disk[],
+        public bottom: Disk,
+        public weight: number,
+    ) {
+
+    }
+
+    get overallWeight(): number {
+        if (this.ow != null) {
+            return this.ow;
+        }
+
+        this.ow = this.weight
+
+        for (let i = 0; i < this.top.length; i++) {
+            this.ow += this.top[i].overallWeight;
+        }
+
+        return this.ow
+    }
+
+    get isBalanced(): boolean {
+        let balanced = true;
+        let weights: number[] = [];
+
+
+        for (const t of this.top) {
+            balanced &&= t.isBalanced
+            weights.push(t.overallWeight);
+        }
+
+        return balanced
+    }
+}
 
 export default function (input: string[]) {
     let map = new Map<string, Disk>();
@@ -16,7 +57,7 @@ export default function (input: string[]) {
         const current = parts[0].split(' ')[0].trim();
 
         if (!map.has(current)) {
-            map.set(current, { id: current, bottom: null, top: [], weight: 0 })
+            map.set(current, new Disk(current, [], null, 0) )
         }
 
         const disk = map.get(current);
@@ -33,7 +74,7 @@ export default function (input: string[]) {
 
         for (let t of top) {
             if (!map.has(t)) {
-                map.set(t, { id: t, bottom: null, top: [], weight: 0});
+                map.set(t, new Disk(t, [], null, 0));
             }
 
             const d = map.get(t);
@@ -44,9 +85,40 @@ export default function (input: string[]) {
     }
 
     const bottom = [...map.values()].find((d) => d.bottom === null);
+    let unbalanced: Disk = null;
 
-    console.log(bottom);
+    try {
+        checkBalanced(bottom);
+    } catch (disk) {
+        unbalanced = disk;
+    }
 
-    return bottom.id;
+    let wrong: Disk = null;
+    let right: Disk = null;
+
+    for (const d of unbalanced.top) {
+        if (wrong === null) {
+            wrong = d;
+        } else if (wrong.overallWeight === d.overallWeight) {
+            right = wrong;
+            wrong = null;
+        }
+    }
+    
+    const diff = right.overallWeight - wrong.overallWeight;
+
+    return wrong.weight + diff;
 };
 
+function checkBalanced(disk: Disk): void {
+
+    for (const d of disk.top) {
+        checkBalanced(d);
+    }
+
+    let weights = disk.top.map(d => d.overallWeight);
+
+    if (!elementsEqual (weights)) {
+        throw disk;
+    }
+}
