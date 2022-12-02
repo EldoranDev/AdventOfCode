@@ -1,4 +1,6 @@
-import { equals } from '@lib/array';
+import { describe, it, expect } from 'vitest';
+
+import { equals } from '.';
 
 describe('Array: Equals', () => {
     it('should fail for arrays of different size', () => {

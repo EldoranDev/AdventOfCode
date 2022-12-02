@@ -1,4 +1,5 @@
-import Vec2 from '@lib/math/vec2';
+import { describe, it, expect } from 'vitest';
+import Vec2 from './vec2';
 
 describe('Vec2', () => {
     it('should init as Zero', () => {
