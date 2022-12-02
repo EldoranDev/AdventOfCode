@@ -3,7 +3,6 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: [
       '@typescript-eslint',
-      'jest',
     ],
     extends: [
       'airbnb/base',
@@ -19,5 +18,9 @@ module.exports = {
       'no-plusplus': 0,
       'no-continue': 0,
       'max-classes-per-file': 0,
+      '@typescript-eslint/no-unused-vars': [
+        "warn", { vars: "all", args: 'none' }
+      ],
+      'func-names': 0,
     }
   };

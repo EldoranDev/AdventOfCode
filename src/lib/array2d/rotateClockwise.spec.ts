@@ -1,4 +1,6 @@
-import { rotateClockwise } from '@lib/array2d';
+import { describe, it, expect } from 'vitest';
+
+import { rotateClockwise } from '.';
 
 describe('Array2D: rotateClockwise', () => {
     it('should rotate correctly', () => {

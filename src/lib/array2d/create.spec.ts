@@ -1,4 +1,6 @@
-import create from '@lib/array2d/create';
+import { describe, it, expect } from 'vitest';
+
+import create from './create';
 
 describe('Array2D: create', () => {
     it('should create in correct dimensions', () => {

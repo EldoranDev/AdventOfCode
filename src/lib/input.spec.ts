@@ -1,4 +1,6 @@
-import * as input from '@lib/input';
+import { describe, it, expect } from 'vitest';
+
+import * as input from './input';
 
 describe('Input', () => {
     it('can map numbers successfull', () => {

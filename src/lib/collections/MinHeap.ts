@@ -3,7 +3,7 @@ import { Heap, Node } from './Heap';
 export class MinHeap<T> extends Heap<T> {
     public push(value: T, prio: number) {
         this.heap.push(new Node(value, prio));
-        
+
         let index = this.heap.length - 1;
 
         while (index !== 0 && this.heap[index].prio < this.heap[Heap.parent(index)].prio) {
