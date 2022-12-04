@@ -12,33 +12,26 @@ const A = 65;
 const a = 96;
 
 export default function (input: string[], { logger }: Context) {
-    const backpacks: Array<Rucksack> = input.map((line) => {
-        return {
-            A: line.substring(0, line.length/2).split(''),
-            B: line.substring(line.length/2).split(''),
-        };
-    });
+    const backpacks: Array<Rucksack> = input.map((line) => ({
+        A: line.substring(0, line.length / 2).split(''),
+        B: line.substring(line.length / 2).split(''),
+    }));
 
-    const inters = backpacks.map((b) => {
-        return [...new Set(intersection(b.A, b.B))]
-    });
-
+    const inters = backpacks.map((b) => [...new Set(intersection(b.A, b.B))]);
 
     return inters.reduce((prev, el) => {
         const values = el.map((item) => {
             let charCode = item.charCodeAt(0);
 
             if (charCode > a) {
-                charCode = charCode - a;
+                charCode -= a;
             } else {
                 charCode = charCode - A + 27;
             }
 
-            return charCode
-        })
+            return charCode;
+        });
 
-        return prev + sum(...values)
+        return prev + sum(...values);
     }, 0);
-
-};
-
+}

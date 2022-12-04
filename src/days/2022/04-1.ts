@@ -18,20 +18,20 @@ export default function (input: string[], { logger }: Context) {
         return {
             A: getRange(A),
             B: getRange(B),
-        }
+        };
     });
 
     let included = 0;
 
     for (const pair of pairs) {
-        if (pair.A.from <= pair.B.from && pair.A.to >= pair.B.to
-            || pair.B.from <= pair.A.from && pair.B.to >= pair.A.to) {
-                included++
+        if ((pair.A.from <= pair.B.from && pair.A.to >= pair.B.to)
+            || (pair.B.from <= pair.A.from && pair.B.to >= pair.A.to)) {
+            included++;
         }
     }
 
     return included;
-};
+}
 
 function getRange(text: string): Range {
     const [from, to] = text.split('-');
@@ -39,5 +39,5 @@ function getRange(text: string): Range {
     return {
         from: Number(from),
         to: Number(to),
-    }
+    };
 }

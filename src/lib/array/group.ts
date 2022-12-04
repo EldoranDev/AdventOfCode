@@ -12,17 +12,17 @@ export default function group<T>(array: T[], groupSize: number): T[][] {
     }
 
     const groups: T[][] = [];
-    let group = 0;
+    let grp = 0;
 
     for (const el of array) {
-        if (groups[group] === undefined) {
-            groups[group] = [];
+        if (groups[grp] === undefined) {
+            groups[grp] = [];
         }
 
-        groups[group].push(el);
+        groups[grp].push(el);
 
-        if (groups[group].length === groupSize) {
-            group++;
+        if (groups[grp].length === groupSize) {
+            grp++;
         }
     }
 

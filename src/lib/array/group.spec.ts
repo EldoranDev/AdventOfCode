@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { group } from '.';
 
 describe('Array: Group', () => {
@@ -17,7 +18,7 @@ describe('Array: Group', () => {
         }).toThrow();
     });
 
-    it ('groups the array sucessful', () => {
+    it('groups the array sucessful', () => {
         const A = ['a', 'b', 'c', 'd', 'e', 'f'];
         const groups = group(A, 2);
 

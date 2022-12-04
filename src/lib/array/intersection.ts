@@ -18,8 +18,8 @@ export default function intersection<T>(...arrays: T[][]): T[] {
     for (const el of arrays[0]) {
         let included = true;
 
-        for(let i = 1; i < arrays.length; i++) {
-            if(!arrays[i].includes(el)) {
+        for (let i = 1; i < arrays.length; i++) {
+            if (!arrays[i].includes(el)) {
                 included = false;
                 break;
             }

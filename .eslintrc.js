@@ -18,6 +18,7 @@ module.exports = {
       'no-plusplus': 0,
       'no-continue': 0,
       'max-classes-per-file': 0,
+      "@typescript-eslint/no-use-before-define": 0,
       '@typescript-eslint/no-unused-vars': [
         "warn", { vars: "all", args: 'none' }
       ],
