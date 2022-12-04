@@ -2,12 +2,6 @@ import { } from '@lib/input';
 import { Context } from '@app/types';
 import { intersection, group } from '@lib/array';
 
-interface Rucksack {
-    A: string[]
-    B: string[]
-    ALL: string[]
-}
-
 const A = 65;
 const a = 96;
 
