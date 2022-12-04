@@ -14,7 +14,7 @@ export default function (input: string[], { logger }: Context) {
         const [ x1, x2, y1, y2, z1, z2] = mapToNumber([ x1s, x2s, y1s, y2s, z1s, z2s ]);
 
         let sign: Sign = state === 'on' ? 1 : -1;
-        
+
         // Can't update our cube list while working on it
         const update: Array<[Cube, Sign]> = [];
 

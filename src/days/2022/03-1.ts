@@ -1,6 +1,7 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
 import { sum } from '@lib/math/functions';
+import { intersection } from '@lib/array';
 
 interface Rucksack {
     A: string[]
@@ -41,18 +42,3 @@ export default function (input: string[], { logger }: Context) {
 
 };
 
-function intersection(a: string[], b: string[]): string[] {
-    const union: string[] = [];
-
-    if (a.length === 0 || b.length === 0) {
-        return union;
-    }
-
-    for (const el of a) {
-        if (b.includes(el)) {
-            union.push(el)
-        }
-    }
-
-    return union;
-}
