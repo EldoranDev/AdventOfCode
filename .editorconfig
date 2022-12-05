@@ -8,6 +8,11 @@ end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+[*.{in,in-test}]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+
 [.session]
 insert_final_newline = false
 
