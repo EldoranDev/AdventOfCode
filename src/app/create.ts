@@ -9,7 +9,7 @@ import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
 
-};`;
+}`;
 
 export async function create(args) {
     const dayPadded = (args.day.toString()).padStart(2, '0');

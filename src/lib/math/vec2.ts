@@ -7,6 +7,18 @@ export default class Vec2 implements IVec {
         public y: number = 0,
     ) {}
 
+    get length(): number {
+        return Math.sqrt(this.lengthSquared);
+    }
+
+    get lengthSquared(): number {
+        return this.x ** 2 + this.y ** 2;
+    }
+
+    public setLength(length: number): void {
+        this.mult(length / this.length);
+    }
+
     public add(b: Vec2) {
         this.x += b.x;
         this.y += b.y;
