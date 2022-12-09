@@ -12,6 +12,7 @@ module.exports = {
       project: './tsconfig.json'
     },
     rules: {
+      'no-bitwise': 0,
       '@typescript-eslint/indent': ["error", 4],
       'import/prefer-default-export': 0,
       'no-restricted-syntax': 0,
