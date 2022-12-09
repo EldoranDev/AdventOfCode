@@ -1,6 +1,5 @@
 import IVec from './IVec';
 
-type Axis = 'x' | 'y';
 export default class Vec2 implements IVec {
     constructor(
         public x: number = 0,

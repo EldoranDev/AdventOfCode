@@ -19,6 +19,27 @@ describe('Vec2', () => {
         expect(res.y).toBe(6);
     });
 
+    it('should scale vector correclty', () => {
+        const a = new Vec2(2, 0);
+
+        a.setLength(1);
+
+        expect(a.length).toBe(1);
+        expect(a.x).toBe(1);
+    });
+
+    it('should give the correct length', () => {
+        const a = new Vec2(4, 3);
+
+        expect(a.length).toBe(5);
+    });
+
+    it('should give the correct squared length', () => {
+        const a = new Vec2(2, 3);
+
+        expect(a.lengthSquared).toBe(13);
+    });
+
     it('should subtract component wise', () => {
         const a = new Vec2(1, 2);
         const b = new Vec2(3, 5);
