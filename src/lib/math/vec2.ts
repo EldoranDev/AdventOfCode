@@ -96,4 +96,8 @@ export default class Vec2 implements IVec {
     public static DOWN = new Vec2(0, -1);
 
     public static ZERO = new Vec2();
+
+    public static ULRD = [
+        this.UP, this.LEFT, this.RIGHT, this.DOWN,
+    ];
 }

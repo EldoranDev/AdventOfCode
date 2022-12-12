@@ -48,12 +48,12 @@ export class AStar<K extends GraphNode> implements RouteFinder<K> {
 
                 do {
                     route.push(current.current);
-                    current = allNodes.get(current.previous.id);
+                    current = allNodes.get(current.previous?.id);
                 } while (current != null);
 
                 return route;
             }
-            [...this.graph.getConnections(next.current).values()].forEach((c) => {
+            [...this.graph.getConnections(next.current)?.values() ?? []].forEach((c) => {
                 let node = allNodes.get(c);
 
                 if (!node) {
