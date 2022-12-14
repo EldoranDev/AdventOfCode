@@ -14,8 +14,10 @@ export default class Vec2 implements IVec {
         return this.x ** 2 + this.y ** 2;
     }
 
-    public setLength(length: number): void {
+    public setLength(length: number): Vec2 {
         this.mult(length / this.length);
+
+        return this;
     }
 
     public add(b: Vec2) {
