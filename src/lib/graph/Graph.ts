@@ -7,6 +7,10 @@ export class Graph<V extends GraphNode> {
 
     private connections: Map<string, Set<string>> = new Map();
 
+    public get size(): number {
+        return this.nodes.size;
+    }
+
     public addNode(id: string, node: V): void {
         this.nodes.set(id, node);
     }
@@ -25,5 +29,9 @@ export class Graph<V extends GraphNode> {
 
     public getConnections(node: V): Set<string> {
         return this.connections.get(node.id);
+    }
+
+    public getNodes(): IterableIterator<V> {
+        return this.nodes.values();
     }
 }

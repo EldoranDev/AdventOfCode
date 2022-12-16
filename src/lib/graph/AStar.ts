@@ -51,6 +51,9 @@ export class AStar<K extends GraphNode> implements RouteFinder<K> {
                     current = allNodes.get(current.previous?.id);
                 } while (current != null);
 
+                route.shift();
+                route.pop();
+
                 return route;
             }
             [...this.graph.getConnections(next.current)?.values() ?? []].forEach((c) => {
