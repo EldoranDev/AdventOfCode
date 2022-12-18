@@ -44,7 +44,7 @@ const ROCKS: Array<Rock> = [
     {
         height: 3,
         width: 3,
-        shape: [new Vec2(2, 0), new Vec2(2, 1), new Vec2(0, 2), new Vec2(1, 2), new Vec2(2,2 )],
+        shape: [new Vec2(2, 0), new Vec2(2, 1), new Vec2(0, 2), new Vec2(1, 2), new Vec2(2, 2)],
     },
 
     // #
@@ -137,9 +137,6 @@ export default function (input: string[], { logger }: Context) {
     const pattern = getPattern(stack.join(''), PATTERN_START, 20).split('').map((p) => Number(p));
     const patternHeight = sum(...pattern);
 
-    console.log(pattern.length);
-    console.log(patternHeight);
-
     const patterns = Math.floor((LIMIT - PATTERN_START) / pattern.length);
 
     height += (patternHeight * patterns);
@@ -147,9 +144,6 @@ export default function (input: string[], { logger }: Context) {
     for (let j = 0; j <= (LIMIT - PATTERN_START) % pattern.length; j++) {
         height += pattern[j];
     }
-
-    // My Output:   1514285714288
-    // Test Height: 1514285714288
 
     return height;
 }

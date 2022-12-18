@@ -41,7 +41,7 @@ const ROCKS: Array<Rock> = [
     {
         height: 3,
         width: 3,
-        shape: [new Vec2(2, 0), new Vec2(2, 1), new Vec2(0, 2), new Vec2(1, 2), new Vec2(2,2 )],
+        shape: [new Vec2(2, 0), new Vec2(2, 1), new Vec2(0, 2), new Vec2(1, 2), new Vec2(2, 2)],
     },
 
     // #
