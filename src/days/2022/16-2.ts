@@ -24,7 +24,6 @@ const D = new Map<string, Map<string, number>>();
 
 const MINUTES = 26;
 
-
 const PATHS: Array<Path> = [];
 
 export default function (input: string[], { logger }: Context) {
@@ -63,8 +62,12 @@ export default function (input: string[], { logger }: Context) {
     let highest = 0;
 
     for (let i = 0; i < PATHS.length; i++) {
-        for (let j = 0; j < PATHS.length; j++) {
+        for (let j = i; j < PATHS.length; j++) {
             if (PATHS[i].nodes.length + PATHS[i].nodes.length > G.size) {
+                continue;
+            }
+
+            if (PATHS[i].score + PATHS[j].score <= highest) {
                 continue;
             }
 
@@ -72,10 +75,8 @@ export default function (input: string[], { logger }: Context) {
                 continue;
             }
 
-            if (PATHS[i].score + PATHS[j].score > highest) {
-                highest = PATHS[i].score + PATHS[j].score;
-                logger.info(`Highest: ${highest}`);
-            }
+            highest = PATHS[i].score + PATHS[j].score;
+            logger.info(`Highest: ${highest}`);
         }
     }
 
