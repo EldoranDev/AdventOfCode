@@ -10,7 +10,6 @@ export function memoize<K extends Function>(fn: K): K {
         const cache = CACHE.get(FN_CACHE_KEY);
 
         if (cache.has(CACHE_KEY)) {
-            console.log('CACHE_KEY');
             return cache.get(CACHE_KEY);
         }
 
