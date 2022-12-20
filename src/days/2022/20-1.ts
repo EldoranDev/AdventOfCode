@@ -4,6 +4,8 @@ import { sum } from '@lib/math/functions';
 
 type NumberRef = { number: number };
 
+const RESULT_NUMS = [1000, 2000, 3000];
+
 export default function (input: string[], { logger }: Context) {
     const elements: Array<NumberRef> = input.map((line) => ({
         number: +line,
@@ -20,11 +22,5 @@ export default function (input: string[], { logger }: Context) {
 
     const pos = mixer.findIndex((n) => n.number === 0);
 
-    const result = [
-        mixer[(pos + 1000) % mixer.length],
-        mixer[(pos + 2000) % mixer.length],
-        mixer[(pos + 3000) % mixer.length],
-    ].map((n) => n.number);
-
-    return sum(...result);
+    return sum(...RESULT_NUMS.map((n) => mixer[(pos + n) % mixer.length].number));
 }
