@@ -152,6 +152,7 @@ yargs(process.argv.slice(2))
             try {
                 const result = module(lines, {
                     logger: implLogger,
+                    test: args.test,
                 });
                 performance.mark('exec-end');
 
