@@ -23,7 +23,7 @@ export class Graph<V extends GraphNode> {
         this.connections.get(from).add(to);
     }
 
-    public getNode(id: string): V {
+    public getNode(id: string): V | undefined {
         return this.nodes.get(id);
     }
 
