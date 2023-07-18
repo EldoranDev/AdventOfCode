@@ -14,24 +14,24 @@ function getSum(objects: Object|any[], sum: number = 0): number {
         objects = Object.values(objects);
         object = true;
     }
-    
+
     let add = 0;
 
     for (let element of objects as any[]) {
         if (Number.isInteger(element)) {
             add += element;
         }
-                
+
         if (typeof element === 'string') {
             if (element === 'red' && object) {
                 ignore = true;
             }
             continue;
         }
-    
+
         add += getSum(element);
     }
-            
+
     if (ignore) {
         return sum;
     }
