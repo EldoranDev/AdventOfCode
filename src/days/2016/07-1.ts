@@ -3,4 +3,4 @@ import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
 
-};
+}

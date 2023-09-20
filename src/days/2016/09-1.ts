@@ -5,39 +5,33 @@ const DETECTOR = /\((\d+)x(\d+)\)/;
 
 export default function (input: string[], { logger }: Context) {
     let message = input[0];
-    let output = "";
 
     let match: RegExpMatchArray;
 
     match = message.match(DETECTOR);
 
-    do {
-        let index = message.indexOf(match[0]);
-        let repeat = message.substr(index + match[0].length, Number(match[1]));
+    let length = 0;
 
-        logger.debug(`Need to repeat ${repeat} ${match[2]} times`);
-                
-        let replace = "";
+    while (match !== null) {
+        // Count the characters before the marker
+        length += getLength(message.slice(0, Math.max(0, match.index)));
 
-        for (let i = 0; i < Number(match[2]); i++) {
-            replace += repeat;
-        }
+        // Extract the marked text
+        // eslint-disable-next-line max-len
+        const markedText = message.slice(match.index + match[0].length, match.index + match[0].length + parseInt(match[1], 10));
 
-        let add = message.slice(0, index);
-        message = message.substr(add.length, message.length - add.length);
+        length += parseInt(match[2], 10) * getLength(markedText);
 
-        output += add + replace;
-        logger.debug(`Left: ${message}`);
-        logger.debug(`Adding ${add}`);
-        
+        message = message.substring(match.index + match[0].length + parseInt(match[1], 10));
 
-        message = message.replace(message.substr(0, match[0].length + repeat.length), "");
-        
         match = message.match(DETECTOR);
-    } while (match !== null);
-    output += message;
+    }
 
-    logger.debug(output);
+    length += getLength(message);
 
-    return output.length;
-};
+    return length;
+}
+
+function getLength(content: string): number {
+    return content.length;
+}
