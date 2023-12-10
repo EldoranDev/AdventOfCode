@@ -34,6 +34,10 @@ export default class Vec2 implements IVec {
         return this;
     }
 
+    public dot(b: Vec2): number {
+        return this.x * b.x + this.y * b.y;
+    }
+
     public mult(a: number) {
         this.x *= a;
         this.y *= a;
@@ -77,12 +81,20 @@ export default class Vec2 implements IVec {
         return a.clone().add(b);
     }
 
+    public static dot(a: Vec2, b: Vec2) {
+        return a.dot(b);
+    }
+
     public static sub(a: Vec2, b: Vec2) {
         return a.clone().sub(b);
     }
 
     public static mult(a: Vec2, b: number) {
         return a.clone().mult(b);
+    }
+
+    public static angleBetween(a: Vec2, b: Vec2): number {
+        return Math.acos(a.dot(b) / (a.length * b.length));
     }
 
     public static rotate(a: Vec2, rotation: number, mode: 'rad' | 'deg' = 'deg') {
