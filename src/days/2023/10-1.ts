@@ -5,53 +5,52 @@ import { Vec2 } from '@lib/math';
 
 const NEIGHBORS = Vec2.ULRD;
 
+const MAPPING = {
+    '|': '│', '-': '─', 7: '┐', F: '┌', J: '┘', L: '└', '.': '.', S: 'S',
+};
+
 export default function (input: string[], { logger }: Context) {
     const map: Grid2D<string> = create(input[0].length, input.length);
-    const start: Vec2 = new Vec2(0, 0);
+    const pos: Vec2 = new Vec2(0, 0);
 
     // Build Map
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            map[y][x] = input[y][x];
+            map[y][x] = MAPPING[input[y][x]];
 
             if (input[y][x] === 'S') {
-                start.x = x;
-                start.y = y;
+                pos.x = x;
+                pos.y = y;
             }
         }
     }
-    const [a, b] = [start.clone(), start.clone()];
 
-    const candidates = NEIGHBORS.filter((dir) => canConnect(start, dir, map));
+    const candidates = NEIGHBORS.filter((dir) => canConnect(pos, dir, map));
 
     if (candidates.length !== 2) {
-        throw new Error(`Invalid start position: ${start}`);
+        throw new Error(`Invalid start position: ${pos}`);
     }
 
-    let [dirA, dirB] = candidates;
+    let dir = candidates[0];
 
-    a.add(dirA);
-    b.add(dirB);
+    pos.add(dir);
 
     let count = 1;
     // Move into both directions at the same time
-    while (!a.equals(b)) {
-        dirA = getNext(a, dirA, map);
-        dirB = getNext(b, dirB, map);
-
-        a.add(dirA);
-        b.add(dirB);
+    while (!map[pos.y][pos.x].match('S')) {
+        dir = getNext(pos, dir, map);
+        pos.add(dir);
 
         count++;
     }
 
-    return count;
+    return count / 2;
 }
 
-const W = ['L', '-', 'F'];
-const E = ['-', 'J', '7'];
-const N = ['|', '7', 'F'];
-const S = ['|', 'J', 'L'];
+const W = ['└', '─', '┌'];
+const E = ['─', '┘', '┐'];
+const N = ['│', '┐', '┌'];
+const S = ['│', '┘', '└'];
 
 function canConnect(pos: Vec2, direction: Vec2, map: Grid2D<string>): boolean {
     const next = Vec2.add(pos, direction);
@@ -81,17 +80,17 @@ function getNext(pos: Vec2, dir: Vec2, map: Grid2D<string>): Vec2 {
     const current = map[pos.y][pos.x];
 
     switch (current) {
-        case '-':
+        case '─':
             return (dir.x === 1) ? new Vec2(1, 0) : new Vec2(-1, 0);
-        case '|':
+        case '│':
             return (dir.y === 1) ? new Vec2(0, 1) : new Vec2(0, -1);
-        case 'L':
+        case '└':
             return (dir.y === 1) ? new Vec2(1, 0) : new Vec2(0, -1);
-        case 'J':
+        case '┘':
             return (dir.y === 1) ? new Vec2(-1, 0) : new Vec2(0, -1);
-        case '7':
+        case '┐':
             return (dir.x === 1) ? new Vec2(0, 1) : new Vec2(-1, 0);
-        case 'F':
+        case '┌':
             return (dir.x === -1) ? new Vec2(0, 1) : new Vec2(1, 0);
         default:
             throw new Error(`Invalid pipe: ${current}`);

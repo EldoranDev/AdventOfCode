@@ -111,6 +111,8 @@ export default function (input: string[], { logger }: Context) {
 
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
+            stdout.write('\x1b[90m');
+
             if (nestPositions.has(new Vec2(x, y).toString())) {
                 stdout.write('\x1b[31m');
             }
