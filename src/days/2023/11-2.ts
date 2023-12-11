@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { } from '@lib/input';
 import { Context } from '@app/types';
 import { create, getColumn } from '@lib/array2d';
@@ -63,34 +64,10 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    const combinations = new Set<string>();
+    return galaxies.flatMap((g, i) => galaxies.slice(i + 1).reduce((acc, g2) => {
+        const pos1 = { x: BigInt(g.position.x) + g.drift.x, y: BigInt(g.position.y) + g.drift.y };
+        const pos2 = { x: BigInt(g2.position.x) + g2.drift.x, y: BigInt(g2.position.y) + g2.drift.y };
 
-    return galaxies.reduce((acc, galaxy) => {
-        let sum = BigInt(0);
-
-        for (const g of galaxies) {
-            if (galaxy.id === g.id) {
-                continue;
-            }
-
-            if (combinations.has([galaxy.id, g.id].sort().join(','))) {
-                continue;
-            }
-
-            combinations.add([galaxy.id, g.id].sort().join(','));
-
-            const pos1: BigPos = {
-                x: BigInt(galaxy.position.x) + galaxy.drift.x,
-                y: BigInt(galaxy.position.y) + galaxy.drift.y,
-            };
-            const pos2: BigPos = {
-                x: BigInt(g.position.x) + g.drift.x,
-                y: BigInt(g.position.y) + g.drift.y,
-            };
-
-            sum += abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
-        }
-
-        return acc + sum;
-    }, BigInt(0));
+        return acc + abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
+    }, 0n)).reduce((acc, v) => acc + v, 0n);
 }

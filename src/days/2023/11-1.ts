@@ -1,6 +1,6 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
-import { Grid2D, create, getColumn } from '@lib/array2d';
+import { create, getColumn } from '@lib/array2d';
 import { Vec2 } from '@lib/math';
 
 const EXPANSION = 1;
@@ -53,28 +53,10 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    const combinations = new Set<string>();
+    return galaxies.flatMap((g, i) => galaxies.slice(i + 1).reduce((acc, g2) => {
+        const pos1 = Vec2.add(g.position, g.drift);
+        const pos2 = Vec2.add(g2.position, g2.drift);
 
-    return galaxies.reduce((acc, galaxy) => {
-        let sum = 0;
-
-        for (const g of galaxies) {
-            if (galaxy.id === g.id) {
-                continue;
-            }
-
-            if (combinations.has([galaxy.id, g.id].sort().join(','))) {
-                continue;
-            }
-
-            combinations.add([galaxy.id, g.id].sort().join(','));
-
-            const pos1 = Vec2.add(galaxy.position, galaxy.drift);
-            const pos2 = Vec2.add(g.position, g.drift);
-
-            sum += pos1.manhattan(pos2);
-        }
-
-        return acc + sum;
-    }, 0);
+        return acc + pos1.manhattan(pos2);
+    }, 0)).reduce((acc, v) => acc + v, 0);
 }
