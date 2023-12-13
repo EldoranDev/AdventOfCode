@@ -1,7 +1,6 @@
+/* eslint-disable no-labels */
 import { getLineGroups } from '@lib/input';
 import { Context } from '@app/types';
-import { equals } from '@lib/array';
-import { getColumn } from '@lib/array2d';
 
 interface Reflection {
     x?: number;
@@ -10,54 +9,66 @@ interface Reflection {
     direction: 'horizontal' | 'vertical';
 }
 
+interface Pattern {
+    rows: number[];
+    columns: number[];
+}
+
 export default function (input: string[], { logger }: Context) {
     return getLineGroups(input)
-        .map((pattern) => pattern.map((line) => line.split('')))
+        .map(getPattern)
         .map(findReflection)
         .reduce((acc, reflection) => acc + (reflection.direction === 'horizontal' ? reflection.y * 100 : reflection.x), 0);
 }
 
-function findReflection(pattern: string[][]): Reflection {
-    for (let y = 1; y < pattern.length; y++) {
-        let mirrored = true;
+function getPattern(lines: string[]): Pattern {
+    const pattern: Pattern = {
+        rows: Array.from({ length: lines.length }, () => 0),
+        columns: Array.from({ length: lines[0].length }, () => 0),
+    };
 
-        for (let yy = 0; y - yy - 1 >= 0 && y + yy < pattern.length; yy++) {
-            const top = pattern[y - yy - 1].join('');
-            const bottom = pattern[y + yy].join('');
+    for (let y = 0; y < lines.length; y++) {
+        for (let x = 0; x < lines[y].length; x++) {
+            const value = lines[y][x] === '#' ? 1 : 0;
 
-            if (top !== bottom) {
-                mirrored = false;
-                break;
-            }
-        }
+            pattern.rows[y] <<= 1;
+            pattern.rows[y] |= value;
 
-        if (mirrored) {
-            return {
-                y,
-                direction: 'horizontal',
-            };
+            pattern.columns[x] <<= 1;
+            pattern.columns[x] |= value;
         }
     }
 
-    for (let x = 1; x < pattern[0].length; x++) {
-        let mirrored = true;
+    return pattern;
+}
 
-        for (let xx = 0; x - xx - 1 >= 0 && x + xx < pattern[0].length; xx++) {
-            const left = getColumn(pattern, x - xx - 1).join();
-            const right = getColumn(pattern, x + xx).join();
-
-            if (left !== right) {
-                mirrored = false;
-                break;
+function findReflection(pattern: Pattern): Reflection {
+    outer:
+    for (let i = 1; i < pattern.rows.length; i++) {
+        for (let ii = 0; i - ii - 1 >= 0 && i + ii < pattern.rows.length; ii++) {
+            if (pattern.rows[i - ii - 1] !== pattern.rows[i + ii]) {
+                continue outer;
             }
         }
 
-        if (mirrored) {
-            return {
-                x,
-                direction: 'vertical',
-            };
+        return {
+            y: i,
+            direction: 'horizontal',
+        };
+    }
+
+    outer:
+    for (let i = 1; i < pattern.columns.length; i++) {
+        for (let ii = 0; i - ii - 1 >= 0 && i + ii < pattern.columns.length; ii++) {
+            if (pattern.columns[i - ii - 1] !== pattern.columns[i + ii]) {
+                continue outer;
+            }
         }
+
+        return {
+            x: i,
+            direction: 'vertical',
+        };
     }
 
     throw new Error('No reflection found');
