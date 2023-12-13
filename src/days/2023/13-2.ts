@@ -1,7 +1,6 @@
+/* eslint-disable no-labels */
 import { getLineGroups } from '@lib/input';
 import { Context } from '@app/types';
-import { getColumn } from '@lib/array2d';
-import { hammingDistance } from '@lib/strings';
 
 interface Reflection {
     x?: number;
@@ -10,35 +9,61 @@ interface Reflection {
     direction: 'horizontal' | 'vertical';
 }
 
+interface Pattern {
+    rows: number[];
+    columns: number[];
+}
+
 export default function (input: string[], { logger }: Context) {
     return getLineGroups(input)
-        .map((pattern) => pattern.map((line) => line.split('')))
+        .map(getPattern)
         .map(findReflection)
         .reduce((acc, reflection) => acc + (reflection.direction === 'horizontal' ? reflection.y * 100 : reflection.x), 0);
 }
 
-function findReflection(pattern: string[][]): Reflection {
-    for (let y = 1; y < pattern.length; y++) {
-        let mirrored = true;
+function getPattern(lines: string[]): Pattern {
+    const pattern: Pattern = {
+        rows: Array.from({ length: lines.length }, () => 0),
+        columns: Array.from({ length: lines[0].length }, () => 0),
+    };
+
+    for (let y = 0; y < lines.length; y++) {
+        for (let x = 0; x < lines[y].length; x++) {
+            const value = lines[y][x] === '#' ? 1 : 0;
+
+            pattern.rows[y] <<= 1;
+            pattern.rows[y] |= value;
+
+            pattern.columns[x] <<= 1;
+            pattern.columns[x] |= value;
+        }
+    }
+
+    return pattern;
+}
+
+function findReflection(pattern: Pattern): Reflection {
+    outer:
+    for (let y = 1; y < pattern.rows.length; y++) {
         let nudged = false;
 
-        for (let yy = 0; y - yy - 1 >= 0 && y + yy < pattern.length; yy++) {
-            const top = pattern[y - yy - 1].join('');
-            const bottom = pattern[y + yy].join('');
+        for (let yy = 0; y - yy - 1 >= 0 && y + yy < pattern.rows.length; yy++) {
+            const diff = pattern.rows[y - yy - 1] ^ pattern.rows[y + yy];
 
-            const h = hammingDistance(top, bottom);
+            if (diff === 0) continue;
 
-            if (h > 1 || (h > 0 && nudged)) {
-                mirrored = false;
-                break;
+            if ((diff & (diff - 1)) !== 0) {
+                continue outer;
             }
 
-            if (h > 0) {
-                nudged = true;
+            if (nudged) {
+                continue outer;
             }
+
+            nudged = true;
         }
 
-        if (mirrored && nudged) {
+        if (nudged) {
             return {
                 y,
                 direction: 'horizontal',
@@ -46,27 +71,27 @@ function findReflection(pattern: string[][]): Reflection {
         }
     }
 
-    for (let x = 1; x < pattern[0].length; x++) {
-        let mirrored = true;
+    outer:
+    for (let x = 1; x < pattern.columns.length; x++) {
         let nudged = false;
 
-        for (let xx = 0; x - xx - 1 >= 0 && x + xx < pattern[0].length; xx++) {
-            const left = getColumn(pattern, x - xx - 1).join();
-            const right = getColumn(pattern, x + xx).join();
+        for (let xx = 0; x - xx - 1 >= 0 && x + xx < pattern.columns.length; xx++) {
+            const diff = pattern.columns[x - xx - 1] ^ pattern.columns[x + xx];
 
-            const h = hammingDistance(left, right);
+            if (diff === 0) continue;
 
-            if (h > 1 || (h > 0 && nudged)) {
-                mirrored = false;
-                break;
+            if ((diff & (diff - 1)) !== 0) {
+                continue outer;
             }
 
-            if (h > 0) {
-                nudged = true;
+            if (nudged) {
+                continue outer;
             }
+
+            nudged = true;
         }
 
-        if (mirrored && nudged) {
+        if (nudged) {
             return {
                 x,
                 direction: 'vertical',
