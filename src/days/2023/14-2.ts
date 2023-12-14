@@ -3,9 +3,9 @@ import { } from '@lib/input';
 import { Context } from '@app/types';
 import { Grid2D, create } from '@lib/array2d';
 import { stdout } from 'process';
+import { createHash } from 'crypto';
 
 const CYCLES = 1_000_000_000;
-
 
 export default function (input: string[], { logger }: Context) {
     const grid = create(input[0].length, input.length, '.');
@@ -155,16 +155,15 @@ function tiltEast(grid: Grid2D<string>): void {
 }
 
 function getConfig(grid: Grid2D<string>): string {
-    const config = Array.from({ length: grid.length }, () => 0);
+    const config = Array.from({ length: grid.length }, () => "");
 
     for (let y = 0; y < grid.length; y++) {
-        for (let x = 0; x < grid[y].length; x++) {
-            config[y] <<= 1;
-            config[y] |= grid[y][x] === 'O' ? 1 : 0;
-        }
+        config[y] = grid[y].join('');
     }
 
-    return config.join('-');
+    const md5 = createHash('md5');
+
+    return md5.update(config.join('-')).digest('hex');
 }
 
 function getScore(grid: Grid2D<string>): number {
