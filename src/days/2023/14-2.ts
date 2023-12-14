@@ -4,9 +4,8 @@ import { Context } from '@app/types';
 import { Grid2D, create } from '@lib/array2d';
 import { stdout } from 'process';
 
-// const CYCLES = 1_000_000_000;
+const CYCLES = 1_000_000_000;
 
-const CYCLES = 1_000;
 
 export default function (input: string[], { logger }: Context) {
     const grid = create(input[0].length, input.length, '.');
@@ -20,21 +19,47 @@ export default function (input: string[], { logger }: Context) {
     const configs = new Map<string, number>();
 
     for (let i = 0; i < CYCLES; i++) {
-        tiltNorth(grid);
-        tiltWest(grid);
-        tiltSouth(grid);
-        tiltEast(grid);
+        rotate(grid);
 
         const config = getConfig(grid);
 
         if (configs.has(config)) {
-            return configs.get(config);
+            const cycleLength = getCycleLength(grid);
+
+            const remaining = (CYCLES - i - 1) % cycleLength;
+
+            for (let ii = 0; ii < remaining; ii++) {
+                rotate(grid);
+            }
+
+            return configs.get(getConfig(grid));
         }
 
         configs.set(config, getScore(grid));
     }
 
     return configs.get(getConfig(grid));
+}
+
+function rotate(grid: Grid2D<string>): void {
+    tiltNorth(grid);
+    tiltWest(grid);
+    tiltSouth(grid);
+    tiltEast(grid);
+}
+
+function getCycleLength(grid: Grid2D<string>): number {
+    const start = getConfig(grid);
+
+    let current = start;
+    let count = 0;
+    do {
+        count++;
+        rotate(grid);
+        current = getConfig(grid);
+    } while (current !== start);
+
+    return count;
 }
 
 function tiltNorth(grid: Grid2D<string>): void {
