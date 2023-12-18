@@ -1,8 +1,6 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
-import { Grid2D, create } from '@lib/array2d';
 import { Vec2 } from '@lib/math';
-import { stdout } from 'process';
 
 interface Instruction {
     direction: Vec2;
@@ -11,49 +9,33 @@ interface Instruction {
 }
 
 export default function (input: string[], { logger }: Context) {
-    const map = new Map<string, string>();
-
-    const min = new Vec2(0, 0);
-    const max = new Vec2(0, 0);
     const pos = new Vec2(0, 0);
 
     const instructions = input.map(parse);
 
-    instructions.forEach((instr) => {
-        for (let i = 0; i < instr.length; i++) {
-            if (pos.x > max.x) max.x = pos.x;
-            if (pos.y > max.y) max.y = pos.y;
-            if (pos.y < min.y) min.y = pos.y;
-            if (pos.x < min.x) min.x = pos.x;
+    const points: Vec2[] = [];
 
-            map.set(pos.toString(), instr.color);
-            pos.add(instr.direction);
-        }
+    let perim = 0;
+
+    instructions.forEach((instr) => {
+        points.push(pos.clone());
+        pos.add(Vec2.mult(instr.direction, instr.length));
+        perim += instr.length;
     });
 
-    const queue: Vec2[] = [
-        Vec2.add(
-            Vec2.mult(instructions[0].direction, (instructions[0].length / 2) | 0),
-            Vec2.rotate(instructions[0].direction, 90, 'deg'),
-        ),
-    ];
+    let l = 0;
+    let r = 0;
 
-    while (queue.length > 0) {
-        const p = queue.shift()!;
-
-        // We already visited this point
-        if (map.has(p.toString())) continue;
-
-        map.set(p.toString(), '#');
-
-        for (const n of [Vec2.DOWN, Vec2.UP, Vec2.LEFT, Vec2.RIGHT]) {
-            if (map.has(Vec2.add(p, n).toString())) continue;
-
-            queue.push(Vec2.add(p, n));
-        }
+    for (let i = 0; i < points.length; i++) {
+        l += (points[i].x * points[(i + 1) % points.length].y);
+        r += (points[i].y * points[(i + 1) % points.length].x);
     }
 
-    return map.size;
+    const area = (l - r) >> 1;
+
+    // https://en.wikipedia.org/wiki/Pick%27s_theorem
+    // https://www.101computing.net/the-shoelace-algorithm/
+    return area + (perim >> 1) + 1;
 }
 
 function parse(line: string): Instruction {
