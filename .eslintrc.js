@@ -24,5 +24,6 @@ module.exports = {
         "warn", { vars: "all", args: 'none' }
       ],
       'func-names': 0,
+      'max-len': ['error', { "code": 160 }],
     }
   };
