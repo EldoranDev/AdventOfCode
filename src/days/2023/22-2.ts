@@ -3,6 +3,8 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
 
+// Switching to array instead of Ve3
+// Vec3 doesn't allow us to use JSON.parse(JSON.stringify()) to deep copy
 type Vec = [x: number, y: number, z: number];
 
 interface Brick {
@@ -15,6 +17,8 @@ interface Brick {
     moved?: boolean;
 }
 
+// Index of the axis in the Vec array
+// Using this to make it readable and avoid magic numbers
 const VEC = {
     X: 0,
     Y: 1,
@@ -37,12 +41,9 @@ export default function (input: string[], { logger }: Context) {
 
     const save = getSaveBricks(BRICKS);
 
-    console.log('Save bricks: ', save.size);
-
     let count = 0;
 
     BRICKS.sort((a, b) => a.from[VEC.Z] - b.from[VEC.Z]);
-
     BRICKS.forEach((b) => {
         b.settled = false;
         b.moved = false;
@@ -63,8 +64,6 @@ export default function (input: string[], { logger }: Context) {
 
         const c = nb.filter((b) => b.moved).length;
 
-        console.log(`Checking ${brick.id} (${i + 1}/${BRICKS.length}): ${c}`);
-
         count += c;
     }
 
@@ -73,6 +72,8 @@ export default function (input: string[], { logger }: Context) {
 
 function sim(bricks: Array<Brick>): void {
     let allSettled = false;
+
+    const setteld: Array<Brick> = [];
 
     while (!allSettled) {
         allSettled = true;
@@ -83,6 +84,7 @@ function sim(bricks: Array<Brick>): void {
             // Brick is already on the ground
             if (brick.from[2] <= 1 || brick.to[2] <= 1) {
                 brick.settled = true;
+                setteld.push(brick);
                 continue;
             }
 
@@ -95,7 +97,7 @@ function sim(bricks: Array<Brick>): void {
             next.from[VEC.Z] -= 1;
             next.to[VEC.Z] -= 1;
 
-            const collisions = bricks.filter((c) => {
+            const collisions = setteld.filter((c) => {
                 // we do not coutn self collisions
                 if (c === brick) return false;
 
@@ -115,6 +117,8 @@ function sim(bricks: Array<Brick>): void {
 
             if (supportedBy.length > 0) {
                 brick.settled = true;
+
+                setteld.push(brick);
 
                 if (brick.supportedBy) {
                     brick.supportedBy = supportedBy;

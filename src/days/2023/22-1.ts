@@ -45,6 +45,9 @@ export default function (input: string[], { logger }: Context) {
 
 function sim(bricks: Array<Brick>): void {
     let allSettled = false;
+
+    const setteld: Array<Brick> = [];
+
     while (!allSettled) {
         allSettled = true;
 
@@ -58,10 +61,11 @@ function sim(bricks: Array<Brick>): void {
 
             if (brick.from.z <= 1 || brick.to.z <= 1) {
                 brick.settled = true;
+                setteld.push(brick);
                 continue;
             }
 
-            const collisions = bricks.filter((c) => {
+            const collisions = setteld.filter((c) => {
                 if (c === brick) return false;
 
                 return intersect(c, next);
@@ -79,6 +83,8 @@ function sim(bricks: Array<Brick>): void {
             if (supportedBy.length > 0) {
                 brick.supportedBy = supportedBy;
                 brick.settled = true;
+
+                setteld.push(brick);
 
                 supportedBy.forEach((c) => c.supporting.push(brick));
             }
