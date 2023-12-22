@@ -5,12 +5,12 @@ import { Context } from '@app/types';
 import { Vec3 } from '@lib/math';
 
 interface Brick {
-    id: string;
+    id?: string;
     from: Vec3;
     to: Vec3;
-    settled: boolean;
-    supportedBy: Brick[];
-    supporting: Brick[];
+    settled?: boolean;
+    supportedBy?: Brick[];
+    supporting?: Brick[];
 }
 
 const DOWN = new Vec3(0, 0, -1);
@@ -22,8 +22,29 @@ export default function (input: string[], { logger }: Context) {
         bricks.push(parse(input[i], String.fromCharCode(65 + i)));
     }
 
-    let allSettled = false;
+    bricks.sort((a, b) => a.to.z - b.to.z);
 
+    sim(bricks);
+
+    let count = 0;
+
+    for (const brick of bricks) {
+        if (brick.supporting.length === 0) {
+            count++;
+            continue;
+        }
+
+        if (brick.supporting.every((b) => b.supportedBy.length >= 2)) {
+            count++;
+            continue;
+        }
+    }
+
+    return count;
+}
+
+function sim(bricks: Array<Brick>): void {
+    let allSettled = false;
     while (!allSettled) {
         allSettled = true;
 
@@ -31,12 +52,8 @@ export default function (input: string[], { logger }: Context) {
             if (brick.settled) continue;
 
             const next: Brick = {
-                id: 'next',
                 from: Vec3.add(brick.from, DOWN),
                 to: Vec3.add(brick.to, DOWN),
-                settled: false,
-                supportedBy: [],
-                supporting: [],
             };
 
             if (brick.from.z <= 1 || brick.to.z <= 1) {
@@ -69,22 +86,6 @@ export default function (input: string[], { logger }: Context) {
             allSettled &&= brick.settled;
         }
     }
-
-    let count = 0;
-
-    for (const brick of bricks) {
-        if (brick.supporting.length === 0) {
-            count++;
-            continue;
-        }
-
-        if (brick.supporting.every((b) => b.supportedBy.length >= 2)) {
-            count++;
-            continue;
-        }
-    }
-
-    return count;
 }
 
 function parse(line: string, id: string): Brick {
