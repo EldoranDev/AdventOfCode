@@ -88,7 +88,7 @@ export class RunCommand implements CommandModule {
         try {
             const result = module(lines, {});
 
-            console.log(result);
+            console.log(Promise.resolve(result));
         } catch (error) {
             console.log(error);
             return;

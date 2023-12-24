@@ -150,12 +150,15 @@ yargs(process.argv.slice(2))
 
             performance.mark('exec-start');
             try {
-                const result = module(lines, {
+                let result = module(lines, {
                     logger: implLogger,
-                    test: args.test,
+                    test: args.test as boolean,
                 });
                 performance.mark('exec-end');
 
+                result = await Promise.resolve(result);
+
+                // eslint-disable-next-line eqeqeq
                 if (result == undefined) {
                     logger.error('No result returned');
                     return;
