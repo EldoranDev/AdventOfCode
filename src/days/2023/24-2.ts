@@ -65,6 +65,7 @@ export default async function (input: string[], { logger }: AppContext) {
     }
 
     em.PThread.terminateAllThreads();
+    return undefined;
 }
 
 function parse(line: string): Storm {
