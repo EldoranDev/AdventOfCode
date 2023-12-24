@@ -1,6 +1,10 @@
 import { } from '@lib/input';
 import { Context } from '@app/types';
-import { Vec2, Vec3 } from '@lib/math';
+
+import { BigNumber } from 'bignumber.js';
+
+type Vec2 = [BigNumber, BigNumber];
+type Vec3 = [BigNumber, BigNumber, BigNumber];
 
 interface Storm {
     position: Vec3;
@@ -8,12 +12,12 @@ interface Storm {
 }
 
 // Test Values
-// const MIN = new Vec2(7, 7);
-// const MAX = new Vec2(27, 27);
+// const MIN = [new BigNumber(7), new BigNumber(7)];
+// const MAX = [new BigNumber(27), new BigNumber(27)];
 
 // Actuall Values
-const MIN = new Vec2(200000000000000, 200000000000000);
-const MAX = new Vec2(400000000000000, 400000000000000);
+const MIN = [new BigNumber(200000000000000), new BigNumber(200000000000000)];
+const MAX = [new BigNumber(400000000000000), new BigNumber(400000000000000)];
 
 export default function (input: string[], { logger }: Context) {
     const storms = input.map(parse);
@@ -34,7 +38,12 @@ export default function (input: string[], { logger }: Context) {
                 continue;
             }
 
-            if (intersection.x <= MIN.x || intersection.x >= MAX.x || intersection.y <= MIN.y || intersection.y >= MAX.y) {
+            if (
+                intersection[0].isLessThanOrEqualTo(MIN[0])
+                || intersection[0].isGreaterThanOrEqualTo(MAX[0])
+                || intersection[1].isLessThanOrEqualTo(MIN[1])
+                || intersection[1].isGreaterThanOrEqualTo(MAX[1])
+            ) {
                 logger.debug(`Intersection outside of test area: ${intersection}`);
                 continue;
             }
@@ -54,39 +63,43 @@ export default function (input: string[], { logger }: Context) {
 }
 
 function intersect(a: Storm, b: Storm): Vec2 | null {
-    const a1 = a.position;
-    const a2 = Vec3.add(a.position, a.velocity);
+    const [x1, y1] = a.position;
+    const [x2, y2] = [a.position[0].plus(a.velocity[0]), a.position[1].plus(a.velocity[1])];
 
-    const b1 = b.position;
-    const b2 = Vec3.add(b.position, b.velocity);
+    const [x3, y3] = b.position;
+    const [x4, y4] = [b.position[0].plus(b.velocity[0]), b.position[1].plus(b.velocity[1])];
 
-    const den = (a1.x - a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x - b2.x);
+    const den = (x1.minus(x2)).multipliedBy(y3.minus(y4)).minus(y1.minus(y2).multipliedBy(x3.minus(x4)));
 
-    if (den === 0) {
+    if (den.isZero()) {
         return null;
     }
 
-    const x = ((a1.x * a2.y - a1.y * a2.x) * (b1.x - b2.x) - (a1.x - a2.x) * (b1.x * b2.y - b1.y * b2.x)) / den;
-    const y = ((a1.x * a2.y - a1.y * a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x * b2.y - b1.y * b2.x)) / den;
+    // eslint-disable-next-line max-len
+    const x = (x1.multipliedBy(y2).minus(y1.multipliedBy(x2)).multipliedBy(x3.minus(x4)).minus(x1.minus(x2).multipliedBy(x3.multipliedBy(y4).minus(y3.multipliedBy(x4)))))
+        .dividedBy(den);
 
-    return new Vec2(x, y);
+    // eslint-disable-next-line max-len
+    const y = (((x1.multipliedBy(y2)).minus(y1.multipliedBy(x2))).multipliedBy(y3.minus(y4))).minus((y1.minus(y2).multipliedBy((x3.multipliedBy(y4)).minus(y3.multipliedBy(x4)))))
+        .dividedBy(den);
+
+    return [x, y];
 }
 
 function isInFuture(storm: Storm, point: Vec2): boolean {
-    const tx = point.x - storm.position.x / storm.velocity.x;
-    const ty = point.y - storm.position.y / storm.velocity.y;
+    const dx = point[0].minus(storm.position[0]);
+    const dy = point[1].minus(storm.position[1]);
 
-    if (tx <= 0 || ty <= 0) {
-        return false;
-    }
-
-    return true;
+    return (
+        ((dx.isPositive() && storm.velocity[0].isPositive()) || (dx.isNegative() && storm.velocity[0].isNegative()))
+        && ((dy.isPositive() && storm.velocity[1].isPositive()) || (dy.isNegative() && storm.velocity[1].isNegative()))
+    );
 }
 
 function parse(line: string): Storm {
-    const [x, y, z, vx, vy, vz] = /(\d*),\s*(\d*),\s*(\d*)\s*@\s*(-?\d*),\s*(-?\d*),\s*(-?\d*)/.exec(line).slice(1).map(Number);
+    const [x, y, z, vx, vy, vz] = /(\d*),\s*(\d*),\s*(\d*)\s*@\s*(-?\d*),\s*(-?\d*),\s*(-?\d*)/.exec(line).slice(1).map((n) => new BigNumber(n));
     return {
-        position: new Vec3(x, y, z),
-        velocity: new Vec3(vx, vy, vz),
+        position: [x, y, z],
+        velocity: [vx, vy, vz],
     };
 }
