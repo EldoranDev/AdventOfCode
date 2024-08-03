@@ -36,7 +36,7 @@ export default class Vec3 implements IVec {
     }
 
     public manhattan(b: Vec3): number {
-        return Math.abs(this.x - b.x) + Math.abs(this.y - b.y);
+        return Math.abs(this.x - b.x) + Math.abs(this.y - b.y) + Math.abs(this.z - b.z);
     }
 
     public clone(): Vec3 {
