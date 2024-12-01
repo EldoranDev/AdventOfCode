@@ -1,6 +1,5 @@
-import fetch from 'node-fetch';
-
 import { resolve } from 'path';
+import { WritableStream } from 'node:stream/web';
 import {
     createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync,
 } from 'fs';
@@ -30,7 +29,13 @@ export default async (year: number, day: number) => {
         resolve(path, `${fileName}.in`),
     );
 
+    const steam = new WritableStream({
+        write(chunk) {
+            file.write(chunk);
+        },
+    });
+
     writeFileSync(resolve(path, `${fileName}.in-test`), '');
 
-    response.body.pipe(file);
+    await response.body.pipeTo(steam);
 };

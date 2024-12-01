@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { system as logger } from '@app/logger';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';

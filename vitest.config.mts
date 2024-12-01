@@ -4,9 +4,9 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
     test: {
         coverage: {
-            provider: 'c8',
+            provider: 'v8',
             all: true,
-            src: ['./src/lib/**'],
+            include: ['./src/lib/**'],
         },
     },
 });
