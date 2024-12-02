@@ -7,7 +7,7 @@ export default function (input: string[], context: Context) {
     const direction = new Vec2(0, 1);
     const history = new Set();
 
-    for(let instr of input[0].split(',').map(i => i.trim())) {
+    for(const instr of input[0].split(',').map(i => i.trim())) {
         switch (instr.substr(0, 1)) {
             case 'L':
                 direction.rotate(90, 'deg');

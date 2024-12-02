@@ -20,13 +20,13 @@ export default function (input: string[], { logger }: Context) {
 
     let score = 0;
 
-    for (let line of input) {
-        let stack = [];
+    for (const line of input) {
+        const stack = [];
 
-        let chars = line.split('');
+        const chars = line.split('');
         let valid = true;
 
-        for (let char of chars) {
+        for (const char of chars) {
             if (CHUNK_START.includes(char)) {
                 stack.push(PAIR[char]);
             } else {

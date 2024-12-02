@@ -25,7 +25,7 @@ export default function (input: string[]) {
 function getSum(array: number[][], x: number, y: number): number {
     let sum = 0;
 
-    for (let pos of round()) {
+    for (const pos of round()) {
         sum += array[y + pos.y][x + pos.x] ?? 0;
     }
 
@@ -57,7 +57,7 @@ function* moveSequence() {
         new Vec2( 0,  1),
     ];
 
-    let lengths = distanceSequence();
+    const lengths = distanceSequence();
 
     let length = lengths.next().value;
 

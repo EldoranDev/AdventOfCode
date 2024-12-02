@@ -7,8 +7,8 @@ export default function (input: string[], { logger }: Context) {
     let position = 0;
 
     while (search.length > 1) {
-        let ones = search.filter(l => l.charAt(position) === "1").length;
-        
+        const ones = search.filter(l => l.charAt(position) === "1").length;
+
         if (ones >= search.length/2) {
             logger.debug(`${ones} >= ${search.length}`);
             search = search.filter(l => l.charAt(position) === "1");
@@ -19,14 +19,14 @@ export default function (input: string[], { logger }: Context) {
         position++;
     }
 
-    let gen = parseInt(search[0], 2);
+    const gen = parseInt(search[0], 2);
 
     search = [...input ];
     position = 0;
 
     while (search.length > 1) {
-        let ones = search.filter(l => l.charAt(position) === "1").length;
-        
+        const ones = search.filter(l => l.charAt(position) === "1").length;
+
         if (ones >= search.length/2) {
             logger.debug(`${ones} > ${search.length}`);
             search = search.filter(l => l.charAt(position) === "0");
@@ -37,9 +37,8 @@ export default function (input: string[], { logger }: Context) {
         position++;
     }
 
-    let scrubber = parseInt(search[0], 2);
+    const scrubber = parseInt(search[0], 2);
 
-    
+
     return gen * scrubber;
-
-};
+}

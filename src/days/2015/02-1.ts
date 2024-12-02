@@ -4,9 +4,9 @@ export default function (input: string[]) {
     let sum = 0;
 
     for (let i = 0; i < input.length; i++) {
-        let [l, w, h] = input[i].split('x').map(d => Number(d));
+        const [l, w, h] = input[i].split('x').map(d => Number(d));
 
-        let sides = [
+        const sides = [
             l * w,
             w * h,
             h * l,

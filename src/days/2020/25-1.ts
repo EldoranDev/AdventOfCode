@@ -2,13 +2,13 @@ import { } from '@lib/input';
 
 export default function (input: string[]) {
 
-    let cardKey = Number(input[0]);
-    let doorKey = Number(input[1]);
+    const cardKey = Number(input[0]);
+    const doorKey = Number(input[1]);
 
-    let cardLoop = findLoopsize(7, cardKey);
+    const cardLoop = findLoopsize(7, cardKey);
 
     let val = 1;
-    let sub = doorKey;
+    const sub = doorKey;
 
     for (let i = 0; i < cardLoop; i++) {
         val *= sub;

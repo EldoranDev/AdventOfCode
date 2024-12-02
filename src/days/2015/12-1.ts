@@ -6,12 +6,12 @@ export default function (input: string[]) {
     return getSum(parsed);
 }
 
-function getSum(objects: Object|any[], sum: number = 0): number {
+function getSum(objects: object|any[], sum: number = 0): number {
     if (!Array.isArray(objects)) {
         objects = Object.values(objects);
     }
 
-    for (let element of objects as any[]) {
+    for (const element of objects as any[]) {
         if (Number.isInteger(element)) {
             sum += element;
         }

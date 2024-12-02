@@ -1,10 +1,10 @@
 import { } from '@lib/input';
 
 export default function (input: string[]) {
-    let startingNumbers = input[0].split(',').map(n => Number(n));
+    const startingNumbers = input[0].split(',').map(n => Number(n));
     const COUNT = 2020;
 
-    let history: number[] = new Array(COUNT);
+    const history: number[] = new Array(COUNT);
 
     for (let i = 0; i < startingNumbers.length; i++) {
         history[startingNumbers[i]] = i;

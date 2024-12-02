@@ -14,12 +14,12 @@ export default function (input: string[]) {
 };
 
 function calculate(expr: string): number {
-    let tokens: Array<Token> = [];
+    const tokens: Array<Token> = [];
 
     let currNumm = '';
 
     for (let i = 0; i < expr.length; i++) {
-        let c = expr.charAt(i);
+        const c = expr.charAt(i);
         
         switch (c) {
         case '(':
@@ -61,7 +61,7 @@ function calculate(expr: string): number {
     const operator: Token[] = [];
 
     for (let i = 0; i < tokens.length; i++) {
-        let token = tokens[i];
+        const token = tokens[i];
 
         switch (token.type) {
             case 'Number':
@@ -95,10 +95,10 @@ function calculate(expr: string): number {
 }
 
 function solveRPN (tokens: Token[]): number {
-    let stack: number[] = [];
+    const stack: number[] = [];
 
     for (let i = 0; i < tokens.length; i++) {
-        let token = tokens[i];
+        const token = tokens[i];
 
         if (token.type === 'Number'){
             stack.push(token.value as number);

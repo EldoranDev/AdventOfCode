@@ -13,8 +13,8 @@ export default function (input: string[]) {
     const search = 'shiny gold';
     const rules: ruleSet = {};
 
-    for (let match of matches) {
-        let rule: rule = {
+    for (const match of matches) {
+        const rule: rule = {
             color: match.groups.color,
             contains: { },
         };

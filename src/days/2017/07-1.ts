@@ -7,10 +7,10 @@ type Disk = {
 };
 
 export default function (input: string[]) {
-    let map = new Map<string, Disk>();
+    const map = new Map<string, Disk>();
 
-    for (let line of input) {
-        let parts = line.split('->');
+    for (const line of input) {
+        const parts = line.split('->');
 
         const current = parts[0].split(' ')[0].trim();
 
@@ -25,7 +25,7 @@ export default function (input: string[]) {
         const top = parts[1].split(',').map(p => p.trim());
         const disk = map.get(current);
 
-        for (let t of top) {
+        for (const t of top) {
             if (!map.has(t)) {
                 map.set(t, { id: t, bottom: null, top: [] });
             }

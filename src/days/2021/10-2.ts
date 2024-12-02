@@ -18,15 +18,15 @@ export default function (input: string[], { logger }: Context) {
         '>': 4,
     };
 
-    let line_scores = [];
+    const line_scores = [];
 
-    for (let line of input) {
-        let stack = [];
+    for (const line of input) {
+        const stack = [];
 
-        let chars = line.split('');
+        const chars = line.split('');
         let valid = true;
 
-        for (let char of chars) {
+        for (const char of chars) {
             if (CHUNK_START.includes(char)) {
                 stack.push(PAIR[char]);
             } else {
@@ -47,7 +47,7 @@ export default function (input: string[], { logger }: Context) {
 
         logger.debug(`Completed by: ${stack.reverse().join('')}`)
 
-        for (let c of stack.reverse()) {
+        for (const c of stack.reverse()) {
             score *= 5;
             score += SCORES[c];
         }

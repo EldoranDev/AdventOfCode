@@ -24,7 +24,7 @@ export default function (input: string[], { logger }: Context) {
         const inputLines = parts[0].split(',').map(p => p.trim());
         const input = {};
 
-        for (let inp of inputLines) {
+        for (const inp of inputLines) {
             const parts = inp.split(' ');
             input[parts[1]] = Number(parts[0]);
         }
@@ -37,7 +37,7 @@ export default function (input: string[], { logger }: Context) {
         };
     }
 
-    for (let resource of Object.keys(recipies)) {
+    for (const resource of Object.keys(recipies)) {
         production[resource] = {
             required: 0,
             current: 0,
@@ -55,25 +55,25 @@ export default function (input: string[], { logger }: Context) {
     do {
         satisfied = true;
 
-        for (let resource of Object.keys(production)) {
+        for (const resource of Object.keys(production)) {
             if (resource === 'ORE') {
                 production['ORE'].current = production['ORE'].required;
                 continue;
             }
 
-            let prod = production[resource];
+            const prod = production[resource];
 
             if (prod.required > prod.current) {
                 
-                let recipe = recipies[resource];
+                const recipe = recipies[resource];
 
-                let count = Math.ceil(
+                const count = Math.ceil(
                     (prod.required - prod.current)/recipe.output
                 );
 
                 prod.current += count * recipe.output;
 
-                for (let inpResoure of Object.keys(recipe.input)) {
+                for (const inpResoure of Object.keys(recipe.input)) {
                     production[inpResoure].required += recipe.input[inpResoure] * count;    
                 }
 

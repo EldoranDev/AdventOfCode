@@ -53,5 +53,5 @@ function compare(left: Entry, right: Entry): number {
         return 0;
     }
 
-    return (left as Array<number>).length - (right as Array<Number>).length;
+    return (left as Array<number>).length - (right as Array<number>).length;
 }

@@ -8,11 +8,11 @@ type Room = { name: string, sector: number, checksum: string};
 export default function (input: string[], { logger }: Context) {
     const rooms: Array<Room> = [];
 
-    for (let line of input) {
+    for (const line of input) {
         const chars = {};
 
-        let match = extractor.exec(line);
-        let room: Room = {
+        const match = extractor.exec(line);
+        const room: Room = {
             name: match[1].replaceAll('-', ''),
             sector: Number(match[2]),
             checksum: match[3],
@@ -24,10 +24,10 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return rooms.filter((room: Room) => {
-        let chars: { [key: string]: number } = {};
-        let order: { [key: string]: string[] } = {};
+        const chars: { [key: string]: number } = {};
+        const order: { [key: string]: string[] } = {};
 
-        for (let char of room.name.split('')) {
+        for (const char of room.name.split('')) {
             if (!chars[char]) {
                 chars[char] = 0;
             }
@@ -37,7 +37,7 @@ export default function (input: string[], { logger }: Context) {
 
         const letters = Object.keys(chars);
         
-        for (let letter of letters) {
+        for (const letter of letters) {
             if (!order[chars[letter]]) {
                 order[chars[letter]] = [];
             }
@@ -48,7 +48,7 @@ export default function (input: string[], { logger }: Context) {
 
         const counts = Object.keys(order).map((o) => Number(o)).sort((a, b) => b - a);
 
-        for (let count of counts) {
+        for (const count of counts) {
             order[count].sort()
             hashsum.push(
                 ...order[count]

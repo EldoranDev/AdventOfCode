@@ -13,7 +13,7 @@ const wires: WireMap = {};
 let results: { [key: string]: number } = {};
 
 export default function (input: string[]) {
-    for (let line of input) {
+    for (const line of input) {
         let result = REF.exec(line);
 
         if (result !== null) {

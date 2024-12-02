@@ -9,8 +9,8 @@ export default function (input: string[]) {
         wp: new Vec2(10, 1) 
     };
   
-    for (let line of input) {
-        let amount = Number(line.substring(1));
+    for (const line of input) {
+        const amount = Number(line.substring(1));
        
         switch (line.charAt(0)) {
             case 'N':

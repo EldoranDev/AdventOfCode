@@ -2,7 +2,7 @@ import { mapToNumber } from '@lib/input';
 import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
-    let numbers = mapToNumber(input);
+    const numbers = mapToNumber(input);
 
     let increase = 0;
     let last = numbers[0];

@@ -14,7 +14,7 @@ export default function (input: string[]) {
         map[i] = Array(WIDTH).fill(0, 0, WIDTH);
     }
 
-    for(let line of input) {
+    for(const line of input) {
         let result = TURN.exec(line);
         
         if(result !== null) {

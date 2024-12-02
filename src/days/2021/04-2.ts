@@ -5,30 +5,30 @@ import { getColumn } from '@lib/array2d';
 type field = { number: number, marked: boolean};
 
 export default function (input: string[], { logger }: Context) {
-    let bingoNumbers = mapToNumber(input[0].split(','));
+    const bingoNumbers = mapToNumber(input[0].split(','));
   
-    let boardsLines = getLineGroups(input.slice(2));
+    const boardsLines = getLineGroups(input.slice(2));
 
-    let boards: Array<Array<{number: number, marked: boolean}>>[] = [];
+    const boards: Array<Array<{number: number, marked: boolean}>>[] = [];
 
-    for (let bl of boardsLines) {
-        let board = [];
+    for (const bl of boardsLines) {
+        const board = [];
 
-        for (let line of bl) {
+        for (const line of bl) {
             board.push(mapToNumber(line.trim().split(' ').filter(e => e.trim() !== "")).map((n => ({ number: n, marked: false}))));
         }
 
         boards.push(board);
     }
     
-    let doneBoards: number[][] = [];
+    const doneBoards: number[][] = [];
 
-    for (let number of bingoNumbers) {
+    for (const number of bingoNumbers) {
         logger.debug(number);
         for (let i = 0; i < boards.length; i++) {
             if (doneBoards.filter(e => e[0] === i).length > 0) continue;
             
-            let board = boards[i];
+            const board = boards[i];
 
             for (let y = 0; y < board.length; y++) {
                 for (let x = 0; x < board[y].length; x++) {
@@ -47,9 +47,9 @@ export default function (input: string[], { logger }: Context) {
             }
         }
     }
-    let last = doneBoards.pop();
+    const last = doneBoards.pop();
 
-    let unmarked = boards[last[0]].reduce((prev, cur) => {
+    const unmarked = boards[last[0]].reduce((prev, cur) => {
         return prev + cur.filter(e => !e.marked).reduce((p, c) => p + c.number, 0);
     }, 0);
 

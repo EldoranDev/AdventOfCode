@@ -12,7 +12,7 @@ export default function (input: string[], { logger }: Context) {
 
     while(password.length < 8) {
         const md5 = createHash('md5');
-        let current = md5.update(`${roomId}${id}`).digest('hex').toString();
+        const current = md5.update(`${roomId}${id}`).digest('hex').toString();
         
         if (current.startsWith('00000')) {
             logger.debug(`Found at ${id} -> ${current} -> ${current.charAt(5)}`);

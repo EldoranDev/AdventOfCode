@@ -4,11 +4,11 @@ import { Convay } from '@lib/simulation';
 
 export default function (input: string[]) {
 
-    let instructions: string[][] = [];
+    const instructions: string[][] = [];
 
-    for (let line of input) {
-        let tile: string[] = [];
-        let inst: string[] = line.split('');
+    for (const line of input) {
+        const tile: string[] = [];
+        const inst: string[] = line.split('');
         let current = '';
 
         for (let i = 0; i < inst.length; i++) {
@@ -23,7 +23,7 @@ export default function (input: string[]) {
         instructions.push(tile);
     }
 
-    let convay = new Convay<Vec3>(
+    const convay = new Convay<Vec3>(
         (pos) => [
             new Vec3(-1, +1, 0),
             new Vec3(+1, -1, 0),
@@ -36,10 +36,10 @@ export default function (input: string[]) {
         (neighbors) => neighbors === 2
     );
     
-    for (let tile of instructions) {
-        let position: Vec3 = new Vec3(0, 0, 0);
+    for (const tile of instructions) {
+        const position: Vec3 = new Vec3(0, 0, 0);
 
-        for (let move of tile) {
+        for (const move of tile) {
             switch(move) {
                 case 'w':
                     position.add(new Vec3(-1, +1, 0));

@@ -5,7 +5,7 @@ export default function (input: string[]) {
 };
 
 function getNeededFuel(number: number): number {
-    let val = ((number/3)|0) - 2;
+    const val = ((number/3)|0) - 2;
 
     if (val <= 0) {
         return 0;

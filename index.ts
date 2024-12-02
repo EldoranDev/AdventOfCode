@@ -11,6 +11,9 @@ import { system as logger, implementation as implLogger } from './src/app/logger
 
 type Implementation = (input: string[], context: Context) => string;
 
+// eslint-disable-next-line
+const __dirname = new URL(".", import.meta.url).pathname;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 yargs(process.argv.slice(2))
     .strict()

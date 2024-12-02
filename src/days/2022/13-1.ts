@@ -56,5 +56,5 @@ function compare(left: Entry, right: Entry): boolean | null {
         return null;
     }
 
-    return (left as Array<number>).length < (right as Array<Number>).length;
+    return (left as Array<number>).length < (right as Array<number>).length;
 }

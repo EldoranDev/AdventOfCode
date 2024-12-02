@@ -2,7 +2,7 @@ import { mapToNumber } from '@lib/input';
 import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
-    let fish = mapToNumber( input[0].split(','));
+    const fish = mapToNumber( input[0].split(','));
 
     let map = new Map<number, number>();
 
@@ -10,18 +10,18 @@ export default function (input: string[], { logger }: Context) {
         map.set(i, 0);
     }
     
-    for (let f of fish) {
+    for (const f of fish) {
         map.set(f, map.get(f) + 1);
     }
     
     for (let i = 0; i < 256; i++) {
-        let nmap = new Map();
+        const nmap = new Map();
 
         for (let i = 0; i <= 8; i++) {
             nmap.set(i, 0);
         }
 
-        for (let e of map.entries()) {
+        for (const e of map.entries()) {
             if (e[0] === 0) {
                 nmap.set(6, nmap.get(6) + e[1]);
                 nmap.set(8, nmap.get(8) + e[1]);

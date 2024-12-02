@@ -2,7 +2,7 @@ import { } from '@lib/input';
 
 export default function (input: string[]) {
     const ops = input.map((line) => { 
-        let parts = line.split(' ');
+        const parts = line.split(' ');
         return {
             op: parts[0],
             param: Number(parts[1]),

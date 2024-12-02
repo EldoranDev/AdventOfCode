@@ -6,7 +6,7 @@ const ROUNDS = 6;
 type Map = boolean[][][][];
 
 export default function (input: string[]) {
-    let world: Map = [];
+    const world: Map = [];
     const SIZE = input.length+ROUNDS*2;
     
     const neighbors = [];
@@ -23,7 +23,7 @@ export default function (input: string[]) {
         }
     }
 
-    let convay = new Convay<Vec4>(
+    const convay = new Convay<Vec4>(
         (pos) => neighbors.map(n => Vec4.add(pos, n)),
         (count) => count === 2 || count === 3,
         (count) => count === 3

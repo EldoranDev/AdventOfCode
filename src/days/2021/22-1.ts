@@ -6,7 +6,7 @@ const EXTRACT = /(on|off) x=(\-?\d*)\.\.(\-?\d*),y=(\-?\d*)\.\.(\-?\d*),z=(\-?\d
 export default function (input: string[], { logger }: Context) {
     const cubes = new Map<string, boolean>();
     
-    for (let line of input) {
+    for (const line of input) {
         const [_, state, x1, x2, y1, y2, z1, z2] = EXTRACT.exec(line);
 
         for (let x = Number(x1); x <= Number(x2); x++) {

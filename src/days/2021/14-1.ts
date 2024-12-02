@@ -1,14 +1,14 @@
 import { getLineGroups } from '@lib/input';
 import { Context } from '@app/types';
 
-let ROUNDS = 10;
+const ROUNDS = 10;
 
 export default function (input: string[], { logger }: Context) {
     
-    let instr = new Map<string, string>();
+    const instr = new Map<string, string>();
 
 
-    let [ START, INSTR ] = getLineGroups(input);
+    const [ START, INSTR ] = getLineGroups(input);
 
     let output = START[0];
 
@@ -22,7 +22,7 @@ export default function (input: string[], { logger }: Context) {
         let tmp = "";
 
         for (let i = 0; i < output.length-1; i++) {
-            let char = output[i] + output[i+1];
+            const char = output[i] + output[i+1];
 
             tmp += output[i];
 
@@ -36,9 +36,9 @@ export default function (input: string[], { logger }: Context) {
     console.log(output);
 
     // Count;
-    let count = new Map<string, number>();
+    const count = new Map<string, number>();
     
-    for (let c of output.split('')) {
+    for (const c of output.split('')) {
         if (!count.has(c)) {
             count.set(c, 0);
         }
@@ -46,7 +46,7 @@ export default function (input: string[], { logger }: Context) {
         count.set(c, count.get(c) + 1)
     }
 
-    let countValues = [...count.values()];
+    const countValues = [...count.values()];
 
     countValues.sort((a, b) => a - b);
     console.log(countValues);

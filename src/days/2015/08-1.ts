@@ -3,9 +3,9 @@ import { } from '@lib/input';
 export default function (input: string[]) {
     let length = 0;
 
-    for (let line of input) {
+    for (const line of input) {
         try {
-            let a = getString(line);
+            const a = getString(line);
     
             length += line.length - a.length;
         } catch (e) {
@@ -20,7 +20,7 @@ function getString(db: string): string {
     let res = '';
 
     for (let i = 0; i < db.length;)  {
-        let current = getToken(db, i);
+        const current = getToken(db, i);
         
         i += current.length;
 

@@ -20,7 +20,7 @@ export default function (input: string[], context: Context) {
     const numbers = [];
     let position = new Vec2(1, 1);
 
-    for(let line of input) {
+    for(const line of input) {
         position = followPath(line, position);
         logger.debug('---');
 
@@ -34,7 +34,7 @@ export default function (input: string[], context: Context) {
 
 function followPath(line: string, position: Vec2): Vec2 {
 
-    for (let move of line.split('')) {
+    for (const move of line.split('')) {
         position.add(moves[move]);
         position.x = Math.min(Math.max(0, position.x), 2);
         position.y = Math.min(Math.max(0, position.y), 2);

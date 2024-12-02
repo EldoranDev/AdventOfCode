@@ -1,4 +1,4 @@
-const CACHE: Map<Symbol, Map<string, any>> = new Map();
+const CACHE: Map<symbol, Map<string, any>> = new Map();
 
 export function memoize<K extends Function>(fn: K): K {
     const FN_CACHE_KEY = Symbol('CACHE_KEY');

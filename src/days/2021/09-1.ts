@@ -6,11 +6,11 @@ import { Vec2 } from '@lib/math';
 export default function (input: string[], { logger }: Context) {
     const map: number[][] = [];
 
-    for (let line of input) {
+    for (const line of input) {
         map.push(mapToNumber(line.split('')));
     }
 
-    let pos = [
+    const pos = [
         new Vec2(0, 1),
         new Vec2(0, -1),
         new Vec2(1, 0),
@@ -22,7 +22,7 @@ export default function (input: string[], { logger }: Context) {
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
             let valid = true;
-            for (let off of pos) {
+            for (const off of pos) {
                 if (
                     map[y + off.y] != undefined &&
                     map[y + off.y][x + off.x] !== undefined && 

@@ -7,13 +7,13 @@ type Cube = [number, number, number, number, number, number];
 type Sign = -1|1;
 
 export default function (input: string[], { logger }: Context) {
-    let cuboids: Array<[ Cube, Sign ]> = [];
+    const cuboids: Array<[ Cube, Sign ]> = [];
 
     for (const line of input) {
         const [_, state, x1s, x2s, y1s, y2s, z1s, z2s] = EXTRACT.exec(line);
         const [ x1, x2, y1, y2, z1, z2] = mapToNumber([ x1s, x2s, y1s, y2s, z1s, z2s ]);
 
-        let sign: Sign = state === 'on' ? 1 : -1;
+        const sign: Sign = state === 'on' ? 1 : -1;
 
         // Can't update our cube list while working on it
         const update: Array<[Cube, Sign]> = [];
@@ -48,7 +48,7 @@ export default function (input: string[], { logger }: Context) {
 
     // Sum up everything
     return cuboids.reduce((prev, cur) => {
-        let [c, sign] = cur;
+        const [c, sign] = cur;
         return prev + (
             (c[1] - c[0] + 1) * (c[3] - c[2] + 1) * (c[5] - c[4] + 1) * sign
         )

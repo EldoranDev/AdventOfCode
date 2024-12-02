@@ -14,12 +14,12 @@ const ROTATIONS: Vec3[] = []
 export default function (input: string[], { logger }: Context) {
     const groups = getLineGroups(input);
 
-    let scanners: Scanner[] = [];
+    const scanners: Scanner[] = [];
 
     for (const [_, ...beacons] of groups) {
-        let scanner: Scanner = {
+        const scanner: Scanner = {
             beacons: beacons.map((l) => {
-                let s = l.split(',').map(c => Number(c.trim()));
+                const s = l.split(',').map(c => Number(c.trim()));
 
                 return new Vec3(s[0], s[1], s[2]);
             }),

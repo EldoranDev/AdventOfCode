@@ -17,8 +17,8 @@ export default function (input: string[], { logger }: Context) {
     for (let y = 1; y < MAX_Y; y++) {
         for (let x = 1; x < MAX_X; x++) {
 
-            let pos = new Vec2(0, 0);
-            let vel = new Vec2(x, y);
+            const pos = new Vec2(0, 0);
+            const vel = new Vec2(x, y);
             let h = 0;
 
             while (pos.y > y1) {
@@ -31,7 +31,7 @@ export default function (input: string[], { logger }: Context) {
                 vel.add(new Vec2(0, -1)); // Gravity
                 
                 if (vel.x !== 0) {
-                    let drag = new Vec2(-1, 0);
+                    const drag = new Vec2(-1, 0);
                     drag.mult(Math.sign(vel.x));
 
                     vel.add(drag);

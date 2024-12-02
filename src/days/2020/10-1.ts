@@ -9,8 +9,8 @@ export default function (input: string[]) {
 
     let current = 0; 
 
-    for (let adapter of list) {
-        let diff = adapter-current;
+    for (const adapter of list) {
+        const diff = adapter-current;
 
         if (!jolts[diff]){
             jolts[diff] = 0;

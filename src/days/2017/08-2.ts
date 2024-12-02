@@ -39,10 +39,10 @@ export default function (input: string[], { logger }: Context) {
     const register = new Map<string, number>()
 
     const instructions: Instr[] = input.map((line): Instr =>  {
-        let l = line.split('if').map(p => p.trim());
+        const l = line.split('if').map(p => p.trim());
         
-        let [ register, operation, value] = l[0].split(' ');
-        let [ conRegister, conOperation, conValue ] = l[1].split(' ');
+        const [ register, operation, value] = l[0].split(' ');
+        const [ conRegister, conOperation, conValue ] = l[1].split(' ');
         
         return {
             register,

@@ -11,7 +11,7 @@ type TreeNode = {
 }
 
 export default function (input: string[], { logger }: Context) {
-    let numbers: Array<TreeNode> = [];
+    const numbers: Array<TreeNode> = [];
 
     for (const line of input) {
         numbers.push(
@@ -48,11 +48,11 @@ function reduce(number: TreeNode) {
         print(number);
 
         // Check Explodes
-        let explodeNode = findExplode(number);
+        const explodeNode = findExplode(number);
         
         if (explodeNode !== null) {
             // Do explode
-            let left = findLeft(explodeNode);
+            const left = findLeft(explodeNode);
             
             if (left !== null) {
                 if (Number.isInteger(left.right)) {
@@ -62,7 +62,7 @@ function reduce(number: TreeNode) {
                 } 
             }
 
-            let right = findRight(explodeNode);
+            const right = findRight(explodeNode);
 
             if (right !== null) {
                 if (Number.isInteger(right.left)) {
@@ -83,7 +83,7 @@ function reduce(number: TreeNode) {
             continue;
         }
         
-        let splitNode = findSplit(number);
+        const splitNode = findSplit(number);
 
         // Do Split
         if (splitNode !== null) {
@@ -113,7 +113,7 @@ function reduce(number: TreeNode) {
     }
 }
 
-function getMagnitude(number: TreeNode|Number) {
+function getMagnitude(number: TreeNode|number) {
     if (typeof number === 'number') {
         return number;
     }
@@ -265,7 +265,7 @@ function createNode(num: SnailNumber, parent: TreeNode|null = null): TreeNode {
 };
 
 function createArray(number: TreeNode): Array<SnailNumber> {
-    let v = [];
+    const v = [];
 
     if (typeof(number.left) === 'number') {
         v[0] = number.left;

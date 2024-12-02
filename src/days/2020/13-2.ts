@@ -1,7 +1,7 @@
 import { } from '@lib/input';
 
 export default function (input: string[]) {
-    let deps = input[1].split(',').map((d) => Number(d));
+    const deps = input[1].split(',').map((d) => Number(d));
 
     for (let i = 0; i < deps.length; i++) {
         if (Number.isNaN(deps[i])) continue;

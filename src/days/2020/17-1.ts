@@ -17,7 +17,7 @@ export default function (input: string[]) {
         }
     }
 
-    let convay = new Convay<Vec3>(
+    const convay = new Convay<Vec3>(
         (pos) => neighbors.map(n => Vec3.add(pos, n)),
         (count) => count === 2 || count === 3,
         (count) => count === 3

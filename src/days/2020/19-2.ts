@@ -6,7 +6,7 @@ type Lookup = Record<string, string[]>;
 export default function (input: string[]) {
     const groups = getLineGroups(input);
 
-    let grammar = parseGrammar(
+    const grammar = parseGrammar(
         groups[0].map(s => s.replace(':', ' ->').replace(/"/g, ''))
     );
 
@@ -22,9 +22,9 @@ export default function (input: string[]) {
 };
 
 function cyk (word: string[], grammar: Grammar, start: string): boolean {
-    let R: string[][][] = new Array(word.length);
+    const R: string[][][] = new Array(word.length);
     
-    let lookup: Lookup = grammarToLookup(grammar);
+    const lookup: Lookup = grammarToLookup(grammar);
 
     for (let i = 0; i < word.length; i++) {
         R[i] = new Array(word.length);
@@ -59,8 +59,8 @@ function cyk (word: string[], grammar: Grammar, start: string): boolean {
 
                 if (left === undefined || right === undefined) continue;
 
-                for (let l of left) {
-                    for (let r of right) {
+                for (const l of left) {
+                    for (const r of right) {
                         const key = getKey([l, r]);
                         if (lookup[key] !== undefined) {
                             R[line][c].push(...lookup[key]);
@@ -87,9 +87,9 @@ function print(R: string[][][]): void {
 }
 
 function parseGrammar(input: string[]): Grammar {
-    let grammar: Grammar = {};
+    const grammar: Grammar = {};
 
-    for (let line of input) {
+    for (const line of input) {
         const parts = line.replace(/"/g, '').split(' -> ');
 
         grammar[parts[0]] = parts[1].split(' | ').map(p => p.split(' '));
@@ -98,15 +98,15 @@ function parseGrammar(input: string[]): Grammar {
     let newRuleCount = 0;
 
     // Remove triplets
-    for (let i of Object.keys(grammar)) {
+    for (const i of Object.keys(grammar)) {
         for (let j = 0; j < grammar[i].length; j++) {
-            let newRule = [...grammar[i]];
+            const newRule = [...grammar[i]];
 
             if (grammar[i][j].length === 3) {
-                let rule = newRule[i].splice(j, 1)[0];
+                const rule = newRule[i].splice(j, 1)[0];
 
-                let a = input.length + (++newRuleCount);
-                let b = input.length + (++newRuleCount);
+                const a = input.length + (++newRuleCount);
+                const b = input.length + (++newRuleCount);
 
                 grammar[a] = [ [rule[0], rule[1]]];
                 grammar[b] = [[rule[1], rule[2]]];
@@ -126,8 +126,8 @@ function parseGrammar(input: string[]): Grammar {
 function grammarToLookup(grammar: Grammar): Lookup {
     const lookup: Record<string, string[]> = {};
 
-    for (let root of Object.keys(grammar)) {
-        for (let production of grammar[root]) {
+    for (const root of Object.keys(grammar)) {
+        for (const production of grammar[root]) {
             const key = getKey(production);
 
             if (lookup[key] === undefined) {

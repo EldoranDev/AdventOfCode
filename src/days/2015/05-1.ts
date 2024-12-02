@@ -17,7 +17,7 @@ function isNice(check: string): boolean {
     let last = '';
 
     for (let i = 0; i < check.length; i++) {
-        let c = check.charAt(i);
+        const c = check.charAt(i);
 
         if (c === last) {
             double = c;

@@ -42,7 +42,7 @@ export default function (input: string[], { logger }: Context) {
 
     let message = "";
 
-    for (let char of input[0]) {
+    for (const char of input[0]) {
         message += parseInt(char, 16).toString(2).padStart(4, "0");
     }
 
@@ -57,15 +57,15 @@ export default function (input: string[], { logger }: Context) {
 
 function parsePackage(binary: string, pointer: number, logger: Logger): [Package, number] {
     let readBits = 0;
-    let version = parseInt(binary.substring(pointer, pointer + 3), 2);
+    const version = parseInt(binary.substring(pointer, pointer + 3), 2);
     pointer += 3;
     readBits += 3;
 
-    let type = parseInt(binary.substring(pointer, pointer + 3), 2);
+    const type = parseInt(binary.substring(pointer, pointer + 3), 2);
     pointer += 3;
     readBits += 3;
 
-    let pkg: Package = new Package(
+    const pkg: Package = new Package(
         version,
         type,
     );
@@ -105,7 +105,7 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
             let bitsLeft = pkg.length;
 
             while (bitsLeft > 0) {
-                let [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [ subPkg, bits ] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 bitsLeft -= bits;
@@ -121,7 +121,7 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
             pointer += 11;
 
             while (pkg.packages.length < pkg.length) {
-                let [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [ subPkg, bits ] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 readBits += bits;
@@ -140,7 +140,7 @@ function parseLiteral(pkg: Package, binary: string, pointer: number, logger: Log
     let readBytes = 0;
 
     while (!last) {
-        let current = binary.substring(pointer + readBytes, pointer + readBytes+5);
+        const current = binary.substring(pointer + readBytes, pointer + readBytes+5);
 
         if (current[0] === '0') {
             last = true;    

@@ -4,12 +4,12 @@ import { Vec2 } from '@lib/math';
 export default function (input: string[]) {
     const target = Number(input[0]);
 
-    let moveSeq = moveSequence();
+    const moveSeq = moveSequence();
 
     let position = new Vec2(0, 0);
 
     for (let i = 1; i < target; i++) {
-        let move = moveSeq.next().value;
+        const move = moveSeq.next().value;
 
         position = position.add(move as Vec2);
     }
@@ -25,7 +25,7 @@ function* moveSequence() {
         new Vec2( 0,  1),
     ];
 
-    let lengths = distanceSequence();
+    const lengths = distanceSequence();
 
     let length = lengths.next().value;
 

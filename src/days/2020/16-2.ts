@@ -13,7 +13,7 @@ export default function (input: string[]) {
     const ticket = input[RULE_COUNT+2].split(',').map(n => Number(n));
 
     for (let i = 0; i < RULE_COUNT; i++) {
-        let match = R_RULE.exec(input[i]);
+        const match = R_RULE.exec(input[i]);
 
         rules[match[1]] = [
             getRange(match[2]),
@@ -28,14 +28,14 @@ export default function (input: string[]) {
     }
 
     tickets = tickets.filter(t => isValid(t, rules));
-    let ruleNames = (Object.keys(rules)).reverse();
-    let possible: Record<string, number[]> = ruleNames.reduce((p, c) => { 
+    const ruleNames = (Object.keys(rules)).reverse();
+    const possible: Record<string, number[]> = ruleNames.reduce((p, c) => { 
         p[c] = [];
         return p;
     }, {})
 
     for (let c = 0; c < ticket.length; c++) {
-        let filtered = ruleNames.filter((rule) => {
+        const filtered = ruleNames.filter((rule) => {
             for (let l = 0; l < tickets.length; l++) {
                 if (
                     !(tickets[l][c] >= rules[rule][0].min && tickets[l][c] <= rules[rule][0].max) &&
@@ -48,32 +48,32 @@ export default function (input: string[]) {
             return true;
         });
 
-        for (let rule of filtered) {
+        for (const rule of filtered) {
             possible[rule].push(c);
         }
     }
 
     while (Object.keys(possible).length !== 0) {
-        let next = Object.keys(possible).find((p) => possible[p].length === 1);
+        const next = Object.keys(possible).find((p) => possible[p].length === 1);
     
-        let column = possible[next][0];
+        const column = possible[next][0];
         
         delete possible[next];
 
         position[next] = column;
 
-        for(let k of Object.keys(possible)) {
+        for(const k of Object.keys(possible)) {
             possible[k] = possible[k].filter(n => n !== column);
         }
     }
 
-    let pos = Object.keys(position).filter(s => s.includes('departure'));
+    const pos = Object.keys(position).filter(s => s.includes('departure'));
 
     return pos.reduce((res, rule) => res * ticket[position[rule]], 1);
 };
 
 function getRange(range: string): range {
-    let s = range.split('-');
+    const s = range.split('-');
 
     return {
         min: Number(s[0]),
@@ -82,12 +82,12 @@ function getRange(range: string): range {
 }
 
 function isValid (ticket: number[], rules: Record<string, ruleSet>): boolean {
-    let ruleNames = Object.keys(rules);
+    const ruleNames = Object.keys(rules);
 
-    for (let field of ticket) {
+    for (const field of ticket) {
         let anyValid = false;
 
-        for (let rule of ruleNames) {
+        for (const rule of ruleNames) {
             if (
                 field >= rules[rule][0].min && field <= rules[rule][0].max ||
                 field >= rules[rule][1].min && field <= rules[rule][1].max

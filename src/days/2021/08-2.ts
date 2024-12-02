@@ -2,11 +2,11 @@ import { } from '@lib/input';
 import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
-    let lines = input.map(l => l.split('|').map(c => c.trim().split(' ')));
+    const lines = input.map(l => l.split('|').map(c => c.trim().split(' ')));
     let count = 0;
 
-    for (let line of lines) {
-            let map = {
+    for (const line of lines) {
+            const map = {
                 t: [],
                 m: [],
                 b: [],
@@ -16,19 +16,19 @@ export default function (input: string[], { logger }: Context) {
                 br: [],
             };
 
-            let all = [
+            const all = [
                 ...line[0],
                 ...line[1],
             ].map(e => e.split(''))
 
-            let known = [
+            const known = [
                 ...line[0].filter(e => [2, 3, 4, 7].includes(e.length)).map(e => e.split('')),
                 ...line[1].filter(e => [2, 3, 4, 7].includes(e.length)).map(e => e.split('')),
             ];
 
-            let one = known.find(e => e.length == 2);
-            let four = known.find(e => e.length == 4);
-            let seven = known.find(e => e.length == 3);
+            const one = known.find(e => e.length == 2);
+            const four = known.find(e => e.length == 4);
+            const seven = known.find(e => e.length == 3);
 
             map['tr'].push(...one);
             map['br'].push(...one);
@@ -44,12 +44,12 @@ export default function (input: string[], { logger }: Context) {
                 ...seven.find(e => !one.includes(e))
             );
 
-            let three = all.find(e => {
+            const three = all.find(e => {
                 if (e.length !== 5) {
                     return false;
                 }
 
-                for (let c of one) {
+                for (const c of one) {
                     if (!e.includes(c)) {
                         return false;
                     }
@@ -68,19 +68,19 @@ export default function (input: string[], { logger }: Context) {
             map['m'] = map['m'].filter(e => three.includes(e));
             map['tl'] = map['tl'].filter(e => !map['m'].includes(e));
 
-            let zero = all.find((e) => {
+            const zero = all.find((e) => {
                 if (e.length != 6) {
                     return false;
                 }
 
-                for (let c of one) {
+                for (const c of one) {
                     if (!e.includes(c)) {
                         return false;
                     }
                 }
 
 
-                for (let c of map['m']) {
+                for (const c of map['m']) {
                     if (e.includes(c)) {
                         return false;
                     }
@@ -97,7 +97,7 @@ export default function (input: string[], { logger }: Context) {
                     .filter(e => !map['tr'].includes(e))
             );
 
-            let five = all.find(e => {
+            const five = all.find(e => {
                 if (e.length !== 5) {
                     return false;
                 }
@@ -204,7 +204,7 @@ export default function (input: string[], { logger }: Context) {
 
             let output = "";
 
-            for (let on of line[1]) {
+            for (const on of line[1]) {
                 output += dict[
                     on.split('').sort().join('')
                 ];

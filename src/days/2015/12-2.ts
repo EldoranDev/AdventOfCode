@@ -6,7 +6,7 @@ export default function (input: string[]) {
     return getSum(parsed);
 };
 
-function getSum(objects: Object|any[], sum: number = 0): number {
+function getSum(objects: object|any[], sum: number = 0): number {
     let ignore = false;
     let object = false;
 
@@ -17,7 +17,7 @@ function getSum(objects: Object|any[], sum: number = 0): number {
 
     let add = 0;
 
-    for (let element of objects as any[]) {
+    for (const element of objects as any[]) {
         if (Number.isInteger(element)) {
             add += element;
         }

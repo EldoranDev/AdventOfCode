@@ -5,25 +5,25 @@ import { getColumn } from '@lib/array2d';
 type field = { number: number, marked: boolean};
 
 export default function (input: string[], { logger }: Context) {
-    let bingoNumbers = mapToNumber(input[0].split(','));
+    const bingoNumbers = mapToNumber(input[0].split(','));
   
-    let boardsLines = getLineGroups(input.slice(2));
+    const boardsLines = getLineGroups(input.slice(2));
 
-    let boards: Array<Array<{number: number, marked: boolean}>>[] = [];
+    const boards: Array<Array<{number: number, marked: boolean}>>[] = [];
 
-    for (let bl of boardsLines) {
-        let board = [];
+    for (const bl of boardsLines) {
+        const board = [];
 
-        for (let line of bl) {
+        for (const line of bl) {
             board.push(mapToNumber(line.trim().split(' ').filter(e => e.trim() !== "")).map((n => ({ number: n, marked: false}))));
         }
 
         boards.push(board);
     }
 
-    for (let number of bingoNumbers) {
+    for (const number of bingoNumbers) {
         logger.debug(number);
-        for (let board of boards) {
+        for (const board of boards) {
             
             for (let y = 0; y < board.length; y++) {
                 for (let x = 0; x < board[y].length; x++) {
@@ -35,7 +35,7 @@ export default function (input: string[], { logger }: Context) {
                         }, ""))
 
                         if (checkIfwon(board, x, y)) {
-                            let unmarked = board.reduce((prev, cur) => {
+                            const unmarked = board.reduce((prev, cur) => {
                                 return prev + cur.filter(e => !e.marked).reduce((p, c) => p + c.number, 0);
                             }, 0);
 

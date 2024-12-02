@@ -10,7 +10,7 @@ export default function (input: string[]) {
     ]
 
 
-    let winner = combat(players);
+    const winner = combat(players);
     
     let sum = 0;
 
@@ -29,8 +29,8 @@ function combat(players: number[][], game: number = 1): number {
     let round = 1;
 
     while (players[0].length > 0 && players[1].length > 0) {
-        let p1Turn = JSON.stringify(players[0]);
-        let p2Turn = JSON.stringify(players[1]);
+        const p1Turn = JSON.stringify(players[0]);
+        const p2Turn = JSON.stringify(players[1]);
 
         if (rounds[0].has(p1Turn)) { return 0; }
         if (rounds[1].has(p2Turn)) { return 0; }
@@ -38,8 +38,8 @@ function combat(players: number[][], game: number = 1): number {
         rounds[0].add(p1Turn);
         rounds[1].add(p2Turn);
 
-        let p1 = players [0].shift();
-        let p2 = players[1].shift();
+        const p1 = players [0].shift();
+        const p2 = players[1].shift();
 
         let winner = -1;
 

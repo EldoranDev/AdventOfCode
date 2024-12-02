@@ -12,8 +12,8 @@ export default function (input: string[]) {
     type rule = { color: string, contains: Record<string, number> };
     const rules: ruleSet = {};
 
-    for (let match of matches) {
-        let rule: rule = {
+    for (const match of matches) {
+        const rule: rule = {
             color: match.groups.color,
             contains: { },
         };

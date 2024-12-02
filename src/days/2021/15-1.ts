@@ -49,23 +49,23 @@ export default function (input: string[], { logger }: Context) {
 
     FROM.routeScore = FROM.risk;
 
-    let open = new MinHeap<Node>();
+    const open = new MinHeap<Node>();
 
     open.push(FROM, 0);
 
     while (open.length > 0) {
-        let node = open.shift();
+        const node = open.shift();
         
         if (node.equals(TO)) {
             break;
         } 
 
         NEXT.map((v: Vec2) => {
-            let d = Vec2.add(v, node.pos);
+            const d = Vec2.add(v, node.pos);
             
             return map[d.y] ? map[d.y][d.x] : null;
         }).filter((v) => v != undefined).forEach((n) => {
-            let cost = node.routeScore + n.risk;
+            const cost = node.routeScore + n.risk;
 
             if (cost < n.routeScore) {
                 n.previous = node;
@@ -76,7 +76,7 @@ export default function (input: string[], { logger }: Context) {
         });
     }
 
-    let path: Node[] = [];
+    const path: Node[] = [];
     let current = TO;
 
     while (current != null) {

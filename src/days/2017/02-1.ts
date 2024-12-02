@@ -3,8 +3,8 @@ import { } from '@lib/input';
 export default function (input: string[]) {
     let checksum = 0;
 
-    for (let line of input) {
-        let [min, max] = getMinMax(line);
+    for (const line of input) {
+        const [min, max] = getMinMax(line);
 
         checksum += max - min;
     }
@@ -13,7 +13,7 @@ export default function (input: string[]) {
 };
 
 function getMinMax(row: string): [ min: number, max: number ] {
-    let numbers = row.split('	').map(n => Number(n)).sort((a, b) => a - b);
+    const numbers = row.split('	').map(n => Number(n)).sort((a, b) => a - b);
 
     return [
         numbers[0],

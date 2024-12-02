@@ -2,13 +2,13 @@ import { mapToNumber } from '@lib/input';
 import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
-    let positions = mapToNumber(input[0].split(','));
+    const positions = mapToNumber(input[0].split(','));
 
     let usedFuel = 99999999999999;
     let position = -1;
 
-    let min = Math.min(...positions);
-    let max = Math.max(...positions);
+    const min = Math.min(...positions);
+    const max = Math.max(...positions);
 
     logger.debug(min);
     logger.debug(max);

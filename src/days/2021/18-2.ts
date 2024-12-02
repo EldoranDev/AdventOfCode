@@ -11,7 +11,7 @@ type TreeNode = {
 }
 
 export default function (input: string[], { logger }: Context) {
-    let numbers: Array<TreeNode> = [];
+    const numbers: Array<TreeNode> = [];
 
     let highest = 0;
 
@@ -25,10 +25,10 @@ export default function (input: string[], { logger }: Context) {
         for (let j = 0; j < numbers.length; j++) {
             if (i == j) continue;
 
-            let A = deepcopy(numbers[i]);
-            let b = deepcopy(numbers[j]);
+            const A = deepcopy(numbers[i]);
+            const b = deepcopy(numbers[j]);
 
-            let N: TreeNode = {
+            const N: TreeNode = {
                 left: A,
                 right: b,
             };
@@ -38,7 +38,7 @@ export default function (input: string[], { logger }: Context) {
 
             reduce(N);
 
-            let m = getMagnitude(N);
+            const m = getMagnitude(N);
 
             if (m > highest) {
                 highest = m;
@@ -54,11 +54,11 @@ function reduce(number: TreeNode) {
         // print(number);
 
         // Check Explodes
-        let explodeNode = findExplode(number);
+        const explodeNode = findExplode(number);
         
         if (explodeNode !== null) {
             // Do explode
-            let left = findLeft(explodeNode);
+            const left = findLeft(explodeNode);
             
             if (left !== null) {
                 if (Number.isInteger(left.right)) {
@@ -68,7 +68,7 @@ function reduce(number: TreeNode) {
                 } 
             }
 
-            let right = findRight(explodeNode);
+            const right = findRight(explodeNode);
 
             if (right !== null) {
                 if (Number.isInteger(right.left)) {
@@ -89,7 +89,7 @@ function reduce(number: TreeNode) {
             continue;
         }
         
-        let splitNode = findSplit(number);
+        const splitNode = findSplit(number);
 
         // Do Split
         if (splitNode !== null) {
@@ -119,7 +119,7 @@ function reduce(number: TreeNode) {
     }
 }
 
-function getMagnitude(number: TreeNode|Number) {
+function getMagnitude(number: TreeNode|number) {
     if (typeof number === 'number') {
         return number;
     }
@@ -271,7 +271,7 @@ function createNode(num: SnailNumber, parent: TreeNode|null = null): TreeNode {
 };
 
 function createArray(number: TreeNode): Array<SnailNumber> {
-    let v = [];
+    const v = [];
 
     if (typeof(number.left) === 'number') {
         v[0] = number.left;

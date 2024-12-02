@@ -1,15 +1,15 @@
 import { } from '@lib/input';
 
 export default function (input: string[]) {
-    let cups = input[0].split('').map(c => Number(c));
+    const cups = input[0].split('').map(c => Number(c));
 
-    let orderdCups = [...cups].sort((a, b) => a - b);
+    const orderdCups = [...cups].sort((a, b) => a - b);
 
     let currentIndex = 0;
 
     for (let i = 0; i < 100; i++) {
 
-        let current = cups[currentIndex];
+        const current = cups[currentIndex];
         let destination = current-1;
         let destinationIndex = -1;
 
@@ -17,7 +17,7 @@ export default function (input: string[]) {
         console.log(`current: ${current}`);
         console.log(`cups: ${cups}`);
 
-        let outside = cups.splice(currentIndex+1, 3);
+        const outside = cups.splice(currentIndex+1, 3);
 
         if (currentIndex+4 >= cups.length) {
             outside.push(...cups.splice(0, 3 - outside.length));
@@ -48,13 +48,13 @@ export default function (input: string[]) {
         console.log();
     }
 
-    let index = cups.indexOf(1);
+    const index = cups.indexOf(1);
 
     let order = '';
 
     console.log(cups);
     for (let i = 1; i < cups.length; i++) {
-        let ind = (index+i) % cups.length;
+        const ind = (index+i) % cups.length;
         order += cups[ind].toString();
     }
 

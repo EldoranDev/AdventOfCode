@@ -2,7 +2,7 @@ import { } from '@lib/input';
 import { Context } from '@app/types';
 
 export default function (input: string[], { logger }: Context) {
-    let numbers = {
+    const numbers = {
         0: ['a', 'b', 'c', 'e', 'f', 'g'],
         1: ['c', 'f'],
         2: ['a', 'c', 'd', 'e', 'g'],
@@ -15,12 +15,12 @@ export default function (input: string[], { logger }: Context) {
         9: ['a', 'b', 'c', 'd', 'f', 'g'],
     }
 
-    let lines = input.map(l => l.split('|').map(c => c.trim().split(' ')));
+    const lines = input.map(l => l.split('|').map(c => c.trim().split(' ')));
     let count = 0;
 
     console.log(lines[0]);
 
-    for (let line of lines) {
+    for (const line of lines) {
             count += line[1].filter(c => [2, 4, 3, 7].includes(c.length)).length
     }
 

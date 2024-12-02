@@ -7,20 +7,20 @@ const WINNING_SCORE = 21;
 const role = memoize(function (player: number, scores: [ number, number ], positions: [ number, number ]) {
 
     if (scores[((player + 1) % 2)] >= WINNING_SCORE) {
-        let s = [0, 0];
+        const s = [0, 0];
         s[(player + 1) % 2] = 1;
 
         return s;
     }
 
-    let wins: [number, number] = [0, 0];
+    const wins: [number, number] = [0, 0];
 
     for (let r1 = 0; r1 < 3; r1++) {
         for (let r2 = 0; r2 < 3; r2++) {
             for (let r3 = 0 ; r3 < 3; r3++) {
-                let rolled = r1 + r2 + r3 + 3;
-                let pos: [number, number] = [...positions];
-                let sco: [number, number] = [...scores];
+                const rolled = r1 + r2 + r3 + 3;
+                const pos: [number, number] = [...positions];
+                const sco: [number, number] = [...scores];
 
                 pos[player] = (pos[player] + rolled) % 10;
                 sco[player] += pos[player] + 1;

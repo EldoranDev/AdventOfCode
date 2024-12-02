@@ -11,8 +11,8 @@ export default function (input: string[]) {
 
     
     while (players[0].length > 0 && players[1].length > 0) {
-        let p1 = players[0].shift();
-        let p2 = players[1].shift();
+        const p1 = players[0].shift();
+        const p2 = players[1].shift();
 
         if (p1 > p2) {
             players[0].push(p1);

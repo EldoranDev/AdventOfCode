@@ -8,14 +8,14 @@ export default function (input: string[]) {
 
     const map: Record<string, string> = {};
 
-    for (let line of input) {
+    for (const line of input) {
         const parts = line.substr(0, line.length-1).split('(contains ');
         const ingr = parts[0].trim().split(' ');
         const algs = parts[1].split(', ');
         
         foods.push(ingr);
 
-        for (let alg of algs) {
+        for (const alg of algs) {
             if (allergenMap[alg] === undefined) {
                 allergenMap[alg] = [];
             }
@@ -27,7 +27,7 @@ export default function (input: string[]) {
 
     let allergens = Object.keys(allergenMap);
 
-    for (let allergen of allergens){
+    for (const allergen of allergens){
         let filtered = allergenMap[allergen][0];
 
         for (let i = 1; i < allergenMap[allergen].length; i++) {
@@ -39,15 +39,15 @@ export default function (input: string[]) {
 
     do {
         allergens = Object.keys(potential);
-        let del = [];
+        const del = [];
 
-        for (let allergen of allergens) {
+        for (const allergen of allergens) {
             if (potential[allergen].length === 1) {
-                let food = potential[allergen][0];
+                const food = potential[allergen][0];
 
                 map[food] = allergen;
                 
-                for (let it of allergens) {
+                for (const it of allergens) {
                     potential[it] = potential[it].filter(a => a !== food);
                 }
 
@@ -55,14 +55,14 @@ export default function (input: string[]) {
             }
         }
 
-        for (let d of del) {
+        for (const d of del) {
             delete potential[d];
         }
     } while (allergens.length > 0);
 
-    let flip: Record<string, string> = {};
+    const flip: Record<string, string> = {};
 
-    for (let food of Object.keys(map)) {
+    for (const food of Object.keys(map)) {
         flip[map[food]] = food; 
     }
 

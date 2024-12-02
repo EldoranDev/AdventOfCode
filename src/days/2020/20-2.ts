@@ -11,9 +11,9 @@ export default function (input: string[]) {
 
     const tiles: Tile[] = [];
 
-    for (let t of ip) {
-        let id = Number(t[0].replace(':', '').split(' ')[1]);
-        let data = [];
+    for (const t of ip) {
+        const id = Number(t[0].replace(':', '').split(' ')[1]);
+        const data = [];
 
         for (let y = 1; y < t.length; y++) {
             data[y-1] = new Array(t[y].length);
@@ -22,18 +22,18 @@ export default function (input: string[]) {
             }
         }
 
-        let borders = getBorders(data);
+        const borders = getBorders(data);
 
         tiles.push({id, data, borders, neighbors: [] });
     }
 
-    for (let t of tiles) {
+    for (const t of tiles) {
         t.neighbors = findNeighbors(t, tiles);
     }
 
     const corners: Tile[] = tiles.filter(t => t.neighbors.length === 2);
 
-    let grid: Tile[][] = [[]];
+    const grid: Tile[][] = [[]];
 
     grid[0][0] = corners[0];
 
@@ -42,8 +42,8 @@ export default function (input: string[]) {
     const pending: Vec2[] = [ new Vec2(0, 0) ];
 
     while(pending.length > 0) {
-        let current = pending.shift();
-        let tile = grid[current.y][current.x];
+        const current = pending.shift();
+        const tile = grid[current.y][current.x];
         
         // Check if we need to place something on the right
         // if checking border peace this will pass but we'll not find a tile to place
@@ -54,7 +54,7 @@ export default function (input: string[]) {
             // Get the one that fits on the right side of the current tile
             // so has a matching border to our border on the right side
             // we can trust that we are aligned correctly as all alignes are based on initial corner
-            let right = getMatching(rborder, tile.neighbors);
+            const right = getMatching(rborder, tile.neighbors);
 
             // If a tile is found the current one isn't a corner peace so the found one can be placed
             if (right !== null) {
@@ -72,7 +72,7 @@ export default function (input: string[]) {
             // Get the one that fits on the bottom side of the current tile
             // so has a matching border to our border on the bottom side of the current tile
             // we can trust that we are aligned correctly as all alignes are based on initial corner
-            let bottom = getMatching(bborder, tile.neighbors);
+            const bottom = getMatching(bborder, tile.neighbors);
 
             if (bottom !== null) {
                 alignTop(bborder, bottom);
@@ -88,7 +88,7 @@ export default function (input: string[]) {
         }
     }
 
-    let image = createImage(grid);
+    const image = createImage(grid);
     const monster = getMonster();
 
 
@@ -140,7 +140,7 @@ function countMonsters (image: boolean[][], monster: Monster): number {
             };
             
             let found = true;
-            for (let offset of monster.offsets) {
+            for (const offset of monster.offsets) {
                 if (!image[y+offset.y][x+offset.x]) {
                     found = false;
                     break;
@@ -209,7 +209,7 @@ function getMonster(): Monster {
 }
 
 function alignLeft(border: boolean[], tile: Tile) {
-    let rb = [...border].reverse();
+    const rb = [...border].reverse();
 
     while (
         !equals(border, getColumn(tile.data, 0))
@@ -224,7 +224,7 @@ function alignLeft(border: boolean[], tile: Tile) {
 }
 
 function alignTop(border: boolean[], tile: Tile) {
-    let rb = [...border].reverse();
+    const rb = [...border].reverse();
 
     while (
         !equals(border, tile.data[0])
@@ -239,10 +239,10 @@ function alignTop(border: boolean[], tile: Tile) {
 }
 
 function alignInitialCorner(grid: Tile[][]) {
-    let right = findMatching(grid[0][0].borders, grid[0][0].neighbors[0].borders);
-    let bottom = findMatching(grid[0][0].borders, grid[0][0].neighbors[1].borders);
+    const right = findMatching(grid[0][0].borders, grid[0][0].neighbors[0].borders);
+    const bottom = findMatching(grid[0][0].borders, grid[0][0].neighbors[1].borders);
 
-    let c = grid[0][0];
+    const c = grid[0][0];
 
     while (
         !equals(c.data[c.data.length-1], bottom)
@@ -260,7 +260,7 @@ function alignInitialCorner(grid: Tile[][]) {
 }
 
 function getMatching(border: boolean[], tiles: Tile[]): Tile|null {
-    for (let tile of tiles) {
+    for (const tile of tiles) {
         if (tile.borders.filter((b) => equals(border, b) || equals(border, b.reverse())).length > 0) {
             return tile;
         }
@@ -270,13 +270,13 @@ function getMatching(border: boolean[], tiles: Tile[]): Tile|null {
 }
 
 function getBorders(data: boolean[][]): boolean[][] {
-    let borders: boolean[][] = [];
+    const borders: boolean[][] = [];
 
     borders.push([...data[0]])
     borders.push([...data[data.length-1]]);
 
-    let l = [];
-    let r = [];
+    const l = [];
+    const r = [];
 
     for (let y = 0; y < data.length; y++) {
         l[y] = data[y][0];
@@ -292,7 +292,7 @@ function getBorders(data: boolean[][]): boolean[][] {
 function findNeighbors(tile: Tile, tiles: Tile[]): Tile[] {
     const neighbors: Tile[] = [];
 
-    for (let t of tiles) {
+    for (const t of tiles) {
         if (t.id === tile.id) continue;
 
         if (areAdjacent(tile, t)) {
@@ -304,8 +304,8 @@ function findNeighbors(tile: Tile, tiles: Tile[]): Tile[] {
 }
 
 function findMatching(a: boolean[][], b: boolean[][]): boolean[]|null {
-    for (let ab of a) {
-        for (let bb of b) {
+    for (const ab of a) {
+        for (const bb of b) {
             if (
                 equals(ab, bb)
                 || equals(ab, bb.reverse())

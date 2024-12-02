@@ -4,18 +4,18 @@ const R_MEM = /mem\[([0-9]*)\] = ([0-9]*)/;
 
 export default function (input: string[]) {
     let mask: string = "";
-    let mem: Record<string, number> = {};
+    const mem: Record<string, number> = {};
 
     for (let i = 0; i < input.length; i++) {
         if (input[i].includes('mask')) {
             mask = input[i].replace('mask = ', '');
         } else {
-            let match = R_MEM.exec(input[i]);
-            let bin = Number(match[1]).toString(2).padStart(mask.length, '0');
+            const match = R_MEM.exec(input[i]);
+            const bin = Number(match[1]).toString(2).padStart(mask.length, '0');
             
-            let addresses = getMemoryArray(mask, bin);
+            const addresses = getMemoryArray(mask, bin);
 
-            for (let add of addresses) {
+            for (const add of addresses) {
                 mem[add] = Number(match[2]);
             }
         }
@@ -29,7 +29,7 @@ function getMemoryArray(mask: string, address: string, current: string = ""): st
         return [Number.parseInt(current, 2).toString() ];
     }
 
-    let addresses = [];
+    const addresses = [];
 
     if (mask.charAt(current.length) === 'X') {
         addresses.push(...getMemoryArray(mask, address, current + "0"));

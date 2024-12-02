@@ -10,7 +10,7 @@ export default function (input: string[]) {
     const rules: Record<string, ruleSet> = {};
 
     for (let i = 0; i < RULE_COUNT; i++) {
-        let match = R_RULE.exec(input[i]);
+        const match = R_RULE.exec(input[i]);
 
         rules[match[1]] = [
             getRange(match[2]),
@@ -19,15 +19,15 @@ export default function (input: string[]) {
     } 
 
     let sum = 0;
-    let ruleNames = Object.keys(rules);
+    const ruleNames = Object.keys(rules);
 
     for (let i = RULE_COUNT + 5; i < input.length; i++) {
-        let ticket = input[i].split(',').map(n => Number(n));
+        const ticket = input[i].split(',').map(n => Number(n));
 
-        for (let field of ticket) {
+        for (const field of ticket) {
             let anyValid = false;
 
-            for (let rule of ruleNames) {
+            for (const rule of ruleNames) {
                 if (
                     field >= rules[rule][0].min && field <= rules[rule][0].max ||
                     field >= rules[rule][1].min && field <= rules[rule][1].max
@@ -47,7 +47,7 @@ export default function (input: string[]) {
 };
 
 function getRange(range: string): range {
-    let s = range.split('-');
+    const s = range.split('-');
 
     return {
         min: Number(s[0]),

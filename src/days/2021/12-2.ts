@@ -8,11 +8,11 @@ const paths: string[][] = [];
 const START = 'start';
 const END = 'end';
 
-let connections: ConnectionMap = new Map();
+const connections: ConnectionMap = new Map();
 
 export default function (input: string[], { logger }: Context) {
-    for (let line of input) {
-        let [a, b] = line.split('-');
+    for (const line of input) {
+        const [a, b] = line.split('-');
 
         if (!connections.has(a)) {
             connections.set(a, new Set<string>());
@@ -50,7 +50,7 @@ function findEnd(
 
     path.push(current);
 
-    let cons = connections.get(current);
+    const cons = connections.get(current);
     
 
     for (const con of cons) {
@@ -60,7 +60,7 @@ function findEnd(
             if (path.filter(c => c === con).length > 1) continue;
         
             let hasDouble = false;    
-            for (let node of path.filter(c => isLowerCase(c))) {
+            for (const node of path.filter(c => isLowerCase(c))) {
                 if (path.filter(c => c === node).length > 1) {
                     hasDouble = true;
                     break;

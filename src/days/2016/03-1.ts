@@ -12,8 +12,8 @@ const extract = /\s*(\d+)\s*(\d+)\s*(\d+)/;
 export default function (input: string[], { logger }: Context) {
     let possible = 0;
 
-    for(let line of input) {
-        let match = extract.exec(line);
+    for(const line of input) {
+        const match = extract.exec(line);
         
         const sides = [
             Number(match[1]),
@@ -23,7 +23,7 @@ export default function (input: string[], { logger }: Context) {
 
         let valid = true;
 
-        for(let c of combitnations) {
+        for(const c of combitnations) {
             logger.debug(`${sides[c[0]]} + ${sides[c[1]]} > ${sides[c[2]]}`);
 
             if (sides[c[0]] + sides[c[1]] <= sides[c[2]]) {

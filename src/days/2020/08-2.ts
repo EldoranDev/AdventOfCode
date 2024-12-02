@@ -5,7 +5,7 @@ type Result = { loop: boolean, acc: number };
 
 export default function (input: string[]) {
     const base = input.map((line) => { 
-        let parts = line.split(' ');
+        const parts = line.split(' ');
         return {
             op: parts[0],
             param: Number(parts[1]),
@@ -14,7 +14,7 @@ export default function (input: string[]) {
 
 
     for (let i = 0; i < base.length; i++) {
-        let op: Op[] = [...base];
+        const op: Op[] = [...base];
 
         if (base[i].op === 'nop' && base[i].param !== 0) {
             op[i] = {
@@ -30,7 +30,7 @@ export default function (input: string[]) {
             continue;
         }
 
-        let result = execute(op);
+        const result = execute(op);
 
         if (!result.loop) {
             return result.acc;

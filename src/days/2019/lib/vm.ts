@@ -26,7 +26,7 @@ export default class VM {
 
     public run(): number {
         while (!this.halted) {
-            let OP = this.memory[this.instr];
+            const OP = this.memory[this.instr];
     
             switch (OP) {
                 case 1:

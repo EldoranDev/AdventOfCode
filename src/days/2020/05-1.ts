@@ -2,10 +2,10 @@ export default function (input: string[]) {
   let highest = 0;
   
   for (const pass of input) {
-    let row = binarySearch(pass.substr(0, 7), 0, 127, { lower: 'F', upper: 'B' });
-    let column = binarySearch(pass.substr(7), 0, 7, { lower: 'L', upper: 'R' });   
+    const row = binarySearch(pass.substr(0, 7), 0, 127, { lower: 'F', upper: 'B' });
+    const column = binarySearch(pass.substr(7), 0, 7, { lower: 'L', upper: 'R' });   
 
-    let id = row * 8 + column;
+    const id = row * 8 + column;
     
     if (id > highest) {
         highest = id;
@@ -22,7 +22,7 @@ function binarySearch(input: string, _lower: number, _upper: number, settings: s
     let lower = _lower;
 
     for (let i = 0; i < input.length; i++) {
-        let direction = input.charAt(i);
+        const direction = input.charAt(i);
         
         let diff = ((upper - lower )/2) | 0;
         diff++;

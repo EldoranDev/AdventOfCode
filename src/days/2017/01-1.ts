@@ -2,7 +2,7 @@ import { } from '@lib/input';
 
 export default function (input: string[]) {
 
-    let [ line ] = input;
+    const [ line ] = input;
     let sum = 0;
 
     for (let i = 0; i <= line.length; i++) {

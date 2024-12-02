@@ -18,8 +18,8 @@ export default function (input: string[], { logger }: Context) {
     let infinity = false;
 
     for (let e = 0; e < ENHANCES; e++) {
-        let input = create(map[0].length + BUFFER*2, map.length + BUFFER*2, infinity);
-        let newMap = create(map[0].length + BUFFER*2, map.length + BUFFER*2, infinity);
+        const input = create(map[0].length + BUFFER*2, map.length + BUFFER*2, infinity);
+        const newMap = create(map[0].length + BUFFER*2, map.length + BUFFER*2, infinity);
 
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
@@ -29,7 +29,7 @@ export default function (input: string[], { logger }: Context) {
 
         for (let y = 0; y < newMap.length; y++) {
             for (let x = 0; x < newMap[y].length; x++) {
-                let index = getNumber(
+                const index = getNumber(
                     x,
                     y, 
                     input,

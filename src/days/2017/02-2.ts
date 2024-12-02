@@ -3,7 +3,7 @@ import { } from '@lib/input';
 export default function (input: string[]) {
     let checksum = 0;
 
-    for (let line of input) {
+    for (const line of input) {
         checksum += getMinMax(line);
     }
 
@@ -11,7 +11,7 @@ export default function (input: string[]) {
 };
 
 function getMinMax(row: string): number {
-    let numbers = row.split('	').map(n => Number(n)).sort((a, b) => b - a);
+    const numbers = row.split('	').map(n => Number(n)).sort((a, b) => b - a);
 
     for (let i = 0; i < numbers.length; i++) {
         for (let j = i+1; j < numbers.length; j++) {

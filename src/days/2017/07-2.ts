@@ -36,7 +36,7 @@ class Disk {
 
     get isBalanced(): boolean {
         let balanced = true;
-        let weights: number[] = [];
+        const weights: number[] = [];
 
 
         for (const t of this.top) {
@@ -49,10 +49,10 @@ class Disk {
 }
 
 export default function (input: string[]) {
-    let map = new Map<string, Disk>();
+    const map = new Map<string, Disk>();
 
-    for (let line of input) {
-        let parts = line.split('->');
+    for (const line of input) {
+        const parts = line.split('->');
 
         const current = parts[0].split(' ')[0].trim();
 
@@ -72,7 +72,7 @@ export default function (input: string[]) {
 
         const top = parts[1].split(',').map(p => p.trim());
 
-        for (let t of top) {
+        for (const t of top) {
             if (!map.has(t)) {
                 map.set(t, new Disk(t, [], null, 0));
             }
@@ -116,7 +116,7 @@ function checkBalanced(disk: Disk): void {
         checkBalanced(d);
     }
 
-    let weights = disk.top.map(d => d.overallWeight);
+    const weights = disk.top.map(d => d.overallWeight);
 
     if (!elementsEqual (weights)) {
         throw disk;

@@ -9,11 +9,11 @@ type Room = { name: string, sector: number, checksum: string};
 export default function (input: string[], { logger }: Context) {
     let rooms: Array<Room> = [];
 
-    for (let line of input) {
+    for (const line of input) {
         const chars = {};
 
-        let match = extractor.exec(line);
-        let room: Room = {
+        const match = extractor.exec(line);
+        const room: Room = {
             name: match[1],
             sector: Number(match[2]),
             checksum: match[3],
@@ -25,10 +25,10 @@ export default function (input: string[], { logger }: Context) {
     }
 
     rooms = rooms.filter((room: Room) => {
-        let chars: { [key: string]: number } = {};
-        let order: { [key: string]: string[] } = {};
+        const chars: { [key: string]: number } = {};
+        const order: { [key: string]: string[] } = {};
 
-        for (let char of room.name.split('')) {
+        for (const char of room.name.split('')) {
             if (!chars[char]) {
                 chars[char] = 0;
             }
@@ -38,7 +38,7 @@ export default function (input: string[], { logger }: Context) {
 
         const letters = Object.keys(chars);
         
-        for (let letter of letters) {
+        for (const letter of letters) {
             if (letter == '-') continue;
 
             if (!order[chars[letter]]) {
@@ -51,7 +51,7 @@ export default function (input: string[], { logger }: Context) {
 
         const counts = Object.keys(order).map((o) => Number(o)).sort((a, b) => b - a);
 
-        for (let count of counts) {
+        for (const count of counts) {
             order[count].sort()
             hashsum.push(
                 ...order[count]
@@ -63,8 +63,8 @@ export default function (input: string[], { logger }: Context) {
         return hash === room.checksum;
     });
 
-    for (let room of rooms) {
-        let name = decrypt(room.name, room.sector);
+    for (const room of rooms) {
+        const name = decrypt(room.name, room.sector);
         logger.debug(`${room.name} -> ${name}`);
 
         room.name = name;

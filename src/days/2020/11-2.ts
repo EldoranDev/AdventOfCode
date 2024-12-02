@@ -19,7 +19,7 @@ export default function (input: string[]) {
     let hadChange = false;
 
     do {
-        let newGrid: string[][] = JSON.parse(JSON.stringify(grid));
+        const newGrid: string[][] = JSON.parse(JSON.stringify(grid));
         hadChange = false;
 
         for (let y = 0; y < newGrid.length; y++) {
@@ -63,7 +63,7 @@ function printBoard(grid: string[][], highlight: Vec2 = {x: -1, y: -1}): void {
 }
 
 function canSeeAny(grid: string[][], pos: Vec2): boolean {
-    for (let dir of DIRECTIONS) {
+    for (const dir of DIRECTIONS) {
         if (checkDirection(grid, pos, dir) === '#') {
             return true;
         }
@@ -91,7 +91,7 @@ function checkDirection(grid: string[][], pos: Vec2, direction: Vec2): string|nu
 function occupiedAdjacent(grid: string[][], pos: Vec2): number {
     let count = 0;
 
-    for (let dir of DIRECTIONS) {
+    for (const dir of DIRECTIONS) {
         if (checkDirection(grid, pos, dir) === '#') {
             count++;
         }

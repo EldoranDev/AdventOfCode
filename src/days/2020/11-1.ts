@@ -6,7 +6,7 @@ export default function (input: string[]) {
     let hadChange = true;
     let tick = 0;
     do {
-        let newGrid: string[][] = JSON.parse(JSON.stringify(grid));
+        const newGrid: string[][] = JSON.parse(JSON.stringify(grid));
         hadChange = false;
 
         for (let x = 0; x < newGrid.length; x++) {

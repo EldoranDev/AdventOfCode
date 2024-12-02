@@ -38,7 +38,7 @@ export default function (input: string[], { logger }: Context) {
 
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
-            let increase = ((y / input.length) | 0) +  ((x / input[0].length) | 0);
+            const increase = ((y / input.length) | 0) +  ((x / input[0].length) | 0);
             let risk = Number(input[y % input.length].charAt(x % input[0].length)) + increase;
 
             if (risk > 9) {
@@ -62,23 +62,23 @@ export default function (input: string[], { logger }: Context) {
 
     FROM.routeScore = FROM.risk;
 
-    let open = new MinHeap<Node>();
+    const open = new MinHeap<Node>();
 
     open.push(FROM, 0);
 
     while (open.length > 0) {
-        let node = open.shift();
+        const node = open.shift();
         
         if (node.equals(TO)) {
             break;
         } 
 
         NEXT.map((v: Vec2) => {
-            let d = Vec2.add(v, node.pos);
+            const d = Vec2.add(v, node.pos);
             
             return map[d.y] ? map[d.y][d.x] : null;
         }).filter((v) => v != undefined).forEach((n) => {
-            let cost = node.routeScore + n.risk;
+            const cost = node.routeScore + n.risk;
 
             if (cost < n.routeScore) {
                 n.previous = node;
@@ -89,7 +89,7 @@ export default function (input: string[], { logger }: Context) {
         });
     }
 
-    let path: Node[] = [];
+    const path: Node[] = [];
     let current = TO;
 
     while (current != null) {
