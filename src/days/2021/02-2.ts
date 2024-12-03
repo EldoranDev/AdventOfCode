@@ -4,10 +4,10 @@ import { Vec2, Vec3 } from '@lib/math';
 
 export default function (input: string[], { logger }: Context) {
     let pos = new Vec3(0, 0, 0);
-    
+
     for (let line of input) {
         let [ instr, length ] = line.split(' ');
-        
+
         switch(instr) {
             case 'forward':
                 pos.x += Number(length);
