@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "start": "tsx index.ts",
+    "start": "tsx aoc.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint ./src/lib",

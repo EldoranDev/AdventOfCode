@@ -1,3 +1,4 @@
+#!/usr/bin/env -S npx tsx
 import yargs from "yargs";
 import { readFileSync } from "fs";
 import { resolve } from "path";
