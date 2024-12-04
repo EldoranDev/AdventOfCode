@@ -9,9 +9,7 @@ export default function (input: string[], { logger }: Context) {
     for (let i = 0; i < input.length; i++) {
         const mults = input[i].matchAll(SEARCH);
 
-        sum += mults.reduce<number>((val, match) => {
-            return val + Number(match.groups['a']) * Number(match.groups['b']);
-        }, 0)
+        sum += mults.reduce<number>((val, match) => val + Number(match.groups.a) * Number(match.groups.b), 0);
     }
 
     return sum;
