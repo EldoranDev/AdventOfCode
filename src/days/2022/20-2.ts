@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 type NumberRef = { number: number };
 
@@ -8,7 +8,7 @@ const RESULT_NUMS = [1000, 2000, 3000];
 
 export default function (input: string[], { logger }: Context) {
     const elements: Array<NumberRef> = input.map((line) => ({
-        number: (+line) * 811589153,
+        number: +line * 811589153,
     }));
 
     const mixer = [...elements];

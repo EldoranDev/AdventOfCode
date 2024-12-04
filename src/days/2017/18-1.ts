@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const card = new SoundCard(input);
@@ -31,9 +31,11 @@ class SoundCard {
     constructor(asm: string[]) {
         this.rom = asm.map((row) => this.parse(row));
 
-        Array.from({ length: 26 }, (_, i) => String.fromCharCode('a'.charCodeAt(0) + i)).forEach((char) => {
-            this.registers[char] = 0;
-        });
+        Array.from({ length: 26 }, (_, i) => String.fromCharCode("a".charCodeAt(0) + i)).forEach(
+            (char) => {
+                this.registers[char] = 0;
+            },
+        );
     }
 
     public tick(): number | null {
@@ -45,39 +47,39 @@ class SoundCard {
     }
 
     private parse(asm: string): Instr {
-        const [instr, iX, iY] = asm.split(' ');
+        const [instr, iX, iY] = asm.split(" ");
 
         const X = new Parameter(iX, this);
         const Y = new Parameter(iY, this);
 
         switch (instr) {
-            case 'snd':
+            case "snd":
                 return (): Response => {
                     this.sound = X.getValue();
                     this.lastSound = X.getValue();
                     return null;
                 };
-            case 'set':
+            case "set":
                 return (): Response => {
                     this.registers[iX] = Y.getValue();
                     return null;
                 };
-            case 'add':
+            case "add":
                 return (): Response => {
                     this.registers[iX] += Y.getValue();
                     return null;
                 };
-            case 'mul':
+            case "mul":
                 return (): Response => {
                     this.registers[iX] *= Y.getValue();
                     return null;
                 };
-            case 'mod':
+            case "mod":
                 return (): Response => {
                     this.registers[iX] %= Y.getValue();
                     return null;
                 };
-            case 'rcv':
+            case "rcv":
                 return (): Response => {
                     if (X.getValue() !== 0) {
                         return this.lastSound;
@@ -85,7 +87,7 @@ class SoundCard {
 
                     return null;
                 };
-            case 'jgz':
+            case "jgz":
                 return (): Response => {
                     if (X.getValue() > 0) {
                         this.PC += Y.getValue() - 1;
@@ -93,7 +95,7 @@ class SoundCard {
                     return null;
                 };
             default:
-                throw new Error('Unknown instruction');
+                throw new Error("Unknown instruction");
         }
     }
 }
@@ -113,6 +115,6 @@ class Parameter {
             return this.card.registers[this.value];
         }
 
-        return (Number(this.value));
+        return Number(this.value);
     }
 }

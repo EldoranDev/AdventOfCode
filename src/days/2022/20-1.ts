@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 type NumberRef = { number: number };
 

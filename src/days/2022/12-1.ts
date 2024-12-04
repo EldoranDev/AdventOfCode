@@ -1,12 +1,12 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Graph, GraphNode } from '@lib/graph/Graph';
-import { Vec2 } from '@lib/math';
-import { AStar } from '@lib/graph/AStar';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Graph, GraphNode } from "@lib/graph/Graph";
+import { Vec2 } from "@lib/math";
+import { AStar } from "@lib/graph/AStar";
 
 interface Point extends GraphNode {
     height: number;
-    pos: Vec2,
+    pos: Vec2;
 }
 
 export default function (input: string[], { logger }: Context) {
@@ -20,11 +20,11 @@ export default function (input: string[], { logger }: Context) {
             const pos = new Vec2(x, y);
             const height = toNum(input[y][x]);
 
-            if (input[y][x] === 'S') {
+            if (input[y][x] === "S") {
                 S = pos.toString();
             }
 
-            if (input[y][x] === 'E') {
+            if (input[y][x] === "E") {
                 E = pos.toString();
             }
 
@@ -64,12 +64,12 @@ export default function (input: string[], { logger }: Context) {
 }
 
 function toNum(char: string): number {
-    if (char === 'S') {
-        return 'a'.charCodeAt(0);
+    if (char === "S") {
+        return "a".charCodeAt(0);
     }
 
-    if (char === 'E') {
-        return 'z'.charCodeAt(0);
+    if (char === "E") {
+        return "z".charCodeAt(0);
     }
 
     return char.charCodeAt(0);

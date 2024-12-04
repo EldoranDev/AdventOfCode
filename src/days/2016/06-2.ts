@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const columns = [];
@@ -38,4 +38,4 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return output;
-};
+}

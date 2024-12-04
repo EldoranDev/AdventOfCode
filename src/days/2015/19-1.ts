@@ -1,5 +1,5 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 type Replacement = {
     from: string;
@@ -12,7 +12,7 @@ export default function (input: string[], { logger }: Context) {
     const replacements: Array<Replacement> = [];
 
     for (const instruction of instructions) {
-        const [from, to] = instruction.split(' => ');
+        const [from, to] = instruction.split(" => ");
 
         replacements.push({ from, to });
     }

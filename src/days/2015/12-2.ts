@@ -1,12 +1,12 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    const parsed = JSON.parse(input.join('\r\n'));
+    const parsed = JSON.parse(input.join("\r\n"));
 
     return getSum(parsed);
-};
+}
 
-function getSum(objects: object|any[], sum: number = 0): number {
+function getSum(objects: object | any[], sum: number = 0): number {
     let ignore = false;
     let object = false;
 
@@ -22,8 +22,8 @@ function getSum(objects: object|any[], sum: number = 0): number {
             add += element;
         }
 
-        if (typeof element === 'string') {
-            if (element === 'red' && object) {
+        if (typeof element === "string") {
+            if (element === "red" && object) {
                 ignore = true;
             }
             continue;

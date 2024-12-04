@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 interface Pulse {
     from: string;
@@ -11,9 +11,9 @@ interface Pulse {
 type State = boolean;
 
 interface Module {
-    id: string,
-    targets: string[],
-    process(pulse: Pulse): Pulse[],
+    id: string;
+    targets: string[];
+    process(pulse: Pulse): Pulse[];
 }
 
 class FlipFlop implements Module {
@@ -22,7 +22,7 @@ class FlipFlop implements Module {
     constructor(
         public id: string,
         public targets: string[],
-    ) { }
+    ) {}
 
     public process(pulse: Pulse): Pulse[] {
         // High pulses are ignored
@@ -46,7 +46,7 @@ class Conjunction implements Module {
     constructor(
         public id: string,
         public targets: string[],
-    ) { }
+    ) {}
 
     public process(pulse: Pulse): Pulse[] {
         this.memory[pulse.from] = pulse.pulse;
@@ -69,7 +69,7 @@ class Broadcaster implements Module {
     constructor(
         public id: string,
         public targets: string[],
-    ) { }
+    ) {}
 
     public process(pulse: Pulse): Pulse[] {
         return this.targets.map((target) => ({
@@ -84,7 +84,7 @@ class Untyped implements Module {
     constructor(
         public id: string,
         public targets: string[] = [],
-    ) { }
+    ) {}
 
     public process(pulse: Pulse): Pulse[] {
         return [];
@@ -103,14 +103,32 @@ export default function (input: string[], { logger }: Context) {
         const [type, id, targets] = /([&%]?)([a-z]+) -> (.+)/.exec(line).slice(1);
 
         switch (type) {
-            case '%':
-                modules.set(id, new FlipFlop(id, targets.split(',').map((target) => target.trim())));
+            case "%":
+                modules.set(
+                    id,
+                    new FlipFlop(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
-            case '&':
-                modules.set(id, new Conjunction(id, targets.split(',').map((target) => target.trim())));
+            case "&":
+                modules.set(
+                    id,
+                    new Conjunction(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
-            case '':
-                modules.set(id, new Broadcaster(id, targets.split(',').map((target) => target.trim())));
+            case "":
+                modules.set(
+                    id,
+                    new Broadcaster(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
             default:
                 throw new Error(`Unknown type: ${type}`);
@@ -129,7 +147,7 @@ export default function (input: string[], { logger }: Context) {
 
     // Untyped output module for testing purposes
     // Required for one of the test inputs
-    modules.set('output', new Untyped('output'));
+    modules.set("output", new Untyped("output"));
 
     const pulses: Array<Pulse> = [];
 
@@ -137,8 +155,8 @@ export default function (input: string[], { logger }: Context) {
 
     for (let i = 0; i < LIMIT; i++) {
         pulses.push({
-            from: 'button',
-            to: 'broadcaster',
+            from: "button",
+            to: "broadcaster",
             pulse: false,
         });
 

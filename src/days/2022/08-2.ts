@@ -1,7 +1,7 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { create, getColumn } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { create, getColumn } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
 
 const LEFT = 0b0001;
 const RIGHT = 0b0010;
@@ -55,12 +55,7 @@ function canIgnore(y: number, x: number): boolean {
     return false;
 }
 
-const DIRECTIONS: Vec2[] = [
-    new Vec2(0, 1),
-    new Vec2(0, -1),
-    new Vec2(1, 0),
-    new Vec2(-1, 0),
-];
+const DIRECTIONS: Vec2[] = [new Vec2(0, 1), new Vec2(0, -1), new Vec2(1, 0), new Vec2(-1, 0)];
 
 function getScore(y: number, x: number): number {
     let score = 1;

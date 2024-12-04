@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 const E = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
 
@@ -54,10 +54,11 @@ function getBlocked(row: number, sensors: Array<Sensor>): Array<Range> {
     for (let x = MIN; x < MAX; x++) {
         const pos = new Vec2(x, row);
 
-        const index = sens
-            .map((s, i) => ({ d: pos.manhattan(s.pos), i }))
-            .filter((s) => s.d <= sens[s.i].distance)
-            .sort((a, b) => b.d - a.d)[0]?.i ?? null;
+        const index =
+            sens
+                .map((s, i) => ({ d: pos.manhattan(s.pos), i }))
+                .filter((s) => s.d <= sens[s.i].distance)
+                .sort((a, b) => b.d - a.d)[0]?.i ?? null;
 
         if (index === null) {
             continue;
@@ -81,10 +82,7 @@ function getBlocked(row: number, sensors: Array<Sensor>): Array<Range> {
 
         for (let i = 0; i < ranges.length - 1; i++) {
             if (ranges[i][1] >= ranges[i + 1][0]) {
-                blocked.push([
-                    ranges[i][0],
-                    ranges[i + 1][1],
-                ]);
+                blocked.push([ranges[i][0], ranges[i + 1][1]]);
                 i++;
                 hadMerge = true;
             } else {

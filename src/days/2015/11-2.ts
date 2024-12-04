@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-const CHAR_CODE_A = 'a'.charCodeAt(0);
-const CHAR_CODE_Z = 'z'.charCodeAt(0);
+const CHAR_CODE_A = "a".charCodeAt(0);
+const CHAR_CODE_Z = "z".charCodeAt(0);
 
-const FORBIDDEN = ['i', 'o', 'l'].map((c) => c.charCodeAt(0));
+const FORBIDDEN = ["i", "o", "l"].map((c) => c.charCodeAt(0));
 
 export default function (input: string[], { logger }: Context) {
     const password = input[0];
 
     // eslint-disable-next-line prefer-const
-    let pw = password.split('').map((c) => c.charCodeAt(0));
+    let pw = password.split("").map((c) => c.charCodeAt(0));
 
     for (;;) {
         getNextPassword(pw);
@@ -25,7 +25,7 @@ export default function (input: string[], { logger }: Context) {
         getNextPassword(pw);
 
         if (isValid(pw)) {
-            return pw.map((c) => String.fromCharCode(c)).join('');
+            return pw.map((c) => String.fromCharCode(c)).join("");
         }
     }
 }
@@ -67,7 +67,7 @@ function increase(pw: Array<number>, index: number): void {
         index--;
 
         if (index < 0) {
-            throw new Error('Could not find a new Password');
+            throw new Error("Could not find a new Password");
         }
 
         pw[index]++;

@@ -1,6 +1,6 @@
-import { Logger } from 'winston';
+import { Logger } from "winston";
 
 export type Context = {
-    logger?: Logger,
-    test: boolean,
+    logger?: Logger;
+    test: boolean;
 };

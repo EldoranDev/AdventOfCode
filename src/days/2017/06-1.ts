@@ -1,7 +1,7 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    const banks = input[0].split('	').map(n => Number(n));
+    const banks = input[0].split("	").map((n) => Number(n));
 
     let loop = false;
 
@@ -17,7 +17,7 @@ export default function (input: string[]) {
             banks[(index + i + 1) % banks.length]++;
         }
 
-        const key = banks.join('-');
+        const key = banks.join("-");
 
         loop = set.has(key);
 
@@ -25,4 +25,4 @@ export default function (input: string[]) {
     } while (!loop);
 
     return set.size + 1;
-};
+}

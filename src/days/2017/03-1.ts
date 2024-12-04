@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Vec2 } from "@lib/math";
 
 export default function (input: string[]) {
     const target = Number(input[0]);
@@ -15,15 +15,10 @@ export default function (input: string[]) {
     }
 
     return position.manhattan(new Vec2(0, 0));
-};
+}
 
 function* moveSequence() {
-    const queue = [
-        new Vec2( 1,  0),
-        new Vec2( 0, -1),
-        new Vec2(-1,  0),
-        new Vec2( 0,  1),
-    ];
+    const queue = [new Vec2(1, 0), new Vec2(0, -1), new Vec2(-1, 0), new Vec2(0, 1)];
 
     const lengths = distanceSequence();
 
@@ -33,7 +28,7 @@ function* moveSequence() {
         queue.push(queue.shift());
 
         for (let i = 0; i < length; i++) {
-            yield queue[queue.length-1];
+            yield queue[queue.length - 1];
         }
 
         length = lengths.next().value;

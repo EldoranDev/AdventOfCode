@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec3 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec3 } from "@lib/math";
 
 interface Brick {
     id?: string;
@@ -95,7 +95,10 @@ function sim(bricks: Array<Brick>): void {
 }
 
 function parse(line: string, id: string): Brick {
-    const [x1, y1, z1, x2, y2, z2] = /(-?\d+),(-?\d+),(-?\d+)~(-?\d+),(-?\d+),(-?\d+)/.exec(line)!.slice(1).map(Number);
+    const [x1, y1, z1, x2, y2, z2] = /(-?\d+),(-?\d+),(-?\d+)~(-?\d+),(-?\d+),(-?\d+)/
+        .exec(line)!
+        .slice(1)
+        .map(Number);
 
     return {
         id,
@@ -110,11 +113,11 @@ function parse(line: string, id: string): Brick {
 // AABB intersection between cubes
 function intersect(a: Brick, b: Brick): boolean {
     return (
-        a.from.x <= b.to.x
-        && a.to.x >= b.from.x
-        && a.from.y <= b.to.y
-        && a.to.y >= b.from.y
-        && a.from.z <= b.to.z
-        && a.to.z >= b.from.z
+        a.from.x <= b.to.x &&
+        a.to.x >= b.from.x &&
+        a.from.y <= b.to.y &&
+        a.to.y >= b.from.y &&
+        a.from.z <= b.to.z &&
+        a.to.z >= b.from.z
     );
 }

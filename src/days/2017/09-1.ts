@@ -1,8 +1,8 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
-    const parser = new Parser(input[0].split(''));
+    const parser = new Parser(input[0].split(""));
 
     let group: Group | null = null;
     let score = 0;
@@ -50,9 +50,7 @@ class Parser {
 
     private ignoreNext: boolean = false;
 
-    constructor(
-        private stream: string[],
-    ) {}
+    constructor(private stream: string[]) {}
 
     getNextToken(): Token {
         const char = this.stream.shift();
@@ -63,12 +61,12 @@ class Parser {
         }
 
         if (this.isGarbage) {
-            if (char === '>') {
+            if (char === ">") {
                 this.isGarbage = false;
                 return Token.GARBAGE_CLOSE;
             }
 
-            if (char === '!') {
+            if (char === "!") {
                 this.ignoreNext = true;
                 return Token.IGNORE;
             }
@@ -77,11 +75,11 @@ class Parser {
         }
 
         switch (char) {
-            case '{':
+            case "{":
                 return Token.GROUP_OPEN;
-            case '}':
+            case "}":
                 return Token.GROUP_CLOSE;
-            case '<':
+            case "<":
                 this.isGarbage = true;
                 return Token.GARBAGE_OPEN;
             default:

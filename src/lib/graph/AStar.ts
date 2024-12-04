@@ -1,7 +1,7 @@
-import { MinHeap } from '@lib/collections';
-import { Heap } from '@lib/collections/Heap';
-import { Graph, GraphNode } from './Graph';
-import { RouteFinder } from './RouteFinder';
+import { MinHeap } from "@lib/collections";
+import { Heap } from "@lib/collections/Heap";
+import { Graph, GraphNode } from "./Graph";
+import { RouteFinder } from "./RouteFinder";
 
 class RouteNode<K> {
     public constructor(
@@ -14,7 +14,8 @@ class RouteNode<K> {
     public compareTo(node: RouteNode<K>): number {
         if (this.estimatedScore > node.estimatedScore) {
             return 1;
-        } if (this.estimatedScore < node.estimatedScore) {
+        }
+        if (this.estimatedScore < node.estimatedScore) {
             return -1;
         }
         return 0;
@@ -57,7 +58,7 @@ export class AStar<K extends GraphNode> implements RouteFinder<K> {
                 return route;
             }
 
-            [...this.graph.getConnections(next.current)?.values() ?? []].forEach((c) => {
+            [...(this.graph.getConnections(next.current)?.values() ?? [])].forEach((c) => {
                 let node = allNodes.get(c);
 
                 if (!node) {

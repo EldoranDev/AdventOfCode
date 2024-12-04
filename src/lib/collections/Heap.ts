@@ -2,7 +2,7 @@ export class Node<T> {
     public constructor(
         public value: T,
         public prio: number,
-    ) { }
+    ) {}
 }
 
 export abstract class Heap<T> {

@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec3 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec3 } from "@lib/math";
 
 const CUBE_DIRS = [
     new Vec3(1, 0, 0),
@@ -16,7 +16,7 @@ const MAX = new Vec3();
 
 export default function (input: string[], { logger }: Context) {
     const cubes = input.map((line) => {
-        const [x, y, z] = line.split(',').map((n) => Number(n));
+        const [x, y, z] = line.split(",").map((n) => Number(n));
         MIN.x = Math.min(MIN.x, x);
         MIN.y = Math.min(MIN.y, y);
         MIN.z = Math.min(MIN.z, z);
@@ -61,11 +61,9 @@ function checkExterior(
     point: Vec3,
     set: Set<string>,
     cache: Map<string, boolean>,
-): { exterior: boolean, checked: Array<string> } {
+): { exterior: boolean; checked: Array<string> } {
     const checked = new Set<string>();
-    const open: Array<Vec3> = [
-        point,
-    ];
+    const open: Array<Vec3> = [point];
 
     while (open.length > 0) {
         const check = open.pop();

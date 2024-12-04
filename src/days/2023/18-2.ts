@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 type Point = [bigint, bigint];
 
@@ -38,7 +38,11 @@ export default function (input: string[], { logger }: Context) {
 function parse(line: string): Instruction {
     const [, , color] = /([LRDU])\s(\d+)\s\(#([\da-z]{6})\)/.exec(line).slice(1);
 
-    console.log(color, getDir(color[color.length - 1]), parseInt(color.substring(0, color.length - 1), 16));
+    console.log(
+        color,
+        getDir(color[color.length - 1]),
+        parseInt(color.substring(0, color.length - 1), 16),
+    );
 
     return {
         direction: getDirVec(getDir(color[color.length - 1])),
@@ -54,7 +58,7 @@ function shoelace(points: Point[]): bigint {
         const [x1, y1] = points[i];
         const [x2, y2] = points[(i + 1) % points.length];
 
-        res += (x1 * y2) - (y1 * x2);
+        res += x1 * y2 - y1 * x2;
     }
 
     return res >> 1n;
@@ -62,22 +66,32 @@ function shoelace(points: Point[]): bigint {
 
 function getDir(char: string): string {
     switch (char) {
-        case '0': return 'R';
-        case '1': return 'D';
-        case '2': return 'L';
-        case '3': return 'U';
+        case "0":
+            return "R";
+        case "1":
+            return "D";
+        case "2":
+            return "L";
+        case "3":
+            return "U";
 
-        default: throw new Error(`Invalid direction: ${char}`);
+        default:
+            throw new Error(`Invalid direction: ${char}`);
     }
 }
 
 function getDirVec(char: string): Point {
     switch (char) {
-        case 'L': return [-1n, 0n];
-        case 'R': return [1n, 0n];
-        case 'U': return [0n, -1n];
-        case 'D': return [0n, 1n];
+        case "L":
+            return [-1n, 0n];
+        case "R":
+            return [1n, 0n];
+        case "U":
+            return [0n, -1n];
+        case "D":
+            return [0n, 1n];
 
-        default: throw new Error(`Invalid direction: ${char}`);
+        default:
+            throw new Error(`Invalid direction: ${char}`);
     }
 }

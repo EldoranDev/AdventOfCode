@@ -2,13 +2,11 @@ type IntCode = number[];
 
 export default class VM {
     private memory: number[];
-    
+
     private instr: number = 0;
     private halted: boolean = false;
 
-    constructor(
-        private program: IntCode
-    ) { }
+    constructor(private program: IntCode) {}
 
     setMemory(pos: number, val: number): void {
         this.memory[pos] = val;
@@ -27,19 +25,23 @@ export default class VM {
     public run(): number {
         while (!this.halted) {
             const OP = this.memory[this.instr];
-    
+
             switch (OP) {
                 case 1:
-                    this.memory[this.memory[this.instr+3]] = this.memory[this.memory[this.instr+1]] + this.memory[this.memory[this.instr+2]];
-                break;
+                    this.memory[this.memory[this.instr + 3]] =
+                        this.memory[this.memory[this.instr + 1]] +
+                        this.memory[this.memory[this.instr + 2]];
+                    break;
                 case 2:
-                    this.memory[this.memory[this.instr+3]] = this.memory[this.memory[this.instr+1]] * this.memory[this.memory[this.instr+2]];
+                    this.memory[this.memory[this.instr + 3]] =
+                        this.memory[this.memory[this.instr + 1]] *
+                        this.memory[this.memory[this.instr + 2]];
                     break;
                 case 99:
                     this.halted = true;
                     break;
             }
-    
+
             this.instr += 4;
         }
 

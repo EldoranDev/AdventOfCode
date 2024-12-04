@@ -1,5 +1,5 @@
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 const COMBINATIONS = new Set<string>();
 
@@ -34,14 +34,20 @@ export default function (input: string[], { logger }: Context) {
 function addContainer(fridge: Array<Container>, containers: Array<Container>): void {
     const currentSum = sum(...fridge.map((c) => c.size));
 
-    const fridgeKey = fridge.map((c) => c.id).sort().join('-');
+    const fridgeKey = fridge
+        .map((c) => c.id)
+        .sort()
+        .join("-");
 
     if (currentSum === TARGET) {
         COMBINATIONS.add(fridgeKey);
         return;
     }
 
-    const containerKey = containers.map((c) => c.id).sort().join('-');
+    const containerKey = containers
+        .map((c) => c.id)
+        .sort()
+        .join("-");
 
     const cacheKey = `${fridgeKey}|${containerKey}`;
 

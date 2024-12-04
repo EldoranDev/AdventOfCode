@@ -1,5 +1,5 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 interface Range {
     from: number;
@@ -13,7 +13,7 @@ type Group = Array<Range>;
 export default function (input: string[], { logger }: Context) {
     const groups = getLineGroups(input);
 
-    const seedRanges = groups.shift()[0].split(':')[1].trim().split(' ').map(Number);
+    const seedRanges = groups.shift()[0].split(":")[1].trim().split(" ").map(Number);
 
     function* getSeed() {
         for (let i = 0; i < seedRanges.length; i += 2) {
@@ -24,7 +24,7 @@ export default function (input: string[], { logger }: Context) {
                 yield j;
             }
 
-            console.log('Finished seed group');
+            console.log("Finished seed group");
         }
     }
 
@@ -33,7 +33,7 @@ export default function (input: string[], { logger }: Context) {
         group.shift();
 
         group.forEach((line) => {
-            const [to, from, length] = line.split(' ').map(Number);
+            const [to, from, length] = line.split(" ").map(Number);
 
             ranges.push({
                 from,

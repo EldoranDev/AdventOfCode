@@ -1,10 +1,10 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { string } from 'yargs';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { string } from "yargs";
 
 const extractor = /([a-z\-]+)(\d+)\[([a-z]+)\]/;
 
-type Room = { name: string, sector: number, checksum: string};
+type Room = { name: string; sector: number; checksum: string };
 
 export default function (input: string[], { logger }: Context) {
     let rooms: Array<Room> = [];
@@ -28,7 +28,7 @@ export default function (input: string[], { logger }: Context) {
         const chars: { [key: string]: number } = {};
         const order: { [key: string]: string[] } = {};
 
-        for (const char of room.name.split('')) {
+        for (const char of room.name.split("")) {
             if (!chars[char]) {
                 chars[char] = 0;
             }
@@ -37,9 +37,9 @@ export default function (input: string[], { logger }: Context) {
         }
 
         const letters = Object.keys(chars);
-        
+
         for (const letter of letters) {
-            if (letter == '-') continue;
+            if (letter == "-") continue;
 
             if (!order[chars[letter]]) {
                 order[chars[letter]] = [];
@@ -49,16 +49,16 @@ export default function (input: string[], { logger }: Context) {
         }
         const hashsum = [];
 
-        const counts = Object.keys(order).map((o) => Number(o)).sort((a, b) => b - a);
+        const counts = Object.keys(order)
+            .map((o) => Number(o))
+            .sort((a, b) => b - a);
 
         for (const count of counts) {
-            order[count].sort()
-            hashsum.push(
-                ...order[count]
-            );
+            order[count].sort();
+            hashsum.push(...order[count]);
         }
 
-        const hash = hashsum.join('').substr(0, room.checksum.length);
+        const hash = hashsum.join("").substr(0, room.checksum.length);
 
         return hash === room.checksum;
     });
@@ -73,11 +73,11 @@ export default function (input: string[], { logger }: Context) {
     }
 
     rooms = rooms.filter((room) => {
-        return room.name.includes('north');
+        return room.name.includes("north");
     });
 
     return rooms[0].sector;
-};
+}
 
 function decrypt(input: string, lenght: number): string {
     const charCodes: number[] = [];
@@ -88,7 +88,7 @@ function decrypt(input: string, lenght: number): string {
         if (charCode === 45) {
             charCode = 32;
         } else {
-            charCode = (((charCode - 97) + lenght) % (26)) + 97;
+            charCode = ((charCode - 97 + lenght) % 26) + 97;
         }
 
         charCodes.push(charCode);

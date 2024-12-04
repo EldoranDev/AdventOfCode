@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const GEAR = /\*/;
 const NUM = /\d/;
@@ -9,13 +9,13 @@ const gears = new Map<string, number[]>();
 
 export default function (input: string[], { logger }: Context) {
     for (let y = 0; y < input.length; y++) {
-        let num = '';
+        let num = "";
         for (let x = 0; x < input[y].length; x++) {
             if (NUM.test(input[y][x])) {
                 num += input[y][x];
-            } else if (num !== '') {
+            } else if (num !== "") {
                 nums.set(`${x - num.length},${y}`, num);
-                num = '';
+                num = "";
             }
 
             const isGear = GEAR.test(input[y][x]);
@@ -25,14 +25,14 @@ export default function (input: string[], { logger }: Context) {
             }
         }
 
-        if (num !== '') {
+        if (num !== "") {
             nums.set(`${input[y].length - num.length},${y}`, num);
-            num = '';
+            num = "";
         }
     }
 
     Array.from(nums.entries()).forEach(([key, value]) => {
-        const [x, y] = key.split(',').map((v) => parseInt(v, 10));
+        const [x, y] = key.split(",").map((v) => parseInt(v, 10));
 
         return addToGears(x, y, value);
     });

@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const stepSize = Number(input[0]);
@@ -10,7 +10,7 @@ export default function (input: string[], { logger }: Context) {
     for (let i = 0; i < 2017; i++) {
         position = (position + stepSize) % buffer.length;
 
-        buffer.splice(position + 1, 0, (i + 1));
+        buffer.splice(position + 1, 0, i + 1);
         position++;
     }
 

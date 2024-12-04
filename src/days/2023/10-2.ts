@@ -1,22 +1,22 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Grid2D, create } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
-import { stdout } from 'process';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Grid2D, create } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
+import { stdout } from "process";
 
 const NEIGHBORS = Vec2.ULRD;
 const MAP = {
-    '|': '│',
-    '-': '─',
-    7: '┐',
-    F: '┌',
-    J: '┘',
-    L: '└',
-    '.': '.',
-    S: 'S',
+    "|": "│",
+    "-": "─",
+    7: "┐",
+    F: "┌",
+    J: "┘",
+    L: "└",
+    ".": ".",
+    S: "S",
 };
 
-type Pipe = '|' | '-' | '7' | 'F' | 'J' | 'L' | '.';
+type Pipe = "|" | "-" | "7" | "F" | "J" | "L" | ".";
 
 export default function (input: string[], { logger }: Context) {
     const map: Grid2D<Pipe> = create(input[0].length, input.length);
@@ -33,7 +33,7 @@ export default function (input: string[], { logger }: Context) {
         for (let x = 0; x < input[y].length; x++) {
             map[y][x] = input[y][x] as Pipe;
 
-            if (input[y][x] === 'S') {
+            if (input[y][x] === "S") {
                 start.x = x;
                 start.y = y;
             }
@@ -96,10 +96,10 @@ export default function (input: string[], { logger }: Context) {
                 }
 
                 if (
-                    candidate.x > map[0].length
-                    || candidate.y > map.length
-                    || candidate.x < 0
-                    || candidate.y < 0
+                    candidate.x > map[0].length ||
+                    candidate.y > map.length ||
+                    candidate.x < 0 ||
+                    candidate.y < 0
                 ) {
                     return;
                 }
@@ -111,35 +111,35 @@ export default function (input: string[], { logger }: Context) {
 
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
-            stdout.write('\x1b[90m');
+            stdout.write("\x1b[90m");
 
             if (nestPositions.has(new Vec2(x, y).toString())) {
-                stdout.write('\x1b[31m');
+                stdout.write("\x1b[31m");
             }
 
             if (loop.has(new Vec2(x, y).toString())) {
-                stdout.write('\x1b[33m');
+                stdout.write("\x1b[33m");
             }
 
             stdout.write(MAP[map[y][x]]);
-            stdout.write('\x1b[0m');
+            stdout.write("\x1b[0m");
         }
 
-        stdout.write('\n');
+        stdout.write("\n");
     }
 
     return nestPositions.size;
 }
 
-const W = ['L', '-', 'F'];
-const E = ['-', 'J', '7'];
-const N = ['|', '7', 'F'];
-const S = ['|', 'J', 'L'];
+const W = ["L", "-", "F"];
+const E = ["-", "J", "7"];
+const N = ["|", "7", "F"];
+const S = ["|", "J", "L"];
 
 function canConnect(pos: Vec2, direction: Vec2, map: Grid2D<string>): boolean {
     const next = Vec2.add(pos, direction);
 
-    if (!map[next.y] || !map[next.y][next.x] || map[next.y][next.x] === '.') {
+    if (!map[next.y] || !map[next.y][next.x] || map[next.y][next.x] === ".") {
         return false;
     }
 
@@ -164,18 +164,18 @@ function getNext(pos: Vec2, dir: Vec2, map: Grid2D<Pipe>): Vec2 {
     const current = map[pos.y][pos.x];
 
     switch (current) {
-        case '-':
-            return (dir.x === 1) ? new Vec2(1, 0) : new Vec2(-1, 0);
-        case '|':
-            return (dir.y === 1) ? new Vec2(0, 1) : new Vec2(0, -1);
-        case 'L':
-            return (dir.y === 1) ? new Vec2(1, 0) : new Vec2(0, -1);
-        case 'J':
-            return (dir.y === 1) ? new Vec2(-1, 0) : new Vec2(0, -1);
-        case '7':
-            return (dir.x === 1) ? new Vec2(0, 1) : new Vec2(-1, 0);
-        case 'F':
-            return (dir.x === -1) ? new Vec2(0, 1) : new Vec2(1, 0);
+        case "-":
+            return dir.x === 1 ? new Vec2(1, 0) : new Vec2(-1, 0);
+        case "|":
+            return dir.y === 1 ? new Vec2(0, 1) : new Vec2(0, -1);
+        case "L":
+            return dir.y === 1 ? new Vec2(1, 0) : new Vec2(0, -1);
+        case "J":
+            return dir.y === 1 ? new Vec2(-1, 0) : new Vec2(0, -1);
+        case "7":
+            return dir.x === 1 ? new Vec2(0, 1) : new Vec2(-1, 0);
+        case "F":
+            return dir.x === -1 ? new Vec2(0, 1) : new Vec2(1, 0);
         default:
             throw new Error(`Invalid pipe: ${current}`);
     }
@@ -184,20 +184,20 @@ function getNext(pos: Vec2, dir: Vec2, map: Grid2D<Pipe>): Vec2 {
 function rotate(dir: Vec2, rot: Vec2, pipe: Pipe): void {
     const DEGREE = 90;
     switch (pipe) {
-        case '-':
-        case '|':
+        case "-":
+        case "|":
             return;
-        case 'L':
-            rot.rotate((dir.y === 1) ? -DEGREE : DEGREE);
+        case "L":
+            rot.rotate(dir.y === 1 ? -DEGREE : DEGREE);
             break;
-        case 'J':
-            rot.rotate((dir.y === 1) ? DEGREE : -DEGREE);
+        case "J":
+            rot.rotate(dir.y === 1 ? DEGREE : -DEGREE);
             break;
-        case '7':
-            rot.rotate((dir.x === 1) ? DEGREE : -DEGREE);
+        case "7":
+            rot.rotate(dir.x === 1 ? DEGREE : -DEGREE);
             break;
-        case 'F':
-            rot.rotate((dir.y === -1) ? DEGREE : -DEGREE);
+        case "F":
+            rot.rotate(dir.y === -1 ? DEGREE : -DEGREE);
             break;
         default:
             throw new Error(`Invalid pipe: ${pipe}`);
@@ -206,45 +206,33 @@ function rotate(dir: Vec2, rot: Vec2, pipe: Pipe): void {
 
 function getToCheck(pipe: Pipe, inner: Vec2, dir: Vec2, pos: Vec2): Array<Vec2> {
     switch (pipe) {
-        case '-':
-        case '|':
+        case "-":
+        case "|":
             return [Vec2.add(inner, pos)];
-        case 'L':
+        case "L":
             if (inner.x === 1 || inner.y === -1) {
                 return [Vec2.add(inner, pos)];
             }
 
-            return [
-                Vec2.add(pos, new Vec2(-1, 0)),
-                Vec2.add(pos, new Vec2(0, 1)),
-            ];
-        case 'J':
+            return [Vec2.add(pos, new Vec2(-1, 0)), Vec2.add(pos, new Vec2(0, 1))];
+        case "J":
             if (inner.x === -1 || inner.y === -1) {
                 return [Vec2.add(inner, pos)];
             }
 
-            return [
-                Vec2.add(pos, new Vec2(1, 0)),
-                Vec2.add(pos, new Vec2(0, 1)),
-            ];
-        case 'F':
+            return [Vec2.add(pos, new Vec2(1, 0)), Vec2.add(pos, new Vec2(0, 1))];
+        case "F":
             if (inner.x === 1 || inner.y === 1) {
                 return [Vec2.add(inner, pos)];
             }
 
-            return [
-                Vec2.add(pos, new Vec2(-1, 0)),
-                Vec2.add(pos, new Vec2(0, -1)),
-            ];
-        case '7':
+            return [Vec2.add(pos, new Vec2(-1, 0)), Vec2.add(pos, new Vec2(0, -1))];
+        case "7":
             if (inner.x === -1 || inner.y === 1) {
                 return [Vec2.add(inner, pos)];
             }
 
-            return [
-                Vec2.add(pos, new Vec2(1, 0)),
-                Vec2.add(pos, new Vec2(0, -1)),
-            ];
+            return [Vec2.add(pos, new Vec2(1, 0)), Vec2.add(pos, new Vec2(0, -1))];
         default:
             throw new Error(`Invalid pipe: ${pipe}`);
     }

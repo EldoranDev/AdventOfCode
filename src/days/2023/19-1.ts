@@ -1,5 +1,5 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 interface Part {
     x: number;
@@ -29,15 +29,15 @@ export default function (input: string[], { logger }: Context) {
     const A = [];
 
     parts.forEach((p) => {
-        let flow = 'in';
+        let flow = "in";
 
-        while (flow !== 'A' && flow !== 'R') {
+        while (flow !== "A" && flow !== "R") {
             const workflow = workflows.get(flow);
 
             flow = applyRules(p, workflow.rules);
         }
 
-        if (flow === 'A') {
+        if (flow === "A") {
             A.push(p);
         }
     });
@@ -46,10 +46,16 @@ export default function (input: string[], { logger }: Context) {
 }
 
 function parsePart(p: string): Part {
-    const [x, m, a, s] = /{x=(\d+),m=(\d+),a=(\d+),s=(\d+)}/.exec(p).slice(1).map((n) => parseInt(n, 10));
+    const [x, m, a, s] = /{x=(\d+),m=(\d+),a=(\d+),s=(\d+)}/
+        .exec(p)
+        .slice(1)
+        .map((n) => parseInt(n, 10));
 
     return {
-        x, m, a, s,
+        x,
+        m,
+        a,
+        s,
     };
 }
 
@@ -58,12 +64,12 @@ function parseWorkflow(w: string): Workflow {
 
     return {
         name,
-        rules: rules.split(',').map(createRule),
+        rules: rules.split(",").map(createRule),
     };
 }
 
 function createRule(s: string): Rule {
-    if (s.includes('>')) {
+    if (s.includes(">")) {
         const [prop, val, target] = /([xmas])>(\d+):(.+)/.exec(s).slice(1);
 
         return (part: Part): string | null => {
@@ -75,7 +81,7 @@ function createRule(s: string): Rule {
         };
     }
 
-    if (s.includes('<')) {
+    if (s.includes("<")) {
         const [prop, val, target] = /([xmas])<(\d+):(.+)/.exec(s).slice(1);
 
         return (part: Part): string | null => {
@@ -100,5 +106,5 @@ function applyRules(part: Part, rules: Rule[]): string {
         }
     }
 
-    throw new Error('Invalid set of rules');
+    throw new Error("Invalid set of rules");
 }

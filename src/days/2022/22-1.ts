@@ -1,10 +1,10 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
-import { create, getColumn } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
-import { Grid2D } from '@lib/array2d/create';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
+import { create, getColumn } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
+import { Grid2D } from "@lib/array2d/create";
 
-type Bound = { from: number, to: number };
+type Bound = { from: number; to: number };
 
 const UP = new Vec2(0, -1);
 const DOWN = new Vec2(0, 1);
@@ -34,29 +34,33 @@ export default function (input: string[], { logger }: Context) {
     const pos = new Vec2(rows[0].from, 0);
     const facing = RIGHT.clone();
 
-    let distance: string = '';
+    let distance: string = "";
 
     console.log(columns[3]);
 
     for (let i = 0; i < instructions.length; i++) {
-        if (instructions[i] === 'L' || instructions[i] === 'R') {
+        if (instructions[i] === "L" || instructions[i] === "R") {
             switch (instructions[i]) {
-                case 'L':
-                    facing.rotate(-90, 'deg');
+                case "L":
+                    facing.rotate(-90, "deg");
                     continue;
-                case 'R':
-                    facing.rotate(90, 'deg');
+                case "R":
+                    facing.rotate(90, "deg");
                     continue;
                 default:
-                    throw new Error('Logic error');
+                    throw new Error("Logic error");
             }
         }
 
         distance = `${distance}${instructions[i]}`;
 
-        if (i + 1 === instructions.length || instructions[i + 1] === 'L' || instructions[i + 1] === 'R') {
+        if (
+            i + 1 === instructions.length ||
+            instructions[i + 1] === "L" ||
+            instructions[i + 1] === "R"
+        ) {
             const dist = Number(distance);
-            distance = '';
+            distance = "";
 
             for (let d = 0; d < dist; d++) {
                 const newPos = Vec2.add(pos, facing);
@@ -81,7 +85,7 @@ export default function (input: string[], { logger }: Context) {
                     }
                 }
 
-                if (map[newPos.y][newPos.x] === '#') {
+                if (map[newPos.y][newPos.x] === "#") {
                     break;
                 }
 
@@ -105,21 +109,15 @@ export default function (input: string[], { logger }: Context) {
         facingValue = 3;
     }
 
-    console.log(map.reduce((prev, current) => `${prev}\n${current.join('')}`, ''));
+    console.log(map.reduce((prev, current) => `${prev}\n${current.join("")}`, ""));
 
     return 1000 * (pos.y + 1) + 4 * (pos.x + 1) + facingValue;
 }
 
 function getBounds(array: string[]): Bound {
-    const beginning = [
-        array.indexOf('#'),
-        array.indexOf('.'),
-    ];
+    const beginning = [array.indexOf("#"), array.indexOf(".")];
 
-    const end = [
-        array.lastIndexOf('#'),
-        array.lastIndexOf('.'),
-    ];
+    const end = [array.lastIndexOf("#"), array.lastIndexOf(".")];
 
     return {
         from: Math.min(...beginning.filter((e) => e !== -1)),
@@ -128,16 +126,16 @@ function getBounds(array: string[]): Bound {
 }
 
 function drawFacing(facing: Vec2, pos: Vec2, map: Grid2D<string>): void {
-    let facingValue = '';
+    let facingValue = "";
 
     if (facing.equals(RIGHT)) {
-        facingValue = '>';
+        facingValue = ">";
     } else if (facing.equals(DOWN)) {
-        facingValue = 'v';
+        facingValue = "v";
     } else if (facing.equals(LEFT)) {
-        facingValue = '<';
+        facingValue = "<";
     } else {
-        facingValue = '^';
+        facingValue = "^";
     }
 
     // eslint-disable-next-line no-param-reassign

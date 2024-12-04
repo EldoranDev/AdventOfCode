@@ -1,12 +1,12 @@
 /* eslint-disable no-labels */
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 interface Reflection {
     x?: number;
     y?: number;
 
-    direction: 'horizontal' | 'vertical';
+    direction: "horizontal" | "vertical";
 }
 
 interface Pattern {
@@ -18,7 +18,11 @@ export default function (input: string[], { logger }: Context) {
     return getLineGroups(input)
         .map(getPattern)
         .map(findReflection)
-        .reduce((acc, reflection) => acc + (reflection.direction === 'horizontal' ? reflection.y * 100 : reflection.x), 0);
+        .reduce(
+            (acc, reflection) =>
+                acc + (reflection.direction === "horizontal" ? reflection.y * 100 : reflection.x),
+            0,
+        );
 }
 
 function getPattern(lines: string[]): Pattern {
@@ -29,7 +33,7 @@ function getPattern(lines: string[]): Pattern {
 
     for (let y = 0; y < lines.length; y++) {
         for (let x = 0; x < lines[y].length; x++) {
-            const value = lines[y][x] === '#' ? 1 : 0;
+            const value = lines[y][x] === "#" ? 1 : 0;
 
             pattern.rows[y] <<= 1;
             pattern.rows[y] |= value;
@@ -43,8 +47,7 @@ function getPattern(lines: string[]): Pattern {
 }
 
 function findReflection(pattern: Pattern): Reflection {
-    outer:
-    for (let y = 1; y < pattern.rows.length; y++) {
+    outer: for (let y = 1; y < pattern.rows.length; y++) {
         let nudged = false;
 
         for (let yy = 0; y - yy - 1 >= 0 && y + yy < pattern.rows.length; yy++) {
@@ -66,13 +69,12 @@ function findReflection(pattern: Pattern): Reflection {
         if (nudged) {
             return {
                 y,
-                direction: 'horizontal',
+                direction: "horizontal",
             };
         }
     }
 
-    outer:
-    for (let x = 1; x < pattern.columns.length; x++) {
+    outer: for (let x = 1; x < pattern.columns.length; x++) {
         let nudged = false;
 
         for (let xx = 0; x - xx - 1 >= 0 && x + xx < pattern.columns.length; xx++) {
@@ -94,10 +96,10 @@ function findReflection(pattern: Pattern): Reflection {
         if (nudged) {
             return {
                 x,
-                direction: 'vertical',
+                direction: "vertical",
             };
         }
     }
 
-    throw new Error('No reflection found');
+    throw new Error("No reflection found");
 }

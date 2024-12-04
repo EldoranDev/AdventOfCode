@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
-import { Context } from '@app/types';
+import { Context } from "@app/types";
 
 type Entry = number | Array<number>;
 
-const DIVIDER_A = '[[2]]';
-const DIVIDER_B = '[[6]]';
+const DIVIDER_A = "[[2]]";
+const DIVIDER_B = "[[6]]";
 
 export default function (input: string[], { logger }: Context) {
     input.unshift(DIVIDER_A, DIVIDER_B);
 
     const list = input
-        .filter((l) => l !== '')
+        .filter((l) => l !== "")
         .map((line) => JSON.parse(line))
         .sort((a, b) => compare(a, b))
         .map((e) => JSON.stringify(e));

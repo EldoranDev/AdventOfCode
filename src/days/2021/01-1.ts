@@ -1,5 +1,5 @@
-import { mapToNumber } from '@lib/input';
-import { Context } from '@app/types';
+import { mapToNumber } from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const numbers = mapToNumber(input);
@@ -16,4 +16,4 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return increase;
-};
+}

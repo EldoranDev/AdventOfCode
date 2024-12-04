@@ -1,7 +1,7 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    const startingNumbers = input[0].split(',').map(n => Number(n));
+    const startingNumbers = input[0].split(",").map((n) => Number(n));
     const COUNT = 2020;
 
     const history: number[] = new Array(COUNT);
@@ -10,20 +10,20 @@ export default function (input: string[]) {
         history[startingNumbers[i]] = i;
     }
 
-    let lastNumber = startingNumbers[startingNumbers.length-1];
+    let lastNumber = startingNumbers[startingNumbers.length - 1];
     let newNumber = 0;
 
     for (let i = startingNumbers.length; i < COUNT; i++) {
         if (history[lastNumber] === undefined) {
-            history[lastNumber] = i-1;
+            history[lastNumber] = i - 1;
 
             lastNumber = 0;
         } else {
             newNumber = i - history[lastNumber] - 1;
-            history[lastNumber] = i-1;
+            history[lastNumber] = i - 1;
             lastNumber = newNumber;
         }
     }
 
     return lastNumber;
-};
+}

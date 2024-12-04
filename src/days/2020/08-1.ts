@@ -1,14 +1,12 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    const ops = input.map((line) => { 
-        const parts = line.split(' ');
+    const ops = input.map((line) => {
+        const parts = line.split(" ");
         return {
             op: parts[0],
             param: Number(parts[1]),
         };
-
-        
     });
 
     let acc = 0;
@@ -25,16 +23,16 @@ export default function (input: string[]) {
 
         const op = ops[instr];
         switch (op.op) {
-            case 'acc':
-                acc += op.param
+            case "acc":
+                acc += op.param;
                 instr++;
                 break;
-            case 'jmp':
+            case "jmp":
                 instr += op.param;
                 break;
-            case 'nop':
+            case "nop":
                 instr++;
                 break;
         }
     }
-};
+}

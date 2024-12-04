@@ -1,22 +1,22 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-case-declarations */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const ROUNDS = 1_000_000_000;
-const START = 'abcdefghijklmnop';
+const START = "abcdefghijklmnop";
 
 export default function (input: string[], { logger, test }: Context) {
-    const group = START.split('');
-    const actions = input[0].split(',');
+    const group = START.split("");
+    const actions = input[0].split(",");
 
     const history = [];
 
     do {
-        history.push(group.join(''));
+        history.push(group.join(""));
 
         dance(group, actions);
-    } while (group.join('') !== START);
+    } while (group.join("") !== START);
 
     return history[ROUNDS % history.length];
 }
@@ -29,7 +29,7 @@ function dance(group: string[], actions: string[]) {
 
 function perform(action: string, group: string[]) {
     switch (action[0]) {
-        case 's':
+        case "s":
             const [, count] = /s(.+)/.exec(action);
 
             for (let i = 0; i < Number(count); i++) {
@@ -37,7 +37,7 @@ function perform(action: string, group: string[]) {
             }
 
             break;
-        case 'x':
+        case "x":
             const [, x1, x2] = /x(.+)\/(.+)/.exec(action);
 
             const tmpX = group[x1];
@@ -45,7 +45,7 @@ function perform(action: string, group: string[]) {
             group[x2] = tmpX;
 
             break;
-        case 'p':
+        case "p":
             const [, p1, p2] = /p(.+)\/(.+)/.exec(action);
 
             const ip1 = group.indexOf(p1);
@@ -57,6 +57,6 @@ function perform(action: string, group: string[]) {
 
             break;
         default:
-            throw new Error('Invalid dance move');
+            throw new Error("Invalid dance move");
     }
 }

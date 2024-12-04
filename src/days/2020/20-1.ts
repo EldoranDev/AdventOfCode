@@ -1,7 +1,7 @@
-import { getLineGroups } from '@lib/input';
-import { timeLog } from 'console';
+import { getLineGroups } from "@lib/input";
+import { timeLog } from "console";
 
-type Tile = { id: number, data: boolean[][] , borders: string[] };
+type Tile = { id: number; data: boolean[][]; borders: string[] };
 
 export default function (input: string[]) {
     const ip = getLineGroups(input);
@@ -9,40 +9,42 @@ export default function (input: string[]) {
     const tiles: Tile[] = [];
 
     for (const t of ip) {
-        const id = Number(t[0].replace(':', '').split(' ')[1]);
+        const id = Number(t[0].replace(":", "").split(" ")[1]);
         const data = [];
 
         for (let y = 1; y < t.length; y++) {
-            data[y-1] = new Array(t[y].length);
+            data[y - 1] = new Array(t[y].length);
             for (let x = 0; x < t[y].length; x++) {
-                data[y-1][x] = t[y].charAt(x) === '#';
+                data[y - 1][x] = t[y].charAt(x) === "#";
             }
         }
 
         const borders = getBorders(data);
 
-        tiles.push({id, data, borders });
+        tiles.push({ id, data, borders });
     }
 
-    const corners: number[] = tiles.filter((t) => findNeighbors(t, tiles).length === 2).map(t => t.id);
+    const corners: number[] = tiles
+        .filter((t) => findNeighbors(t, tiles).length === 2)
+        .map((t) => t.id);
 
-    return corners.reduce((c, v) => c*v, 1);
-};
+    return corners.reduce((c, v) => c * v, 1);
+}
 
 function getBorders(data: boolean[][]): string[] {
     const borders: string[] = [];
 
     borders.push(JSON.stringify([...data[0]]));
     borders.push(JSON.stringify([...data[0]].reverse()));
-    borders.push(JSON.stringify([...data[data.length-1]]))
-    borders.push(JSON.stringify([...data[data.length-1]].reverse()))
+    borders.push(JSON.stringify([...data[data.length - 1]]));
+    borders.push(JSON.stringify([...data[data.length - 1]].reverse()));
 
     const l = [];
     const r = [];
 
     for (let y = 0; y < data.length; y++) {
         l[y] = data[y][0];
-        r[y] = data[y][data[y].length-1];
+        r[y] = data[y][data[y].length - 1];
     }
 
     borders.push(JSON.stringify(l), JSON.stringify(r));
@@ -56,9 +58,9 @@ function print(tile: Tile): void {
 
     for (let y = 0; y < tile.data.length; y++) {
         for (let x = 0; x < tile.data[y].length; x++) {
-            process.stdout.write(tile.data[y][x] ? '#' : '.');
+            process.stdout.write(tile.data[y][x] ? "#" : ".");
         }
-        process.stdout.write('\n');
+        process.stdout.write("\n");
     }
 }
 
@@ -71,8 +73,8 @@ function findNeighbors(tile: Tile, tiles: Tile[]): Tile[] {
         if (areAdjacent(tile, t)) {
             neighbors.push(t);
         }
-    }    
-    
+    }
+
     return neighbors;
 }
 

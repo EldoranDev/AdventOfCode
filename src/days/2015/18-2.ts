@@ -1,8 +1,8 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Convay } from '@lib/simulation';
-import { Vec2 } from '@lib/math';
-import { create } from '@lib/array2d';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Convay } from "@lib/simulation";
+import { Vec2 } from "@lib/math";
+import { create } from "@lib/array2d";
 
 const SIZE = 100;
 const ROUNDS = 100;
@@ -21,7 +21,9 @@ export default function (input: string[], { logger }: Context) {
             }
 
             // eslint-disable-next-line max-len
-            return neighbors.map((n) => Vec2.add(pos, n)).filter((n) => n.x >= 0 && n.y >= 0 && n.x < SIZE && n.y < SIZE);
+            return neighbors
+                .map((n) => Vec2.add(pos, n))
+                .filter((n) => n.x >= 0 && n.y >= 0 && n.x < SIZE && n.y < SIZE);
         },
         (count) => count === 2 || count === 3,
         (count) => count === 3,
@@ -29,7 +31,7 @@ export default function (input: string[], { logger }: Context) {
 
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input.length; x++) {
-            convay.set(new Vec2(x, y), input[y].charAt(x) === '#');
+            convay.set(new Vec2(x, y), input[y].charAt(x) === "#");
         }
     }
 
@@ -63,10 +65,10 @@ function print(convay: Convay<Vec2>): void {
 
     for (let y = 0; y < board.length; y++) {
         for (let x = 0; x < board.length; x++) {
-            process.stdout.write(board[y][x] ? '#' : '.');
+            process.stdout.write(board[y][x] ? "#" : ".");
         }
-        process.stdout.write('\n');
+        process.stdout.write("\n");
     }
 
-    process.stdout.write('-----------\n');
+    process.stdout.write("-----------\n");
 }

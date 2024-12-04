@@ -1,7 +1,4 @@
-export default function findAllIndices<T>(
-    val: T,
-    array: Array<T>,
-): Array<number> {
+export default function findAllIndices<T>(val: T, array: Array<T>): Array<number> {
     const matches = [];
 
     let lastIndex = array.indexOf(val, 0);

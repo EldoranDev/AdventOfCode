@@ -1,11 +1,10 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { create } from '@lib/array2d';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { create } from "@lib/array2d";
 
 export default function (input: string[], { logger }: Context) {
     const numbers: string[][] = create(0, input[0].length);
-    
-    
+
     for (const line of input) {
         for (let i = 0; i < line.length; i++) {
             logger.debug(line.charAt(i));
@@ -17,7 +16,7 @@ export default function (input: string[], { logger }: Context) {
     let epsilonIn = "";
 
     for (let i = 0; i < numbers.length; i++) {
-        const ones = numbers[i].filter(n => n === "1").length;
+        const ones = numbers[i].filter((n) => n === "1").length;
 
         if (ones > numbers[i].length / 2) {
             epsilonIn += "0";
@@ -34,5 +33,4 @@ export default function (input: string[], { logger }: Context) {
     const epsilon = parseInt(epsilonIn, 2);
 
     return gamma * epsilon;
-
-};
+}

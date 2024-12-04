@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import create, { Grid2D } from '@lib/array2d/create';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import create, { Grid2D } from "@lib/array2d/create";
+import { sum } from "@lib/math/functions";
 
 interface Rock {
     height: number;
@@ -73,8 +73,8 @@ const LIMIT = 1_000_000_000_000;
 const WIDTH = 7;
 
 const DIR = {
-    '>': Vec2.RIGHT,
-    '<': Vec2.LEFT,
+    ">": Vec2.RIGHT,
+    "<": Vec2.LEFT,
 };
 
 export default function (input: string[], { logger }: Context) {
@@ -88,10 +88,10 @@ export default function (input: string[], { logger }: Context) {
 
     for (let i = 0; rocks < PATTERN_START + PATTERN_SEARCH_BUFFER; i++) {
         if (current === null) {
-            const neededHight = highest + 3 + (ROCKS[rocks % ROCKS.length].height);
+            const neededHight = highest + 3 + ROCKS[rocks % ROCKS.length].height;
 
             while (map.length < neededHight) {
-                map.unshift(Array.from({ length: WIDTH }, () => '.'));
+                map.unshift(Array.from({ length: WIDTH }, () => "."));
             }
 
             let y = 0;
@@ -134,12 +134,14 @@ export default function (input: string[], { logger }: Context) {
         height += stack[i];
     }
 
-    const pattern = getPattern(stack.join(''), PATTERN_START, 20).split('').map((p) => Number(p));
+    const pattern = getPattern(stack.join(""), PATTERN_START, 20)
+        .split("")
+        .map((p) => Number(p));
     const patternHeight = sum(...pattern);
 
     const patterns = Math.floor((LIMIT - PATTERN_START) / pattern.length);
 
-    height += (patternHeight * patterns);
+    height += patternHeight * patterns;
 
     for (let j = 0; j <= (LIMIT - PATTERN_START) % pattern.length; j++) {
         height += pattern[j];
@@ -150,7 +152,7 @@ export default function (input: string[], { logger }: Context) {
 
 function save(rock: FallingRock, grid: Map) {
     for (const p of rock.rock.shape) {
-        grid[rock.pos.y + p.y][rock.pos.x + p.x] = '#';
+        grid[rock.pos.y + p.y][rock.pos.x + p.x] = "#";
     }
 }
 
@@ -165,7 +167,7 @@ function moveAllowed(rock: FallingRock, directon: Vec2, grid: Map) {
             return false;
         }
 
-        if (grid[ny][nx] !== '.') {
+        if (grid[ny][nx] !== ".") {
             return false;
         }
     }
@@ -177,7 +179,7 @@ function getPattern(base: string, index: number, size: number): string {
     const repeat = base.indexOf(base.substring(index, index + size), index + size);
 
     if (repeat === -1) {
-        throw new Error('No pattern found');
+        throw new Error("No pattern found");
     }
 
     return base.substring(index, repeat);

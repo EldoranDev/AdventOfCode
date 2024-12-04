@@ -1,4 +1,4 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
     let checksum = 0;
@@ -10,13 +10,13 @@ export default function (input: string[]) {
     }
 
     return checksum;
-};
+}
 
-function getMinMax(row: string): [ min: number, max: number ] {
-    const numbers = row.split('	').map(n => Number(n)).sort((a, b) => a - b);
+function getMinMax(row: string): [min: number, max: number] {
+    const numbers = row
+        .split("	")
+        .map((n) => Number(n))
+        .sort((a, b) => a - b);
 
-    return [
-        numbers[0],
-        numbers[numbers.length-1],
-    ];
+    return [numbers[0], numbers[numbers.length - 1]];
 }

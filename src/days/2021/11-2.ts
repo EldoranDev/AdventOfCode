@@ -1,13 +1,13 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { create } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { create } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
 
 export default function (input: string[], { logger }: Context) {
     const map = create(input[0].length, input.length, 0);
 
     for (let y = 0; y < input.length; y++) {
-        const cols = input[y].split('');
+        const cols = input[y].split("");
 
         for (let x = 0; x < input[y].length; x++) {
             map[y][x] = Number(cols[x]);
@@ -29,7 +29,7 @@ export default function (input: string[], { logger }: Context) {
 
     let count = 0;
 
-    for (let r = 0;; r++) {
+    for (let r = 0; ; r++) {
         let hadChange = false;
 
         for (let y = 0; y < map.length; y++) {
@@ -37,9 +37,9 @@ export default function (input: string[], { logger }: Context) {
                 map[y][x] += 1;
             }
         }
-        
+
         const flashed = new Set<Vec2>();
-        
+
         do {
             hadChange = false;
 
@@ -48,7 +48,6 @@ export default function (input: string[], { logger }: Context) {
                     const pos = new Vec2(x, y);
 
                     if (map[y][x] > 9) {
-                        
                         if (flashed.has(pos)) {
                             continue;
                         }
@@ -59,10 +58,7 @@ export default function (input: string[], { logger }: Context) {
                         for (const adj of adjacents) {
                             const ap = Vec2.add(adj, pos);
 
-                            if (
-                                map[ap.y] !== undefined &&
-                                map[ap.y][ap.x] !== undefined
-                            ) {
+                            if (map[ap.y] !== undefined && map[ap.y][ap.x] !== undefined) {
                                 map[ap.y][ap.x] += 1;
                             }
                         }
@@ -75,14 +71,12 @@ export default function (input: string[], { logger }: Context) {
             for (const p of flashed) {
                 map[p.y][p.x] = 0;
             }
-        } while(hadChange)
+        } while (hadChange);
 
-        logger.debug(
-            '\n' + map.map((row) => row.join('')).join('\n')
-        );
+        logger.debug("\n" + map.map((row) => row.join("")).join("\n"));
 
         if (flashed.size === ALL) {
-            return  r+1;
+            return r + 1;
         }
     }
-};
+}

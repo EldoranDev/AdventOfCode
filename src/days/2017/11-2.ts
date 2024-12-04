@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec3 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec3 } from "@lib/math";
 
 const START = new Vec3(0, 0, 0);
 
@@ -18,7 +18,7 @@ const DIRS = {
 };
 
 export default function (input: string[], { logger }: Context) {
-    const dirs = input[0].split(',');
+    const dirs = input[0].split(",");
 
     const pos = START.clone();
 
@@ -34,5 +34,5 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    return (furthest / 2);
+    return furthest / 2;
 }

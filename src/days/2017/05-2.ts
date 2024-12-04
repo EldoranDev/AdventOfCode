@@ -1,4 +1,4 @@
-import { mapToNumber } from '@lib/input';
+import { mapToNumber } from "@lib/input";
 
 export default function (input: string[]) {
     const instructions = mapToNumber(input);
@@ -19,5 +19,5 @@ export default function (input: string[]) {
         count++;
     }
 
-    return count-1;
-};
+    return count - 1;
+}

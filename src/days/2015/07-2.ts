@@ -1,6 +1,6 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
-type WireMap = { [ wire: string]: () => number };
+type WireMap = { [wire: string]: () => number };
 
 const REF = /^(\w+) -> (\w+)/;
 const AND = /^(\w+) AND (\w+) -> (\w+)/;
@@ -17,7 +17,7 @@ export default function (input: string[]) {
         let result = REF.exec(line);
 
         if (result !== null) {
-            wires[result[2]] = function ref() { 
+            wires[result[2]] = function ref() {
                 return getValue(result[1]);
             };
             continue;
@@ -31,7 +31,7 @@ export default function (input: string[]) {
                 cache[0] = getValue(result[1]);
                 cache[1] = getValue(result[2]);
                 cache[2] = cache[0] & cache[1];
-                
+
                 return cache[2];
             };
             continue;
@@ -45,9 +45,9 @@ export default function (input: string[]) {
                 cache[0] = getValue(result[1]);
                 cache[1] = getValue(result[2]);
                 cache[2] = cache[0] | cache[1];
-                
+
                 return cache[2];
-            }
+            };
             continue;
         }
 
@@ -59,7 +59,7 @@ export default function (input: string[]) {
                 cache[0] = getValue(result[1]);
                 cache[1] = getValue(result[2]);
                 cache[2] = cache[0] << cache[1];
-                
+
                 return cache[2];
             };
             continue;
@@ -67,14 +67,14 @@ export default function (input: string[]) {
 
         result = RSHIFT.exec(line);
         if (result !== null) {
-            wires[result[3]] = function rshift ()  {
+            wires[result[3]] = function rshift() {
                 const cache = new Uint16Array(3);
 
                 cache[0] = getValue(result[1]);
                 cache[1] = getValue(result[2]);
                 cache[2] = cache[0] >> cache[1];
-                
-                return cache[2];  
+
+                return cache[2];
             };
             continue;
         }
@@ -89,18 +89,18 @@ export default function (input: string[]) {
 
                 return cache[2];
             };
-            continue;   
+            continue;
         }
     }
 
-    const value = getValue('a');
+    const value = getValue("a");
 
     results = {
-        'b': value
+        b: value,
     };
 
-    return getValue('a');
-};
+    return getValue("a");
+}
 
 function isNumeric(input: string): boolean {
     return /^\d+$/.test(input);

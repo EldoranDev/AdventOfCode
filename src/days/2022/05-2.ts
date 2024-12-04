@@ -1,10 +1,10 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 const RGX = /move (\d+) from (\d) to (\d)/;
 
 export default function (input: string[], { logger }: Context) {
-    const stackCount = (`${input[0]} `).length / 4;
+    const stackCount = `${input[0]} `.length / 4;
 
     const stacks: string[][] = [];
 
@@ -18,9 +18,9 @@ export default function (input: string[], { logger }: Context) {
         for (let j = 0; j < stackCount; j++) {
             let val = start[i].substring(j * 4, j * 4 + 4);
 
-            val = val.replace('[', '').replace(']', '').trim();
+            val = val.replace("[", "").replace("]", "").trim();
 
-            if (val !== '') {
+            if (val !== "") {
                 stacks[j].unshift(val);
             }
         }
@@ -29,12 +29,10 @@ export default function (input: string[], { logger }: Context) {
     moves.forEach((move) => {
         const [, count, from, to] = RGX.exec(move);
 
-        const elements = []
+        const elements = [];
 
         for (let i = 0; i < Number(count); i++) {
-            elements.unshift(
-                stacks[Number(from) - 1].pop(),
-            );
+            elements.unshift(stacks[Number(from) - 1].pop());
         }
 
         for (let i = 0; i < Number(count); i++) {
@@ -42,5 +40,5 @@ export default function (input: string[], { logger }: Context) {
         }
     });
 
-    return stacks.reduce((msg, stack) => msg + stack[stack.length - 1], '');
+    return stacks.reduce((msg, stack) => msg + stack[stack.length - 1], "");
 }

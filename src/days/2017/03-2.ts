@@ -1,6 +1,6 @@
-import { create } from '@lib/array2d';
-import { } from '@lib/input';
-import { Vec2 } from '@lib/math';
+import { create } from "@lib/array2d";
+import {} from "@lib/input";
+import { Vec2 } from "@lib/math";
 
 export default function (input: string[]) {
     const target = Number(input[0]);
@@ -20,7 +20,7 @@ export default function (input: string[]) {
     }
 
     return lastNumber;
-};
+}
 
 function getSum(array: number[][], x: number, y: number): number {
     let sum = 0;
@@ -34,14 +34,14 @@ function getSum(array: number[][], x: number, y: number): number {
 
 function* round() {
     const queue = [
-        new Vec2( 1,  0),
-        new Vec2( 1,  -1),
-        new Vec2( 0,  -1),
-        new Vec2( -1,  -1),
-        new Vec2( -1,  0),
-        new Vec2( -1,  1),
-        new Vec2( 0,  1),
-        new Vec2( 1,  1),
+        new Vec2(1, 0),
+        new Vec2(1, -1),
+        new Vec2(0, -1),
+        new Vec2(-1, -1),
+        new Vec2(-1, 0),
+        new Vec2(-1, 1),
+        new Vec2(0, 1),
+        new Vec2(1, 1),
     ];
 
     while (queue.length > 0) {
@@ -50,12 +50,7 @@ function* round() {
 }
 
 function* moveSequence() {
-    const queue = [
-        new Vec2( 1,  0),
-        new Vec2( 0, -1),
-        new Vec2(-1,  0),
-        new Vec2( 0,  1),
-    ];
+    const queue = [new Vec2(1, 0), new Vec2(0, -1), new Vec2(-1, 0), new Vec2(0, 1)];
 
     const lengths = distanceSequence();
 
@@ -65,7 +60,7 @@ function* moveSequence() {
         queue.push(queue.shift());
 
         for (let i = 0; i < length; i++) {
-            yield queue[queue.length-1];
+            yield queue[queue.length - 1];
         }
 
         length = lengths.next().value;
@@ -86,4 +81,3 @@ function* distanceSequence(): Generator<number> {
         }
     }
 }
-

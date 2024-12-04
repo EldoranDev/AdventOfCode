@@ -1,4 +1,4 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
     const allergenMap: Record<string, string[][]> = {};
@@ -9,10 +9,10 @@ export default function (input: string[]) {
     const map: Record<string, string> = {};
 
     for (const line of input) {
-        const parts = line.substr(0, line.length-1).split('(contains ');
-        const ingr = parts[0].trim().split(' ');
-        const algs = parts[1].split(', ');
-        
+        const parts = line.substr(0, line.length - 1).split("(contains ");
+        const ingr = parts[0].trim().split(" ");
+        const algs = parts[1].split(", ");
+
         foods.push(ingr);
 
         for (const alg of algs) {
@@ -21,20 +21,19 @@ export default function (input: string[]) {
             }
 
             allergenMap[alg].push(ingr);
-            
         }
     }
 
     let allergens = Object.keys(allergenMap);
 
-    for (const allergen of allergens){
+    for (const allergen of allergens) {
         let filtered = allergenMap[allergen][0];
 
         for (let i = 1; i < allergenMap[allergen].length; i++) {
-            filtered = filtered.filter(a => allergenMap[allergen][i].includes(a));
+            filtered = filtered.filter((a) => allergenMap[allergen][i].includes(a));
         }
 
-        potential[allergen]= filtered;
+        potential[allergen] = filtered;
     }
 
     do {
@@ -46,9 +45,9 @@ export default function (input: string[]) {
                 const food = potential[allergen][0];
 
                 map[food] = allergen;
-                
+
                 for (const it of allergens) {
-                    potential[it] = potential[it].filter(a => a !== food);
+                    potential[it] = potential[it].filter((a) => a !== food);
                 }
 
                 del.push(allergen);
@@ -63,8 +62,11 @@ export default function (input: string[]) {
     const flip: Record<string, string> = {};
 
     for (const food of Object.keys(map)) {
-        flip[map[food]] = food; 
+        flip[map[food]] = food;
     }
 
-    return Object.keys(flip).sort().map(f => flip[f]).join(',');
-};
+    return Object.keys(flip)
+        .sort()
+        .map((f) => flip[f])
+        .join(",");
+}

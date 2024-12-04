@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const layers: Array<[number, number]> = [];
 
 export default function (input: string[], { logger }: Context) {
     for (const line of input) {
-        const [layer, depth] = line.split(':').map((p) => Number(p.trim()));
+        const [layer, depth] = line.split(":").map((p) => Number(p.trim()));
 
-        layers.push([layer, (depth * 2) - 2]);
+        layers.push([layer, depth * 2 - 2]);
     }
 
     for (let i = 0; ; i++) {

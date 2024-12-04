@@ -1,28 +1,28 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 type Disk = {
-    id: string,
-    top: Disk[],
-    bottom: Disk,
+    id: string;
+    top: Disk[];
+    bottom: Disk;
 };
 
 export default function (input: string[]) {
     const map = new Map<string, Disk>();
 
     for (const line of input) {
-        const parts = line.split('->');
+        const parts = line.split("->");
 
-        const current = parts[0].split(' ')[0].trim();
+        const current = parts[0].split(" ")[0].trim();
 
         if (!map.has(current)) {
-            map.set(current, { id: current, bottom: null, top: [] })
+            map.set(current, { id: current, bottom: null, top: [] });
         }
 
         if (parts.length === 1) {
             continue;
         }
 
-        const top = parts[1].split(',').map(p => p.trim());
+        const top = parts[1].split(",").map((p) => p.trim());
         const disk = map.get(current);
 
         for (const t of top) {
@@ -40,5 +40,4 @@ export default function (input: string[]) {
     const bottom = [...map.values()].find((d) => d.bottom === null);
 
     return bottom.id;
-};
-
+}

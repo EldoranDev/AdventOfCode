@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 enum Type {
     FiveOfAKind = 0,
@@ -47,18 +47,18 @@ export default function (input: string[], { logger }: Context) {
             }
         }
 
-        throw new Error('Input error');
+        throw new Error("Input error");
     });
 
     console.log(hands);
 
-    return hands.reduce((acc, hand, index) => acc + (hand.bid * (input.length - index)), 0);
+    return hands.reduce((acc, hand, index) => acc + hand.bid * (input.length - index), 0);
 }
 
 function parseHand(hand: string): Hand {
-    const [cardsStr, bid] = hand.split(' ');
+    const [cardsStr, bid] = hand.split(" ");
 
-    const cards = cardsStr.split('').map((card) => CARDS[card]);
+    const cards = cardsStr.split("").map((card) => CARDS[card]);
 
     return {
         cards,

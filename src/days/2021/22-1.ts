@@ -1,11 +1,11 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const EXTRACT = /(on|off) x=(\-?\d*)\.\.(\-?\d*),y=(\-?\d*)\.\.(\-?\d*),z=(\-?\d*)\.\.(\-?\d*)/;
 
 export default function (input: string[], { logger }: Context) {
     const cubes = new Map<string, boolean>();
-    
+
     for (const line of input) {
         const [_, state, x1, x2, y1, y2, z1, z2] = EXTRACT.exec(line);
 
@@ -20,10 +20,10 @@ export default function (input: string[], { logger }: Context) {
 
                     const id = `${x},${y},${z}`;
 
-                    if (state === 'on') {
+                    if (state === "on") {
                         cubes.set(id, true);
                     } else {
-                        if(cubes.has(id)) {
+                        if (cubes.has(id)) {
                             cubes.delete(id);
                         }
                     }
@@ -33,4 +33,4 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return cubes.size;
-};
+}

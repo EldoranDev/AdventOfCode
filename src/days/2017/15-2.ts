@@ -1,19 +1,19 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-import '@lib/array/extensions/index';
+import "@lib/array/extensions/index";
 
 export default function (input: string[], { logger }: Context) {
     const gens = [
-        new Generator(Number(input[0].split(' ').last()), 16807, 4),
-        new Generator(Number(input[1].split(' ').last()), 48271, 8),
+        new Generator(Number(input[0].split(" ").last()), 16807, 4),
+        new Generator(Number(input[1].split(" ").last()), 48271, 8),
     ];
 
     let match = 0;
 
     for (let i = 0; i < 5_000_000; i++) {
-        const a = (gens[0].next() & 0xFFFF);
-        const b = (gens[1].next() & 0xFFFF);
+        const a = gens[0].next() & 0xffff;
+        const b = gens[1].next() & 0xffff;
 
         if (a === b) {
             match++;

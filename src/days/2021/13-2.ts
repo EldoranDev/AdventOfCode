@@ -1,33 +1,31 @@
-import { getLineGroups, mapToNumber } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import { GeneralSet } from '@lib/collections';
+import { getLineGroups, mapToNumber } from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import { GeneralSet } from "@lib/collections";
 
 export default function (input: string[], { logger }: Context) {
     let coords = new GeneralSet<Vec2>();
 
-    const [ COORDINATES, FOLDS ] = getLineGroups(input);
+    const [COORDINATES, FOLDS] = getLineGroups(input);
 
     COORDINATES.forEach((line) => {
-        const [x, y] = mapToNumber(line.split(','))
+        const [x, y] = mapToNumber(line.split(","));
         coords.add(new Vec2(x, y));
     }, new GeneralSet<Vec2>());
 
     FOLDS.forEach((fold) => {
-        const [_, axis, index ] = /fold along ([xy])=([0-9]*)/.exec(fold);
-        if (axis === 'x') {
+        const [_, axis, index] = /fold along ([xy])=([0-9]*)/.exec(fold);
+        if (axis === "x") {
             coords = new GeneralSet<Vec2>(
-                [...coords.values()].map((v => new Vec2(
-                    v.x < Number(index) ? v.x : 2 * Number(index) - v.x,
-                    v.y
-                )))
+                [...coords.values()].map(
+                    (v) => new Vec2(v.x < Number(index) ? v.x : 2 * Number(index) - v.x, v.y),
+                ),
             );
         } else {
             coords = new GeneralSet<Vec2>(
-                [...coords.values()].map((v => new Vec2(
-                    v.x,
-                    v.y < Number(index) ? v.y : 2 * Number(index) - v.y
-                )))
+                [...coords.values()].map(
+                    (v) => new Vec2(v.x, v.y < Number(index) ? v.y : 2 * Number(index) - v.y),
+                ),
             );
         }
     });
@@ -36,8 +34,8 @@ export default function (input: string[], { logger }: Context) {
 
     [...coords.values()].forEach((v) => {
         process.stdout.cursorTo(v.x, v.y + 1);
-        process.stdout.write('█');    
-    }); 
+        process.stdout.write("█");
+    });
 
     process.stdout.cursorTo(0, process.stdout.rows);
-};
+}

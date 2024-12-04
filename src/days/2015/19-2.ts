@@ -1,19 +1,19 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 type Replacement = {
     from: string;
     to: string;
 };
 
-const TARGET = 'e';
+const TARGET = "e";
 const REPLACEMENTS: Array<Replacement> = [];
 
 export default function (input: string[], { logger }: Context) {
     const [instructions, [start]] = getLineGroups(input);
 
     for (const instruction of instructions) {
-        const [from, to] = instruction.split(' => ');
+        const [from, to] = instruction.split(" => ");
 
         REPLACEMENTS.push({ from, to });
     }
@@ -46,7 +46,7 @@ export default function (input: string[], { logger }: Context) {
         target = start;
         steps = 0;
 
-        console.log('Shuffeling replacements, and restarting');
+        console.log("Shuffeling replacements, and restarting");
     }
 
     return steps;

@@ -1,5 +1,3 @@
-import Convay from './convay';
+import Convay from "./convay";
 
-export {
-    Convay,
-};
+export { Convay };

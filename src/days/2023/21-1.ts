@@ -1,8 +1,8 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import { Grid2D, create } from '@lib/array2d';
-import { memoize } from '@lib/functools';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import { Grid2D, create } from "@lib/array2d";
+import { memoize } from "@lib/functools";
 
 let MAP: Grid2D<string> = null;
 
@@ -13,22 +13,17 @@ const REACHABLE = new Set<string>();
 
 const getReachableMem = memoize(getReachable);
 
-const DIRS = [
-    new Vec2(1, 0),
-    new Vec2(0, 1),
-    new Vec2(-1, 0),
-    new Vec2(0, -1),
-];
+const DIRS = [new Vec2(1, 0), new Vec2(0, 1), new Vec2(-1, 0), new Vec2(0, -1)];
 
 export default function (input: string[], { logger }: Context) {
-    MAP = create<string>(input[0].length, input.length, '.');
+    MAP = create<string>(input[0].length, input.length, ".");
     let start: Vec2 = null;
 
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            if (input[y][x] === 'S') {
+            if (input[y][x] === "S") {
                 start = new Vec2(x, y);
-                MAP[y][x] = '.';
+                MAP[y][x] = ".";
                 continue;
             }
 
@@ -37,7 +32,7 @@ export default function (input: string[], { logger }: Context) {
     }
 
     if (start === null) {
-        throw new Error('Parsing Error: No start found');
+        throw new Error("Parsing Error: No start found");
     }
 
     getReachableMem(start, STEPS);
@@ -58,7 +53,7 @@ function getReachable(pos: Vec2, steps: number) {
             continue;
         }
 
-        if (MAP[np.y][np.x] === '#') {
+        if (MAP[np.y][np.x] === "#") {
             continue;
         }
 

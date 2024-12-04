@@ -1,8 +1,8 @@
-import { mapToNumber } from '@lib/input';
-import { Context } from '@app/types';
+import { mapToNumber } from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
-    const positions = mapToNumber(input[0].split(','));
+    const positions = mapToNumber(input[0].split(","));
 
     let usedFuel = 99999999999999;
     let position = -1;
@@ -27,4 +27,4 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return usedFuel;
-};
+}

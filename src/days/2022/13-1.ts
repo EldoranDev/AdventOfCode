@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 type Entry = number | Array<number>;
 

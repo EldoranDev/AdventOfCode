@@ -1,13 +1,9 @@
-import { resolve } from 'path';
-import { WritableStream } from 'node:stream/web';
-import {
-    createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync,
-} from 'fs';
+import { resolve } from "path";
+import { WritableStream } from "node:stream/web";
+import { createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync } from "fs";
 
 export default async (year: number, day: number) => {
-    const session = readFileSync(
-        resolve(__dirname, '..', '..', '..', '.session'),
-    );
+    const session = readFileSync(resolve(__dirname, "..", "..", "..", ".session"));
 
     const response = await fetch(`https://adventofcode.com/${year}/day/${day}/input`, {
         headers: {
@@ -15,9 +11,9 @@ export default async (year: number, day: number) => {
         },
     });
 
-    const fileName = (day.toString()).padStart(2, '0');
+    const fileName = day.toString().padStart(2, "0");
 
-    const path = resolve(__dirname, '..', '..', '..', 'inputs', year.toString());
+    const path = resolve(__dirname, "..", "..", "..", "inputs", year.toString());
 
     try {
         accessSync(path);
@@ -25,9 +21,7 @@ export default async (year: number, day: number) => {
         mkdirSync(path);
     }
 
-    const file = createWriteStream(
-        resolve(path, `${fileName}.in`),
-    );
+    const file = createWriteStream(resolve(path, `${fileName}.in`));
 
     const steam = new WritableStream({
         write(chunk) {
@@ -35,7 +29,7 @@ export default async (year: number, day: number) => {
         },
     });
 
-    writeFileSync(resolve(path, `${fileName}.in-test`), '');
+    writeFileSync(resolve(path, `${fileName}.in-test`), "");
 
     await response.body.pipeTo(steam);
 };

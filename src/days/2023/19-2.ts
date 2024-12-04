@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 interface Workflow {
     name: string;
     rules: Rule[];
 }
 
-type OP = '<' | '>';
+type OP = "<" | ">";
 
 type Rule = [prop: string, op: OP, val: number, target: string];
 
 type Range = [number, number];
 
-type Ranges = { x: Range, m: Range, a: Range, s: Range };
+type Ranges = { x: Range; m: Range; a: Range; s: Range };
 
 const FLOWS = new Map<string, Workflow>();
 
@@ -28,12 +28,15 @@ export default function (input: string[], { logger }: Context) {
         FLOWS.set(flow.name, flow);
     });
 
-    return count({
-        x: [MIN, MAX],
-        m: [MIN, MAX],
-        a: [MIN, MAX],
-        s: [MIN, MAX],
-    }, 'in');
+    return count(
+        {
+            x: [MIN, MAX],
+            m: [MIN, MAX],
+            a: [MIN, MAX],
+            s: [MIN, MAX],
+        },
+        "in",
+    );
 }
 
 function parseWorkflow(w: string): Workflow {
@@ -41,38 +44,28 @@ function parseWorkflow(w: string): Workflow {
 
     return {
         name,
-        rules: rules.split(',').map(createRule),
+        rules: rules.split(",").map(createRule),
     };
 }
 
 function createRule(s: string): Rule {
-    if (s.includes('>') || s.includes('<')) {
+    if (s.includes(">") || s.includes("<")) {
         const [prop, op, val, target] = /([xmas])([<>])(\d+):(.+)/.exec(s).slice(1);
 
-        return [
-            prop,
-            op as OP,
-            parseInt(val, 10),
-            target,
-        ];
+        return [prop, op as OP, parseInt(val, 10), target];
     }
 
-    return [
-        null,
-        null,
-        null,
-        s,
-    ];
+    return [null, null, null, s];
 }
 
 function count(ranges: Ranges, name: string): number {
     // This path ends up with R and therefore all the ranges passed here are invalid
-    if (name === 'R') {
+    if (name === "R") {
         return 0;
     }
 
     // This path ends up with A and therefore all the ranges passed here are valid
-    if (name === 'A') {
+    if (name === "A") {
         let product = 1;
         for (const [min, max] of Object.values(ranges)) {
             product *= max - min + 1;
@@ -94,7 +87,7 @@ function count(ranges: Ranges, name: string): number {
         let True: Range;
         let False: Range;
 
-        if (op === '<') {
+        if (op === "<") {
             True = [min, value - 1];
             False = [value, max];
         } else {

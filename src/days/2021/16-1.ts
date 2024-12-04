@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Logger } from 'winston';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Logger } from "winston";
 
 interface Package {
     version: number;
@@ -11,11 +11,9 @@ interface Package {
     length?: number;
 
     packages?: Package[];
-
 }
 
 export default function (input: string[], { logger }: Context) {
-
     let message = "";
 
     for (const char of input[0]) {
@@ -24,13 +22,13 @@ export default function (input: string[], { logger }: Context) {
 
     logger.debug(message);
 
-    const [ pkg ] = parsePackage(message, 0, logger);
+    const [pkg] = parsePackage(message, 0, logger);
 
     return countVersion(pkg);
-};
+}
 
-function countVersion (pkg: Package): number {
-    return pkg.version + ((pkg.packages) ? pkg.packages.reduce((p, c) => p + countVersion(c), 0) : 0);
+function countVersion(pkg: Package): number {
+    return pkg.version + (pkg.packages ? pkg.packages.reduce((p, c) => p + countVersion(c), 0) : 0);
 }
 
 function parsePackage(binary: string, pointer: number, logger: Logger): [Package, number] {
@@ -46,7 +44,7 @@ function parsePackage(binary: string, pointer: number, logger: Logger): [Package
     const pkg: Package = {
         version,
         type,
-    }
+    };
     let bits = 0;
 
     switch (type) {
@@ -66,14 +64,14 @@ function parsePackage(binary: string, pointer: number, logger: Logger): [Package
 function parseOperator(pkg: Package, binary: string, pointer: number, logger: Logger): number {
     let readBits = 0;
 
-    pkg.lengthId = Number(binary.substring(pointer, pointer+1));
+    pkg.lengthId = Number(binary.substring(pointer, pointer + 1));
 
     readBits += 1;
     pointer += 1;
 
     pkg.packages = [];
 
-    switch(pkg.lengthId) {
+    switch (pkg.lengthId) {
         case 0:
             pkg.length = parseInt(binary.substring(pointer, pointer + 15), 2);
             readBits += 15;
@@ -82,7 +80,7 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
             let bitsLeft = pkg.length;
 
             while (bitsLeft > 0) {
-                const [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [subPkg, bits] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 bitsLeft -= bits;
@@ -90,15 +88,14 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
                 pointer += bits;
             }
 
-
             break;
         case 1:
-            pkg.length = parseInt(binary.substring(pointer, pointer + 11), 2)
+            pkg.length = parseInt(binary.substring(pointer, pointer + 11), 2);
             readBits += 11;
             pointer += 11;
 
             while (pkg.packages.length < pkg.length) {
-                const [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [subPkg, bits] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 readBits += bits;
@@ -117,14 +114,14 @@ function parseLiteral(pkg: Package, binary: string, pointer: number, logger: Log
     let readBytes = 0;
 
     while (!last) {
-        const current = binary.substring(pointer + readBytes, pointer + readBytes+5);
+        const current = binary.substring(pointer + readBytes, pointer + readBytes + 5);
 
-        if (current[0] === '0') {
-            last = true;    
+        if (current[0] === "0") {
+            last = true;
         }
 
         num += current.substring(1);
-        
+
         readBytes += 5;
     }
 

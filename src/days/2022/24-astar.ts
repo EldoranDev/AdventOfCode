@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import { MinHeap } from '@lib/collections';
-import { Heap } from '@lib/collections/Heap';
-import { Graph, GraphNode } from '@lib/graph/Graph';
-import { RouteFinder } from '@lib/graph/RouteFinder';
+import { MinHeap } from "@lib/collections";
+import { Heap } from "@lib/collections/Heap";
+import { Graph, GraphNode } from "@lib/graph/Graph";
+import { RouteFinder } from "@lib/graph/RouteFinder";
 
 class RouteNode<K> {
     public constructor(
@@ -16,7 +16,8 @@ class RouteNode<K> {
     public compareTo(node: RouteNode<K>): number {
         if (this.estimatedScore > node.estimatedScore) {
             return 1;
-        } if (this.estimatedScore < node.estimatedScore) {
+        }
+        if (this.estimatedScore < node.estimatedScore) {
             return -1;
         }
         return 0;
@@ -25,7 +26,11 @@ class RouteNode<K> {
 
 export type Scorer<K extends GraphNode> = (from: K, to: K) => number;
 // eslint-disable-next-line max-len
-export type ConnectionFetcher<K extends GraphNode> = (node: K, graph: Graph<K>, round: number) => Array<string>;
+export type ConnectionFetcher<K extends GraphNode> = (
+    node: K,
+    graph: Graph<K>,
+    round: number,
+) => Array<string>;
 
 export class AStar<K extends GraphNode> implements RouteFinder<K> {
     public constructor(
@@ -66,7 +71,13 @@ export class AStar<K extends GraphNode> implements RouteFinder<K> {
                 let node = allNodes.get(`${c}-${next.round + 1}`);
 
                 if (!node) {
-                    node = new RouteNode<K>(this.graph.getNode(c), null, Number.MAX_SAFE_INTEGER, null, next.round + 1);
+                    node = new RouteNode<K>(
+                        this.graph.getNode(c),
+                        null,
+                        Number.MAX_SAFE_INTEGER,
+                        null,
+                        next.round + 1,
+                    );
                 }
 
                 allNodes.set(`${c}-${node.round}`, node);

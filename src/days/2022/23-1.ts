@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 type Elf = Vec2;
-type Suggestion = { pos: Vec2, from: Array<Vec2> };
-type Check = { move: Vec2, conditon: Array<Vec2> };
+type Suggestion = { pos: Vec2; from: Array<Vec2> };
+type Check = { move: Vec2; conditon: Array<Vec2> };
 
 const DIR = {
     N: new Vec2(0, -1),
@@ -36,7 +36,7 @@ export default function (input: string[], { logger }: Context) {
 
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            if (input[y][x] === '.') {
+            if (input[y][x] === ".") {
                 continue;
             }
 
@@ -72,10 +72,10 @@ export default function (input: string[], { logger }: Context) {
         console.log(map.size);
 
         for (const elf of map.values()) {
-            const moves = Object
-                .values(DIR)
-                .map((dir) => map.has(Vec2.add(elf, dir).toString()))
-                .filter((v) => v).length > 0;
+            const moves =
+                Object.values(DIR)
+                    .map((dir) => map.has(Vec2.add(elf, dir).toString()))
+                    .filter((v) => v).length > 0;
 
             if (!moves) {
                 // Elf does not check any directions and just stays at its place
@@ -90,9 +90,9 @@ export default function (input: string[], { logger }: Context) {
             for (let i = 0; i < CHECKS.length; i++) {
                 const check = CHECKS[(i + sugStart) % CHECKS.length];
 
-                const canMove = check.conditon
-                    .map((n) => map.has(Vec2.add(elf, n).toString()))
-                    .filter((v) => v).length === 0;
+                const canMove =
+                    check.conditon.map((n) => map.has(Vec2.add(elf, n).toString())).filter((v) => v)
+                        .length === 0;
 
                 if (!canMove) {
                     // Direction can not get moved into
@@ -116,7 +116,7 @@ export default function (input: string[], { logger }: Context) {
         }
 
         if (!hadMove) {
-            console.log('No move required anymore');
+            console.log("No move required anymore");
             break;
         }
 
@@ -158,21 +158,21 @@ export default function (input: string[], { logger }: Context) {
     }
 
     let count = 0;
-    let output = '';
+    let output = "";
 
     for (let { y } = min; y <= max.y; y++) {
         for (let { x } = min; x <= max.x; x++) {
             if (map.has(new Vec2(x, y).toString())) {
-                output += '#';
+                output += "#";
                 continue;
             }
 
-            output += '.';
+            output += ".";
 
             count++;
         }
 
-        output += '\n';
+        output += "\n";
     }
 
     console.log(output);

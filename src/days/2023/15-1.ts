@@ -1,9 +1,9 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 export default function (input: string[], { logger }: Context) {
-    return sum(...input[0].split(',').map(hash));
+    return sum(...input[0].split(",").map(hash));
 }
 
 function hash(input: string): number {
