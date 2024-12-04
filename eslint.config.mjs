@@ -5,7 +5,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
   {
-    "files": ['**/*.ts'],
+    "files": ['src/lib/**/*.ts'],
     "rules": {
       '@typescript-eslint/no-unused-vars': [
         "warn", { vars: "all", args: 'none' }

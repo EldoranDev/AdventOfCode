@@ -9,8 +9,8 @@
     "start": "tsx index.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "lint:lib": "eslint ./src/lib --ext .ts",
-    "lint:app": "eslint ./src/app --ext .ts"
+    "lint": "eslint ./src/lib",
+    "lint:fix": "eslint ./src/lib --fix"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,7 @@
     "url": "https://github.com/EldoranDev/AdventOfCode/issues"
   },
   "lint-staged": {
-    "src/app/*.ts": "npm run lint:app",
-    "src/lib/*.ts": "npm run lint:lib"
+    "src/lib/*.ts": "npm run lint"
   },
   "homepage": "https://github.com/EldoranDev/AdventOfCode#readme",
   "devDependencies": {

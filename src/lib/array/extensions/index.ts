@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Array<T> {
     first(): T | undefined;
     last(): T | undefined;

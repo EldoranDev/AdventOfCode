@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 const CACHE: Map<symbol, Map<string, any>> = new Map();
 
 export function memoize<K extends Function>(fn: K): K {
