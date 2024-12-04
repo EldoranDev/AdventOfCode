@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Grid2D, create } from '@lib/array2d';
-import { stdout } from 'process';
-import { createHash } from 'crypto';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Grid2D, create } from "@lib/array2d";
+import { stdout } from "process";
+import { createHash } from "crypto";
 
 const CYCLES = 1_000_000_000;
 
 export default function (input: string[], { logger }: Context) {
-    const grid = create(input[0].length, input.length, '.');
+    const grid = create(input[0].length, input.length, ".");
 
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
@@ -65,7 +65,7 @@ function getCycleLength(grid: Grid2D<string>): number {
 function tiltNorth(grid: Grid2D<string>): void {
     for (let y = 1; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] !== 'O') {
+            if (grid[y][x] !== "O") {
                 continue;
             }
 
@@ -73,14 +73,14 @@ function tiltNorth(grid: Grid2D<string>): void {
 
             do {
                 yy--;
-            } while (yy > 0 && grid[yy][x] === '.');
+            } while (yy > 0 && grid[yy][x] === ".");
 
-            if (grid[yy][x] !== '.') {
+            if (grid[yy][x] !== ".") {
                 yy++;
             }
 
-            grid[y][x] = '.';
-            grid[yy][x] = 'O';
+            grid[y][x] = ".";
+            grid[yy][x] = "O";
         }
     }
 }
@@ -88,7 +88,7 @@ function tiltNorth(grid: Grid2D<string>): void {
 function tiltWest(grid: Grid2D<string>): void {
     for (let y = 0; y < grid.length; y++) {
         for (let x = 1; x < grid[y].length; x++) {
-            if (grid[y][x] !== 'O') {
+            if (grid[y][x] !== "O") {
                 continue;
             }
 
@@ -96,14 +96,14 @@ function tiltWest(grid: Grid2D<string>): void {
 
             do {
                 xx--;
-            } while (xx > 0 && grid[y][xx] === '.');
+            } while (xx > 0 && grid[y][xx] === ".");
 
-            if (grid[y][xx] !== '.') {
+            if (grid[y][xx] !== ".") {
                 xx++;
             }
 
-            grid[y][x] = '.';
-            grid[y][xx] = 'O';
+            grid[y][x] = ".";
+            grid[y][xx] = "O";
         }
     }
 }
@@ -111,7 +111,7 @@ function tiltWest(grid: Grid2D<string>): void {
 function tiltSouth(grid: Grid2D<string>): void {
     for (let y = grid.length - 2; y >= 0; y--) {
         for (let x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] !== 'O') {
+            if (grid[y][x] !== "O") {
                 continue;
             }
 
@@ -119,14 +119,14 @@ function tiltSouth(grid: Grid2D<string>): void {
 
             do {
                 yy++;
-            } while (yy < grid.length - 1 && grid[yy][x] === '.');
+            } while (yy < grid.length - 1 && grid[yy][x] === ".");
 
-            if (grid[yy][x] !== '.') {
+            if (grid[yy][x] !== ".") {
                 yy--;
             }
 
-            grid[y][x] = '.';
-            grid[yy][x] = 'O';
+            grid[y][x] = ".";
+            grid[yy][x] = "O";
         }
     }
 }
@@ -134,7 +134,7 @@ function tiltSouth(grid: Grid2D<string>): void {
 function tiltEast(grid: Grid2D<string>): void {
     for (let y = 0; y < grid.length; y++) {
         for (let x = grid[y].length - 2; x >= 0; x--) {
-            if (grid[y][x] !== 'O') {
+            if (grid[y][x] !== "O") {
                 continue;
             }
 
@@ -142,14 +142,14 @@ function tiltEast(grid: Grid2D<string>): void {
 
             do {
                 xx++;
-            } while (xx < grid[y].length - 1 && grid[y][xx] === '.');
+            } while (xx < grid[y].length - 1 && grid[y][xx] === ".");
 
-            if (grid[y][xx] !== '.') {
+            if (grid[y][xx] !== ".") {
                 xx--;
             }
 
-            grid[y][x] = '.';
-            grid[y][xx] = 'O';
+            grid[y][x] = ".";
+            grid[y][xx] = "O";
         }
     }
 }
@@ -158,12 +158,12 @@ function getConfig(grid: Grid2D<string>): string {
     const config = Array.from({ length: grid.length }, () => "");
 
     for (let y = 0; y < grid.length; y++) {
-        config[y] = grid[y].join('');
+        config[y] = grid[y].join("");
     }
 
-    const md5 = createHash('md5');
+    const md5 = createHash("md5");
 
-    return md5.update(config.join('-')).digest('hex');
+    return md5.update(config.join("-")).digest("hex");
 }
 
 function getScore(grid: Grid2D<string>): number {
@@ -171,11 +171,11 @@ function getScore(grid: Grid2D<string>): number {
 
     for (let y = 0; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] !== 'O') {
+            if (grid[y][x] !== "O") {
                 continue;
             }
 
-            sum += (grid.length - y);
+            sum += grid.length - y;
         }
     }
 
@@ -187,6 +187,6 @@ function print(grid: Grid2D<string>): void {
         for (let x = 0; x < grid[y].length; x++) {
             stdout.write(grid[y][x]);
         }
-        stdout.write('\n');
+        stdout.write("\n");
     }
 }

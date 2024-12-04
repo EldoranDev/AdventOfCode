@@ -1,11 +1,11 @@
-import { range } from '@lib/math/functions';
-import { Hash } from './hash';
+import { range } from "@lib/math/functions";
+import { Hash } from "./hash";
 
 const SUFFIX = [17, 31, 73, 47, 23];
 const ROUNDS = 64;
 
 export function knot(input: string): Hash {
-    const lengths = input.split('').map((n) => Number(n.charCodeAt(0)));
+    const lengths = input.split("").map((n) => Number(n.charCodeAt(0)));
 
     lengths.push(...SUFFIX);
 
@@ -34,9 +34,7 @@ export function knot(input: string): Hash {
     for (let i = 0; i < 16; i++) {
         const slice = getSlice(list, i * 16, 16);
 
-        bytes.push(
-            slice.reduce((prev, curr) => prev ^ curr, 0),
-        );
+        bytes.push(slice.reduce((prev, curr) => prev ^ curr, 0));
     }
 
     return new Hash(bytes);

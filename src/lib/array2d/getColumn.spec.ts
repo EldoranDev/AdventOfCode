@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
-import { getColumn } from '.';
+import { getColumn } from ".";
 
-describe('Array2D: getColumn', () => {
-    it('should return undefined when out of bounds', () => {
+describe("Array2D: getColumn", () => {
+    it("should return undefined when out of bounds", () => {
         const M = [
             [0, 1],
             [2, 3],
@@ -12,7 +12,7 @@ describe('Array2D: getColumn', () => {
         expect(getColumn(M, 2)).toBe(undefined);
     });
 
-    it('should return correct column', () => {
+    it("should return correct column", () => {
         const M = [
             [0, 1],
             [2, 3],

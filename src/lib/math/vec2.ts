@@ -1,4 +1,4 @@
-import IVec from './IVec';
+import IVec from "./IVec";
 
 export default class Vec2 implements IVec {
     constructor(
@@ -53,10 +53,10 @@ export default class Vec2 implements IVec {
         return `V2(${this.x}|${this.y})`;
     }
 
-    public rotate(rotation: number, mode: 'rad' | 'deg' = 'deg') {
+    public rotate(rotation: number, mode: "rad" | "deg" = "deg") {
         let rads = rotation;
 
-        if (mode === 'deg') {
+        if (mode === "deg") {
             rads *= Math.PI / 180;
         }
 
@@ -97,7 +97,7 @@ export default class Vec2 implements IVec {
         return Math.acos(a.dot(b) / (a.length * b.length));
     }
 
-    public static rotate(a: Vec2, rotation: number, mode: 'rad' | 'deg' = 'deg') {
+    public static rotate(a: Vec2, rotation: number, mode: "rad" | "deg" = "deg") {
         return a.clone().rotate(rotation, mode);
     }
 
@@ -111,7 +111,5 @@ export default class Vec2 implements IVec {
 
     public static ZERO = new Vec2();
 
-    public static ULRD = [
-        this.UP, this.LEFT, this.RIGHT, this.DOWN,
-    ];
+    public static ULRD = [this.UP, this.LEFT, this.RIGHT, this.DOWN];
 }

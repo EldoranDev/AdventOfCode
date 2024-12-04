@@ -1,8 +1,9 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { permutator } from '@lib/array';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { permutator } from "@lib/array";
 
-const EXTRACTOR = /([a-zA-Z]*) would (gain|lose) (\d*) happiness units by sitting next to ([a-zA-Z]*)./;
+const EXTRACTOR =
+    /([a-zA-Z]*) would (gain|lose) (\d*) happiness units by sitting next to ([a-zA-Z]*)./;
 
 const RULES: Map<string, Map<string, number>> = new Map();
 
@@ -13,12 +14,12 @@ export default function (input: string[], { logger }: Context) {
     for (const line of input) {
         const [, person, gainOrLose, value, nextTo] = EXTRACTOR.exec(line)!;
 
-        const change = parseInt(value, 10) * (gainOrLose === 'gain' ? 1 : -1);
+        const change = parseInt(value, 10) * (gainOrLose === "gain" ? 1 : -1);
 
         if (!RULES.has(person)) {
             RULES.set(person, new Map());
 
-            RULES.get(person)!.set('Me', 0);
+            RULES.get(person)!.set("Me", 0);
         }
 
         RULES.get(person)!.set(nextTo, change);
@@ -28,12 +29,12 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    const people = Array.from([...RULES.keys(), 'Me']);
+    const people = Array.from([...RULES.keys(), "Me"]);
 
-    RULES.set('Me', new Map());
+    RULES.set("Me", new Map());
 
     people.forEach((person) => {
-        RULES.get('Me')!.set(person, 0);
+        RULES.get("Me")!.set(person, 0);
     });
 
     permutator(people).forEach((permutation) => {

@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
-import { rotateClockwise } from '.';
+import { rotateClockwise } from ".";
 
-describe('Array2D: rotateClockwise', () => {
-    it('should rotate correctly', () => {
+describe("Array2D: rotateClockwise", () => {
+    it("should rotate correctly", () => {
         const M = [
             [0, 1],
             [2, 3],
@@ -15,7 +15,7 @@ describe('Array2D: rotateClockwise', () => {
         ]);
     });
 
-    it('should equal identity when used 4 times', () => {
+    it("should equal identity when used 4 times", () => {
         const M = [
             [0, 1],
             [2, 3],

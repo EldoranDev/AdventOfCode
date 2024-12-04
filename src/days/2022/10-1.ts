@@ -1,7 +1,7 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-const NOOP = 'noop';
+const NOOP = "noop";
 
 export default function (input: string[], { logger }: Context) {
     let X = 1;
@@ -27,7 +27,7 @@ export default function (input: string[], { logger }: Context) {
         } else if (input[OP] === NOOP) {
             OP++;
         } else {
-            const [, amount] = input[OP].split(' ');
+            const [, amount] = input[OP].split(" ");
             BUFFER = Number(amount);
         }
     }

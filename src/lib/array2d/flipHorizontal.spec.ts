@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
-import { flipHorizontal } from '.';
+import { flipHorizontal } from ".";
 
-describe('Array2D: flipHorizontal', () => {
-    it('should flip array successfully', () => {
+describe("Array2D: flipHorizontal", () => {
+    it("should flip array successfully", () => {
         const M = [
             [0, 1],
             [2, 3],
@@ -15,7 +15,7 @@ describe('Array2D: flipHorizontal', () => {
         ]);
     });
 
-    it('should equal identity when applied twice', () => {
+    it("should equal identity when applied twice", () => {
         const M = [
             [0, 1],
             [2, 3],

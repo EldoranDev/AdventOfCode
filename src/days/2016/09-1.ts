@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const DETECTOR = /\((\d+)x(\d+)\)/;
 
@@ -18,7 +18,10 @@ export default function (input: string[], { logger }: Context) {
 
         // Extract the marked text
         // eslint-disable-next-line max-len
-        const markedText = message.slice(match.index + match[0].length, match.index + match[0].length + parseInt(match[1], 10));
+        const markedText = message.slice(
+            match.index + match[0].length,
+            match.index + match[0].length + parseInt(match[1], 10),
+        );
 
         length += parseInt(match[2], 10) * getLength(markedText);
 

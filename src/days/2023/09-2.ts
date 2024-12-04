@@ -1,11 +1,11 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-import '@lib/array/extensions';
+import "@lib/array/extensions";
 
 export default function (input: string[], { logger }: Context) {
     return input
-        .map((line) => line.split(' ').map(Number))
+        .map((line) => line.split(" ").map(Number))
         .map(extrapolate)
         .reduce((acc, current) => acc + current.first(), 0);
 }

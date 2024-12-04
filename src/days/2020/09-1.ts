@@ -1,4 +1,4 @@
-import { mapToNumber } from '@lib/input';
+import { mapToNumber } from "@lib/input";
 
 export default function (input: string[]) {
     const numbers = mapToNumber(input);
@@ -11,10 +11,10 @@ export default function (input: string[]) {
         valid.push(numbers[i]);
     }
 
-    for (let i =  PREAMBLE_LENGTH; i < numbers.length; i++) {
+    for (let i = PREAMBLE_LENGTH; i < numbers.length; i++) {
         if (!canSum(valid, numbers[i])) {
             return numbers[i];
-        };
+        }
 
         valid.shift();
 
@@ -22,14 +22,14 @@ export default function (input: string[]) {
     }
 
     return "";
-};
+}
 
-function canSum (numbers: number[], sum: number): boolean {
+function canSum(numbers: number[], sum: number): boolean {
     for (let i = 0; i < numbers.length; i++) {
         if (numbers[i] > sum) continue;
-        for (let j= 0; j < numbers.length; j++) {
+        for (let j = 0; j < numbers.length; j++) {
             if (i === j) continue;
-            
+
             if (numbers[i] + numbers[j] === sum) {
                 return true;
             }

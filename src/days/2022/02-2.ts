@@ -1,32 +1,32 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-const WIN = { A: 'C', B: 'A', C: 'B' };
-const LOSE = { A: 'B', B: 'C', C: 'A' };
+const WIN = { A: "C", B: "A", C: "B" };
+const LOSE = { A: "B", B: "C", C: "A" };
 
 export default function (input: string[], { logger }: Context) {
     let score = 0;
 
     for (const game of input) {
         // eslint-disable-next-line prefer-const
-        const [E, R] = game.split(' ');
+        const [E, R] = game.split(" ");
 
-        let P = '';
+        let P = "";
 
         // eslint-disable-next-line default-case
         switch (R) {
-            case 'X':
+            case "X":
                 P = WIN[E];
                 break;
-            case 'Y':
+            case "Y":
                 P = E;
                 break;
-            case 'Z':
+            case "Z":
                 P = LOSE[E];
                 break;
         }
 
-        score += P.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        score += P.charCodeAt(0) - "A".charCodeAt(0) + 1;
 
         if (E === P) {
             score += 3;

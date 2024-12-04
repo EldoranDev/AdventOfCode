@@ -1,24 +1,24 @@
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Graph, GraphNode } from '@lib/graph/Graph';
-import { Vec2 } from '@lib/math';
-import { AStar } from './24-astar';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Graph, GraphNode } from "@lib/graph/Graph";
+import { Vec2 } from "@lib/math";
+import { AStar } from "./24-astar";
 
 interface Node extends GraphNode {
     pos: Vec2;
 }
 
 type Blizzard = {
-    start: Vec2,
-    direction: Vec2,
+    start: Vec2;
+    direction: Vec2;
 };
 
 const DIR = {
-    '>': new Vec2(1, 0),
-    '<': new Vec2(-1, 0),
+    ">": new Vec2(1, 0),
+    "<": new Vec2(-1, 0),
     v: new Vec2(0, 1),
-    '^': new Vec2(0, -1),
+    "^": new Vec2(0, -1),
 };
 
 const BOUNDS = new Vec2();
@@ -39,7 +39,7 @@ export default function (input: string[], { logger }: Context) {
 
             graph.addNode(node.id, node);
 
-            if (input[y + 1][x + 1] === '.') {
+            if (input[y + 1][x + 1] === ".") {
                 continue;
             }
 
@@ -83,9 +83,7 @@ export default function (input: string[], { logger }: Context) {
         () => 1,
         (from, to) => from.pos.manhattan(to.pos),
         (node, g, round) => {
-            let array = [
-                ...g.getConnections(node)?.values() ?? [],
-            ];
+            let array = [...(g.getConnections(node)?.values() ?? [])];
 
             array = array.filter((n) => !hasBlizzard(g.getNode(n).pos, round, blizzards));
             return array;

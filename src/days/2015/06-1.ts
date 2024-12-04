@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Vec2 } from '@lib/math';
-import { number } from 'yargs';
+import {} from "@lib/input";
+import { Vec2 } from "@lib/math";
+import { number } from "yargs";
 
 const HEIGHT = 1000;
 const WIDTH = 1000;
@@ -15,26 +15,18 @@ export default function (input: string[]) {
         map[i] = Array(WIDTH).fill(false, 0, WIDTH);
     }
 
-    for(let line of input) {
+    for (const line of input) {
         let result = TURN.exec(line);
-        
-        if(result !== null) {
-            turn(
-                toVec(result[2]), 
-                toVec(result[3]), 
-                result[1] === 'on'
-            );
+
+        if (result !== null) {
+            turn(toVec(result[2]), toVec(result[3]), result[1] === "on");
         }
 
         result = TOGGLE.exec(line);
 
         if (result !== null) {
-            toggle(
-                toVec(result[1]),
-                toVec(result[2])
-            );
+            toggle(toVec(result[1]), toVec(result[2]));
         }
-
     }
     let count = 0;
 
@@ -47,7 +39,7 @@ export default function (input: string[]) {
     }
 
     return count;
-};
+}
 
 function toggle(from: Vec2, to: Vec2) {
     for (let x = from.x; x <= to.x; x++) {
@@ -66,7 +58,7 @@ function turn(from: Vec2, to: Vec2, state: boolean) {
 }
 
 function toVec(coords: string): Vec2 {
-    const split = coords.split(',');
+    const split = coords.split(",");
 
     return new Vec2(Number(split[0]), Number(split[1]));
 }

@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 const DIRS: Vec2[] = [
     new Vec2(0, -1),
@@ -13,7 +13,7 @@ const DIRS: Vec2[] = [
     new Vec2(1, -1),
 ];
 
-const WORD = ['X', 'M', 'A', 'S'];
+const WORD = ["X", "M", "A", "S"];
 
 export default function (input: string[], { logger }: Context) {
     let count = 0;
@@ -40,7 +40,13 @@ function check(pos: Vec2, grid: string[]): number {
         for (let i = 0; i < WORD.length; i++) {
             const p = Vec2.add(pos, Vec2.mult(dir, i));
 
-            if (p.y < 0 || p.y >= grid.length || p.x < 0 || p.x >= grid[p.y].length || grid[p.y][p.x] !== WORD[i]) {
+            if (
+                p.y < 0 ||
+                p.y >= grid.length ||
+                p.x < 0 ||
+                p.x >= grid[p.y].length ||
+                grid[p.y][p.x] !== WORD[i]
+            ) {
                 match = false;
                 break;
             }

@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Grid2D, create } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Grid2D, create } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
 
-type Tile = '.' | '/' | '\\' | '-' | '|';
+type Tile = "." | "/" | "\\" | "-" | "|";
 
 interface Field {
     type: Tile;
@@ -22,7 +22,7 @@ export default function (input: string[], { logger }: Context) {
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
             grid[y][x] = {
-                type: input[y][x] as Field['type'],
+                type: input[y][x] as Field["type"],
                 energy: 0,
             };
         }
@@ -66,10 +66,10 @@ function energize(grid: Grid2D<Field>, pos: Vec2, direction: Vec2): number {
             beam.pos.add(beam.direction);
 
             if (
-                beam.pos.y < 0
-                || beam.pos.y >= grid.length
-                || beam.pos.x < 0
-                || beam.pos.x >= grid[beam.pos.y].length
+                beam.pos.y < 0 ||
+                beam.pos.y >= grid.length ||
+                beam.pos.x < 0 ||
+                beam.pos.x >= grid[beam.pos.y].length
             ) {
                 // Remove beam from list as we do not need to process it anymore
                 continue;
@@ -98,9 +98,9 @@ function energize(grid: Grid2D<Field>, pos: Vec2, direction: Vec2): number {
 
 function getBeams(beam: Beam, tile: Tile): Array<Beam> {
     switch (tile) {
-        case '.':
+        case ".":
             return [beam];
-        case '|':
+        case "|":
             if (beam.direction.x === 0) {
                 return [beam];
             }
@@ -115,7 +115,7 @@ function getBeams(beam: Beam, tile: Tile): Array<Beam> {
                     direction: new Vec2(0, -1),
                 },
             ];
-        case '-':
+        case "-":
             if (beam.direction.y === 0) {
                 return [beam];
             }
@@ -130,7 +130,7 @@ function getBeams(beam: Beam, tile: Tile): Array<Beam> {
                     direction: new Vec2(-1, 0),
                 },
             ];
-        case '/':
+        case "/":
             if (beam.direction.x !== 0) {
                 return [
                     {
@@ -146,7 +146,7 @@ function getBeams(beam: Beam, tile: Tile): Array<Beam> {
                     direction: new Vec2(-beam.direction.y, 0),
                 },
             ];
-        case '\\':
+        case "\\":
             if (beam.direction.x !== 0) {
                 return [
                     {

@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { sum } from "@lib/math/functions";
 
 type Property = {
     capacity: number;
@@ -12,7 +12,8 @@ type Property = {
 
 const INGREDIENTS: Array<Property> = [];
 
-const EXTRACTOR = /(\w+): capacity (-?\d), durability (-?\d), flavor (-?\d). texture (-?\d), calories (-?\d)/;
+const EXTRACTOR =
+    /(\w+): capacity (-?\d), durability (-?\d), flavor (-?\d). texture (-?\d), calories (-?\d)/;
 
 const CACHE = new Map<string, number>();
 
@@ -32,7 +33,7 @@ export default function (input: string[], { logger }: Context) {
 }
 
 function addIngredient(ingredients: Array<number>): number {
-    const cacheKey = ingredients.join(',');
+    const cacheKey = ingredients.join(",");
 
     if (sum(...ingredients) === 100) {
         let capacity = 0;

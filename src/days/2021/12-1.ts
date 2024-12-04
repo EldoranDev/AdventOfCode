@@ -1,18 +1,18 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 type ConnectionMap = Map<string, Set<string>>;
 
 const paths: string[][] = [];
 
-const START = 'start';
-const END = 'end';
+const START = "start";
+const END = "end";
 
-let connections: ConnectionMap = new Map();
+const connections: ConnectionMap = new Map();
 
 export default function (input: string[], { logger }: Context) {
-    for (let line of input) {
-        let [a, b] = line.split('-');
+    for (const line of input) {
+        const [a, b] = line.split("-");
 
         if (!connections.has(a)) {
             connections.set(a, new Set<string>());
@@ -25,23 +25,17 @@ export default function (input: string[], { logger }: Context) {
         connections.get(a).add(b);
         connections.get(b).add(a);
     }
-    
-    findEnd(
-        START,
-        [START]
-    );
+
+    findEnd(START, [START]);
 
     return paths.length;
-};
+}
 
 function isLowerCase(str: string): boolean {
     return str.toLocaleLowerCase() === str;
 }
 
-function findEnd(
-    current: string,
-    path: string[]
-): void {
+function findEnd(current: string, path: string[]): void {
     if (current === END) {
         paths.push(path);
         return;
@@ -49,8 +43,7 @@ function findEnd(
 
     path.push(current);
 
-    let cons = connections.get(current);
-    
+    const cons = connections.get(current);
 
     for (const con of cons) {
         if (con === START) continue;
@@ -59,5 +52,3 @@ function findEnd(
         findEnd(con, [...path]);
     }
 }
-
-

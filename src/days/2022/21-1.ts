@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 interface Operation {
     a: string;
@@ -10,17 +10,17 @@ interface Operation {
 const E = /([a-z]{4})\s([+\-*/])\s([a-z]{4})/;
 
 const OPS = {
-    '*': (a, b) => a * b,
-    '+': (a, b) => a + b,
-    '-': (a, b) => a - b,
-    '/': (a, b) => a / b,
+    "*": (a, b) => a * b,
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "/": (a, b) => a / b,
 };
 
 export default function (input: string[], { logger }: Context) {
     const map = new Map<string, Operation | number>();
 
     for (const line of input) {
-        const [monkey, term] = line.split(':');
+        const [monkey, term] = line.split(":");
 
         const match = E.exec(term);
 
@@ -60,5 +60,5 @@ export default function (input: string[], { logger }: Context) {
 
     console.log(map);
 
-    return map.get('root');
+    return map.get("root");
 }

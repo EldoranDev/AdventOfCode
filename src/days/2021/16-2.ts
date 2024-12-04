@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Logger } from 'winston';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Logger } from "winston";
 
 class Package {
     public constructor(
@@ -13,7 +13,7 @@ class Package {
 
         public packages?: Package[],
     ) {}
-    
+
     public get value() {
         switch (this.type) {
             case 0:
@@ -21,9 +21,9 @@ class Package {
             case 1:
                 return this.packages.reduce((p, c) => p * c.value, 1);
             case 2:
-                return Math.min(...this.packages.map(p => p.value));
+                return Math.min(...this.packages.map((p) => p.value));
             case 3:
-                return Math.max(...this.packages.map(p => p.value));
+                return Math.max(...this.packages.map((p) => p.value));
             case 4:
                 return this.literal;
             case 5:
@@ -39,36 +39,32 @@ class Package {
 }
 
 export default function (input: string[], { logger }: Context) {
-
     let message = "";
 
-    for (let char of input[0]) {
+    for (const char of input[0]) {
         message += parseInt(char, 16).toString(2).padStart(4, "0");
     }
 
     logger.debug(message);
 
-    const [ pkg ] = parsePackage(message, 0, logger);
-    
+    const [pkg] = parsePackage(message, 0, logger);
+
     console.log(pkg);
 
     return pkg.value;
-};
+}
 
 function parsePackage(binary: string, pointer: number, logger: Logger): [Package, number] {
     let readBits = 0;
-    let version = parseInt(binary.substring(pointer, pointer + 3), 2);
+    const version = parseInt(binary.substring(pointer, pointer + 3), 2);
     pointer += 3;
     readBits += 3;
 
-    let type = parseInt(binary.substring(pointer, pointer + 3), 2);
+    const type = parseInt(binary.substring(pointer, pointer + 3), 2);
     pointer += 3;
     readBits += 3;
 
-    let pkg: Package = new Package(
-        version,
-        type,
-    );
+    const pkg: Package = new Package(version, type);
 
     let bits = 0;
 
@@ -89,14 +85,14 @@ function parsePackage(binary: string, pointer: number, logger: Logger): [Package
 function parseOperator(pkg: Package, binary: string, pointer: number, logger: Logger): number {
     let readBits = 0;
 
-    pkg.lengthId = Number(binary.substring(pointer, pointer+1));
+    pkg.lengthId = Number(binary.substring(pointer, pointer + 1));
 
     readBits += 1;
     pointer += 1;
 
     pkg.packages = [];
 
-    switch(pkg.lengthId) {
+    switch (pkg.lengthId) {
         case 0:
             pkg.length = parseInt(binary.substring(pointer, pointer + 15), 2);
             readBits += 15;
@@ -105,7 +101,7 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
             let bitsLeft = pkg.length;
 
             while (bitsLeft > 0) {
-                let [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [subPkg, bits] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 bitsLeft -= bits;
@@ -113,15 +109,14 @@ function parseOperator(pkg: Package, binary: string, pointer: number, logger: Lo
                 pointer += bits;
             }
 
-
             break;
         case 1:
-            pkg.length = parseInt(binary.substring(pointer, pointer + 11), 2)
+            pkg.length = parseInt(binary.substring(pointer, pointer + 11), 2);
             readBits += 11;
             pointer += 11;
 
             while (pkg.packages.length < pkg.length) {
-                let [ subPkg, bits ] = parsePackage(binary, pointer, logger);
+                const [subPkg, bits] = parsePackage(binary, pointer, logger);
 
                 pkg.packages.push(subPkg);
                 readBits += bits;
@@ -140,14 +135,14 @@ function parseLiteral(pkg: Package, binary: string, pointer: number, logger: Log
     let readBytes = 0;
 
     while (!last) {
-        let current = binary.substring(pointer + readBytes, pointer + readBytes+5);
+        const current = binary.substring(pointer + readBytes, pointer + readBytes + 5);
 
-        if (current[0] === '0') {
-            last = true;    
+        if (current[0] === "0") {
+            last = true;
         }
 
         num += current.substring(1);
-        
+
         readBytes += 5;
     }
 

@@ -1,11 +1,11 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { unique } from '@lib/array';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { unique } from "@lib/array";
 
 export default function (input: string[], { logger }: Context) {
     const MARKER_LENGTH = 4;
     const buffer = input[0];
-    const marker = buffer.substring(0, MARKER_LENGTH).split('');
+    const marker = buffer.substring(0, MARKER_LENGTH).split("");
 
     for (let i = MARKER_LENGTH; i < buffer.length; i++) {
         marker.shift();
@@ -16,5 +16,5 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    return 'Nothing Found';
+    return "Nothing Found";
 }

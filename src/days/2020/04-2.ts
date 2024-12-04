@@ -9,17 +9,17 @@ const RULES: Record<string, (val: string) => boolean> = {
 
         if (res === null) return false;
 
-        switch(res[2]) {
-            case 'cm':
+        switch (res[2]) {
+            case "cm":
                 return Number(res[1]) >= 150 && Number(res[1]) <= 193;
-            case 'in':
+            case "in":
                 return Number(res[1]) >= 59 && Number(res[1]) < 76;
         }
 
         return false;
     },
     hcl: (val: string) => val.length === 7 && /#[0-9a-f]{6}/.test(val),
-    ecl: (val: string) => ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(val),
+    ecl: (val: string) => ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].includes(val),
     pid: (val: string) => val.length === 9,
 };
 
@@ -37,21 +37,21 @@ export default function (input: string[]) {
             passport = {};
         }
 
-        const parts = input[i].split(' ');
+        const parts = input[i].split(" ");
 
         for (const part of parts) {
-            const [ key, value ] = part.split(':');
+            const [key, value] = part.split(":");
 
             passport[key] = value;
         }
     }
 
-    if(checkValid(passport)) {
+    if (checkValid(passport)) {
         valid++;
     }
 
     return valid;
-};
+}
 
 function checkValid(passport: Passport): boolean {
     const fields = Object.keys(RULES);

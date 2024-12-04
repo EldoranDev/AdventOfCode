@@ -1,5 +1,5 @@
-import { getLineGroups } from '@lib/input';
-import { sum } from '@lib/math/functions';
+import { getLineGroups } from "@lib/input";
+import { sum } from "@lib/math/functions";
 
 export default function (input: string[]) {
     const elves = getLineGroups(input);

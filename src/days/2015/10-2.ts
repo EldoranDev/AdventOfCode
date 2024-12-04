@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     let line = input[0];
@@ -11,14 +11,14 @@ export default function (input: string[], { logger }: Context) {
     return line.length;
 }
 
-type Entry = { num: string, count: number };
+type Entry = { num: string; count: number };
 
 function transform(value: string): string {
     const groups: Array<Entry> = [];
 
     groups.push({ num: value[0], count: 0 });
 
-    for (const char of value.split('')) {
+    for (const char of value.split("")) {
         if (groups[groups.length - 1].num === char) {
             groups[groups.length - 1].count++;
         } else {
@@ -26,7 +26,7 @@ function transform(value: string): string {
         }
     }
 
-    let ouput: string = '';
+    let ouput: string = "";
 
     for (const group of groups) {
         ouput += `${group.count}${group.num}`;

@@ -1,9 +1,9 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
-import { LCM } from '@lib/math/functions';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
+import { LCM } from "@lib/math/functions";
 
-const START = 'A';
-const END = 'Z';
+const START = "A";
+const END = "Z";
 
 export default function (input: string[], { logger }: Context) {
     const connections = new Map<string, string[]>();
@@ -40,7 +40,7 @@ function getCycleLength(
     while (!done) {
         const [left, right] = connections.get(current)!;
 
-        if (directions[steps % directions.length] === 'L') {
+        if (directions[steps % directions.length] === "L") {
             current = left;
         } else {
             current = right;

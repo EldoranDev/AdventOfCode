@@ -1,5 +1,5 @@
-import { getLineGroups } from '@lib/input';
-import { Context } from '@app/types';
+import { getLineGroups } from "@lib/input";
+import { Context } from "@app/types";
 
 interface Range {
     from: number;
@@ -13,14 +13,14 @@ type Group = Array<Range>;
 export default function (input: string[], { logger }: Context) {
     const groups = getLineGroups(input);
 
-    const seeds = groups.shift()[0].split(':')[1].trim().split(' ').map(Number);
+    const seeds = groups.shift()[0].split(":")[1].trim().split(" ").map(Number);
 
     const maps = groups.map((group): Group => {
         const ranges: Range[] = [];
         group.shift();
 
         group.forEach((line) => {
-            const [to, from, length] = line.split(' ').map(Number);
+            const [to, from, length] = line.split(" ").map(Number);
 
             ranges.push({
                 from,

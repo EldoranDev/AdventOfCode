@@ -1,18 +1,12 @@
-export default function findAllIndices<T>(
-    val: T,
-    array: Array<T>,
-): Array<number> {
+export default function findAllIndices<T>(val: T, array: Array<T>): Array<number> {
     const matches = [];
 
-    let lastIndex = 0;
+    let lastIndex = array.indexOf(val, 0);
 
-    while (true) {
-        const i = array.indexOf(val, lastIndex);
-
-        if (i === -1) {
-            return matches;
-        }
-        matches.push(i);
-        lastIndex = i + 1;
+    while (lastIndex !== -1) {
+        matches.push(lastIndex);
+        lastIndex = array.indexOf(val, lastIndex + 1);
     }
+
+    return matches;
 }

@@ -1,13 +1,13 @@
 /* eslint-disable no-case-declarations */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger, test }: Context) {
-    const group = test ? 'abcde'.split('') : 'abcdefghijklmnop'.split('');
+    const group = test ? "abcde".split("") : "abcdefghijklmnop".split("");
 
-    for (const action of input[0].split(',')) {
+    for (const action of input[0].split(",")) {
         switch (action[0]) {
-            case 's':
+            case "s":
                 const [, count] = /s(.+)/.exec(action);
 
                 for (let i = 0; i < Number(count); i++) {
@@ -15,7 +15,7 @@ export default function (input: string[], { logger, test }: Context) {
                 }
 
                 break;
-            case 'x':
+            case "x":
                 const [, x1, x2] = /x(.+)\/(.+)/.exec(action);
 
                 const tmpX = group[x1];
@@ -23,7 +23,7 @@ export default function (input: string[], { logger, test }: Context) {
                 group[x2] = tmpX;
 
                 break;
-            case 'p':
+            case "p":
                 const [, p1, p2] = /p(.+)\/(.+)/.exec(action);
 
                 const ip1 = group.indexOf(p1);
@@ -35,9 +35,9 @@ export default function (input: string[], { logger, test }: Context) {
 
                 break;
             default:
-                throw new Error('Invalid dance move');
+                throw new Error("Invalid dance move");
         }
     }
 
-    return group.join('');
+    return group.join("");
 }

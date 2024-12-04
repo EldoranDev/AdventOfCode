@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 interface Instruction {
     direction: Vec2;
@@ -27,8 +27,8 @@ export default function (input: string[], { logger }: Context) {
     let r = 0;
 
     for (let i = 0; i < points.length; i++) {
-        l += (points[i].x * points[(i + 1) % points.length].y);
-        r += (points[i].y * points[(i + 1) % points.length].x);
+        l += points[i].x * points[(i + 1) % points.length].y;
+        r += points[i].y * points[(i + 1) % points.length].x;
     }
 
     const area = (l - r) >> 1;
@@ -50,11 +50,16 @@ function parse(line: string): Instruction {
 
 function getDir(char: string): Vec2 {
     switch (char) {
-        case 'L': return new Vec2(-1, 0);
-        case 'R': return new Vec2(1, 0);
-        case 'U': return new Vec2(0, -1);
-        case 'D': return new Vec2(0, 1);
+        case "L":
+            return new Vec2(-1, 0);
+        case "R":
+            return new Vec2(1, 0);
+        case "U":
+            return new Vec2(0, -1);
+        case "D":
+            return new Vec2(0, 1);
 
-        default: throw new Error(`Invalid direction: ${char}`);
+        default:
+            throw new Error(`Invalid direction: ${char}`);
     }
 }

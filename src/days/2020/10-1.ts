@@ -1,4 +1,4 @@
-import { mapToNumber } from '@lib/input';
+import { mapToNumber } from "@lib/input";
 
 export default function (input: string[]) {
     const list = mapToNumber(input);
@@ -7,12 +7,12 @@ export default function (input: string[]) {
 
     const jolts: Record<number, number> = {};
 
-    let current = 0; 
+    let current = 0;
 
-    for (let adapter of list) {
-        let diff = adapter-current;
+    for (const adapter of list) {
+        const diff = adapter - current;
 
-        if (!jolts[diff]){
+        if (!jolts[diff]) {
             jolts[diff] = 0;
         }
 
@@ -20,8 +20,8 @@ export default function (input: string[]) {
 
         current = adapter;
     }
-    
+
     jolts[3]++;
     console.log(jolts);
     return jolts[1] * jolts[3];
-};
+}

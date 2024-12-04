@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { LCM } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { LCM } from "@lib/math/functions";
 
 interface Pulse {
     from: string;
@@ -17,7 +17,7 @@ abstract class Module {
     constructor(
         public id: string,
         public targets: string[],
-    ) { }
+    ) {}
 
     public abstract process(pulse: Pulse): Pulse[];
 
@@ -84,7 +84,7 @@ class Untyped extends Module {
 }
 
 // Target we're looking for
-const TARGET = 'rx';
+const TARGET = "rx";
 
 export default function (input: string[], { logger }: Context) {
     const modules: Map<string, Module> = new Map();
@@ -93,14 +93,32 @@ export default function (input: string[], { logger }: Context) {
         const [type, id, targets] = /([&%]?)([a-z]+) -> (.+)/.exec(line).slice(1);
 
         switch (type) {
-            case '%':
-                modules.set(id, new FlipFlop(id, targets.split(',').map((target) => target.trim())));
+            case "%":
+                modules.set(
+                    id,
+                    new FlipFlop(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
-            case '&':
-                modules.set(id, new Conjunction(id, targets.split(',').map((target) => target.trim())));
+            case "&":
+                modules.set(
+                    id,
+                    new Conjunction(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
-            case '':
-                modules.set(id, new Broadcaster(id, targets.split(',').map((target) => target.trim())));
+            case "":
+                modules.set(
+                    id,
+                    new Broadcaster(
+                        id,
+                        targets.split(",").map((target) => target.trim()),
+                    ),
+                );
                 break;
             default:
                 throw new Error(`Unknown type: ${type}`);
@@ -109,7 +127,7 @@ export default function (input: string[], { logger }: Context) {
 
     // Untyped output module for testing purposes
     // Required for one of the test inputs
-    modules.set('output', new Untyped('output', []));
+    modules.set("output", new Untyped("output", []));
 
     // Untyped rx module for P2
     modules.set(TARGET, new Untyped(TARGET, []));
@@ -131,10 +149,10 @@ export default function (input: string[], { logger }: Context) {
     });
 
     const pulses: Array<Pulse> = [];
-    for (let i = 0; /* Search until we find answer */ ; i++) {
+    for (let i = 0 /* Search until we find answer */; ; i++) {
         pulses.push({
-            from: 'button',
-            to: 'broadcaster',
+            from: "button",
+            to: "broadcaster",
             pulse: false,
         });
 
@@ -175,5 +193,7 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    return Object.values(points).map((p) => p[0] + 1).reduce((a, b) => LCM(a, b), 1);
+    return Object.values(points)
+        .map((p) => p[0] + 1)
+        .reduce((a, b) => LCM(a, b), 1);
 }

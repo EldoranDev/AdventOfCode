@@ -1,36 +1,35 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
-type Op = { op: string, param: number };
-type Result = { loop: boolean, acc: number };
+type Op = { op: string; param: number };
+type Result = { loop: boolean; acc: number };
 
 export default function (input: string[]) {
-    const base = input.map((line) => { 
-        let parts = line.split(' ');
+    const base = input.map((line) => {
+        const parts = line.split(" ");
         return {
             op: parts[0],
             param: Number(parts[1]),
         };
     });
 
-
     for (let i = 0; i < base.length; i++) {
-        let op: Op[] = [...base];
+        const op: Op[] = [...base];
 
-        if (base[i].op === 'nop' && base[i].param !== 0) {
+        if (base[i].op === "nop" && base[i].param !== 0) {
             op[i] = {
                 ...base[i],
-                op: 'jmp',
+                op: "jmp",
             };
-        } else if (base[i].op === 'jmp') {
+        } else if (base[i].op === "jmp") {
             op[i] = {
                 ...base[i],
-                op: 'nop',
+                op: "nop",
             };
         } else {
             continue;
         }
 
-        let result = execute(op);
+        const result = execute(op);
 
         if (!result.loop) {
             return result.acc;
@@ -38,8 +37,7 @@ export default function (input: string[]) {
     }
 
     return "NON";
-
-};
+}
 
 function execute(ops: Op[]): Result {
     let acc = 0;
@@ -49,25 +47,25 @@ function execute(ops: Op[]): Result {
 
     while (instr < ops.length) {
         if (visited.has(instr)) {
-            return { loop: true, acc};
+            return { loop: true, acc };
         }
 
         visited.add(instr);
 
         const op = ops[instr];
         switch (op.op) {
-            case 'acc':
-                acc += op.param
+            case "acc":
+                acc += op.param;
                 instr++;
                 break;
-            case 'jmp':
+            case "jmp":
                 instr += op.param;
                 break;
-            case 'nop':
+            case "nop":
                 instr++;
                 break;
         }
     }
 
-    return { loop: false, acc};
+    return { loop: false, acc };
 }

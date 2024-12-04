@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 interface Node {
     id: string;
@@ -20,28 +20,28 @@ interface PreNode {
 const E = /([a-z]{4})\s([+\-*/])\s([a-z]{4})/;
 
 const OPS = {
-    '*': (a: number, b: number) => a * b,
-    '+': (a: number, b: number) => a + b,
-    '-': (a: number, b: number) => a - b,
-    '/': (a: number, b: number) => (a / b) | 0,
-    '=': (a: number, b: number) => a === b,
+    "*": (a: number, b: number) => a * b,
+    "+": (a: number, b: number) => a + b,
+    "-": (a: number, b: number) => a - b,
+    "/": (a: number, b: number) => (a / b) | 0,
+    "=": (a: number, b: number) => a === b,
 };
 
 const INV = {
-    '*': [(y, a) => y / a, (y, b) => y / b],
-    '+': [(y, a) => y - a, (y, b) => y - b],
-    '-': [(y, a) => a - y, (y, b) => b + y],
-    '/': [(y, a) => a / y, (y, b) => b * y],
+    "*": [(y, a) => y / a, (y, b) => y / b],
+    "+": [(y, a) => y - a, (y, b) => y - b],
+    "-": [(y, a) => a - y, (y, b) => b + y],
+    "/": [(y, a) => a / y, (y, b) => b * y],
 };
 
-const HUMAN = 'humn';
+const HUMAN = "humn";
 
 export default function (input: string[], { logger }: Context) {
     const preNodes = new Map<string, PreNode>();
     const nodes = new Map<string, Node>();
 
     for (const line of input) {
-        const [monkey, term] = line.split(':');
+        const [monkey, term] = line.split(":");
 
         const match = E.exec(term);
 
@@ -58,11 +58,11 @@ export default function (input: string[], { logger }: Context) {
             });
         } else {
             preNodes.set(monkey, {
-                value: +(term.trim()),
+                value: +term.trim(),
             });
             nodes.set(monkey, {
                 id: monkey,
-                value: +(term.trim()),
+                value: +term.trim(),
             });
         }
     }
@@ -89,7 +89,7 @@ export default function (input: string[], { logger }: Context) {
         replaced = false;
 
         for (const [key, value] of nodes.entries()) {
-            if (typeof value.value === 'number') {
+            if (typeof value.value === "number") {
                 continue;
             }
 
@@ -106,7 +106,7 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    const root = nodes.get('root');
+    const root = nodes.get("root");
     nodes.get(HUMAN).value = null;
 
     let node = root;

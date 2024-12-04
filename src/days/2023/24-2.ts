@@ -1,9 +1,9 @@
-import { } from '@lib/input';
-import { Context as AppContext } from '@app/types';
+import {} from "@lib/input";
+import { Context as AppContext } from "@app/types";
 
-import { Vec3 } from '@lib/math';
+import { Vec3 } from "@lib/math";
 
-import { init } from 'z3-solver';
+import { init } from "z3-solver";
 
 interface Storm {
     position: Vec3;
@@ -15,15 +15,15 @@ export default async function (input: string[], { logger }: AppContext) {
 
     const { Context, em } = await init();
 
-    const { Solver, Int } = Context('main');
+    const { Solver, Int } = Context("main");
 
-    const X = Int.const('X');
-    const Y = Int.const('Y');
-    const Z = Int.const('Z');
+    const X = Int.const("X");
+    const Y = Int.const("Y");
+    const Z = Int.const("Z");
 
-    const VX = Int.const('VX');
-    const VY = Int.const('VY');
-    const VZ = Int.const('VZ');
+    const VX = Int.const("VX");
+    const VY = Int.const("VY");
+    const VZ = Int.const("VZ");
 
     const solver = new Solver();
 
@@ -47,14 +47,10 @@ export default async function (input: string[], { logger }: AppContext) {
         );
     }
 
-    if (await solver.check() === 'sat') {
+    if ((await solver.check()) === "sat") {
         const model = solver.model();
 
-        const [
-            x,
-            y,
-            z,
-        ] = [
+        const [x, y, z] = [
             Number(model.eval(X).toString()),
             Number(model.eval(Y).toString()),
             Number(model.eval(Z).toString()),
@@ -69,7 +65,10 @@ export default async function (input: string[], { logger }: AppContext) {
 }
 
 function parse(line: string): Storm {
-    const [x, y, z, vx, vy, vz] = /(\d*),\s*(\d*),\s*(\d*)\s*@\s*(-?\d*),\s*(-?\d*),\s*(-?\d*)/.exec(line).slice(1).map(Number);
+    const [x, y, z, vx, vy, vz] = /(\d*),\s*(\d*),\s*(\d*)\s*@\s*(-?\d*),\s*(-?\d*),\s*(-?\d*)/
+        .exec(line)
+        .slice(1)
+        .map(Number);
     return {
         position: new Vec3(x, y, z),
         velocity: new Vec3(vx, vy, vz),

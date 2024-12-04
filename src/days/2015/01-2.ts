@@ -1,12 +1,12 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
     let current = 0;
-    const instr = input[0].split('');
+    const instr = input[0].split("");
 
     for (let i = 0; i < instr.length; i++) {
-        if (instr[i] === ')') {
-            current--
+        if (instr[i] === ")") {
+            current--;
         } else {
             current++;
         }
@@ -15,4 +15,4 @@ export default function (input: string[]) {
             return i + 1;
         }
     }
-};
+}

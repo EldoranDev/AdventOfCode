@@ -1,9 +1,9 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { range } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { range } from "@lib/math/functions";
 
 export default function (input: string[], { logger, test }: Context) {
-    const lengths = input[0].split(',').map((n) => Number(n));
+    const lengths = input[0].split(",").map((n) => Number(n));
 
     const list = test ? range(5, 0) : range(256, 0);
 

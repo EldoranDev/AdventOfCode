@@ -1,34 +1,32 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import deepcopy from 'deepcopy';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import deepcopy from "deepcopy";
 
-type SnailNumber = [ SnailNumber|number, SnailNumber|number];
+type SnailNumber = [SnailNumber | number, SnailNumber | number];
 
-type TreeNode = { 
-    left?: TreeNode|number, 
-    right?: TreeNode|number,
-    parent?: TreeNode,
-}
+type TreeNode = {
+    left?: TreeNode | number;
+    right?: TreeNode | number;
+    parent?: TreeNode;
+};
 
 export default function (input: string[], { logger }: Context) {
-    let numbers: Array<TreeNode> = [];
+    const numbers: Array<TreeNode> = [];
 
     let highest = 0;
 
     for (const line of input) {
-        numbers.push(
-            createNode(JSON.parse(line))
-        );
+        numbers.push(createNode(JSON.parse(line)));
     }
 
     for (let i = 0; i < numbers.length; i++) {
         for (let j = 0; j < numbers.length; j++) {
             if (i == j) continue;
 
-            let A = deepcopy(numbers[i]);
-            let b = deepcopy(numbers[j]);
+            const A = deepcopy(numbers[i]);
+            const b = deepcopy(numbers[j]);
 
-            let N: TreeNode = {
+            const N: TreeNode = {
                 left: A,
                 right: b,
             };
@@ -38,7 +36,7 @@ export default function (input: string[], { logger }: Context) {
 
             reduce(N);
 
-            let m = getMagnitude(N);
+            const m = getMagnitude(N);
 
             if (m > highest) {
                 highest = m;
@@ -46,36 +44,36 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    return highest
-};
+    return highest;
+}
 
 function reduce(number: TreeNode) {
-    while(true) {
+    while (true) {
         // print(number);
 
         // Check Explodes
-        let explodeNode = findExplode(number);
-        
+        const explodeNode = findExplode(number);
+
         if (explodeNode !== null) {
             // Do explode
-            let left = findLeft(explodeNode);
-            
+            const left = findLeft(explodeNode);
+
             if (left !== null) {
                 if (Number.isInteger(left.right)) {
                     (left.right as number) += explodeNode.left as number;
                 } else if (Number.isInteger(left.left)) {
                     (left.left as number) += explodeNode.left as number;
-                } 
+                }
             }
 
-            let right = findRight(explodeNode);
+            const right = findRight(explodeNode);
 
             if (right !== null) {
                 if (Number.isInteger(right.left)) {
                     (right.left as number) += explodeNode.right as number;
                 } else if (Number.isInteger(right.right)) {
                     (right.right as number) += explodeNode.right as number;
-                } 
+                }
             }
 
             // Replace with 0
@@ -84,12 +82,12 @@ function reduce(number: TreeNode) {
             } else {
                 explodeNode.parent.right = 0;
             }
-            
+
             // restart checking
             continue;
         }
-        
-        let splitNode = findSplit(number);
+
+        const splitNode = findSplit(number);
 
         // Do Split
         if (splitNode !== null) {
@@ -97,7 +95,7 @@ function reduce(number: TreeNode) {
                 splitNode.left = {
                     parent: splitNode,
                     left: Math.floor((splitNode.left as number) / 2),
-                    right: Math.ceil((splitNode.left as number) / 2)
+                    right: Math.ceil((splitNode.left as number) / 2),
                 };
 
                 continue;
@@ -107,24 +105,25 @@ function reduce(number: TreeNode) {
                 splitNode.right = {
                     parent: splitNode,
                     left: Math.floor((splitNode.right as number) / 2),
-                    right: Math.ceil((splitNode.right as number) / 2)
+                    right: Math.ceil((splitNode.right as number) / 2),
                 };
 
                 continue;
             }
         }
-        
 
         return number;
     }
 }
 
-function getMagnitude(number: TreeNode|Number) {
-    if (typeof number === 'number') {
+function getMagnitude(number: TreeNode | number) {
+    if (typeof number === "number") {
         return number;
     }
 
-    return getMagnitude((number as TreeNode).left) * 3 + getMagnitude((number as TreeNode).right) * 2;
+    return (
+        getMagnitude((number as TreeNode).left) * 3 + getMagnitude((number as TreeNode).right) * 2
+    );
 }
 
 function findExplode(number: TreeNode, cd: number = 0): TreeNode {
@@ -134,7 +133,7 @@ function findExplode(number: TreeNode, cd: number = 0): TreeNode {
         let node = null;
         if (!Number.isInteger(number.left)) {
             node = findExplode(number.left as TreeNode, cd + 1);
-            
+
             if (node !== null) {
                 return node;
             }
@@ -142,7 +141,7 @@ function findExplode(number: TreeNode, cd: number = 0): TreeNode {
 
         if (!Number.isInteger(number.right)) {
             node = findExplode(number.right as TreeNode, cd + 1);
-            
+
             if (node !== null) {
                 return node;
             }
@@ -159,7 +158,7 @@ function findSplit(number: TreeNode): TreeNode {
 
     let node = null;
 
-    if (typeof(number.left) !== 'number') {
+    if (typeof number.left !== "number") {
         node = findSplit(number.left as TreeNode);
 
         if (node !== null) {
@@ -170,8 +169,8 @@ function findSplit(number: TreeNode): TreeNode {
     if (number.right >= 10) {
         return number;
     }
-    
-    if (typeof(number.right) !== 'number') {
+
+    if (typeof number.right !== "number") {
         node = findSplit(number.right as TreeNode);
 
         if (node !== null) {
@@ -207,7 +206,7 @@ function findLeft(number: TreeNode): TreeNode {
         return null;
     }
 
-    while(true) {
+    while (true) {
         if (Number.isInteger(current.right)) {
             return current;
         }
@@ -219,7 +218,7 @@ function findLeft(number: TreeNode): TreeNode {
 function findRight(number: TreeNode): TreeNode {
     let current = number;
 
-    while(current !== null) {
+    while (current !== null) {
         if (current.parent === null || current.parent === undefined) {
             return null;
         }
@@ -241,7 +240,7 @@ function findRight(number: TreeNode): TreeNode {
         return null;
     }
 
-    while(true) {
+    while (true) {
         if (Number.isInteger(current.left)) {
             return current;
         }
@@ -250,7 +249,7 @@ function findRight(number: TreeNode): TreeNode {
     }
 }
 
-function createNode(num: SnailNumber, parent: TreeNode|null = null): TreeNode {
+function createNode(num: SnailNumber, parent: TreeNode | null = null): TreeNode {
     const node: TreeNode = {
         parent,
     };
@@ -268,18 +267,18 @@ function createNode(num: SnailNumber, parent: TreeNode|null = null): TreeNode {
     }
 
     return node;
-};
+}
 
 function createArray(number: TreeNode): Array<SnailNumber> {
-    let v = [];
+    const v = [];
 
-    if (typeof(number.left) === 'number') {
+    if (typeof number.left === "number") {
         v[0] = number.left;
     } else {
         v[0] = createArray(number.left as TreeNode);
     }
 
-    if (typeof(number.right) === 'number') {
+    if (typeof number.right === "number") {
         v[1] = number.right;
     } else {
         v[1] = createArray(number.right as TreeNode);

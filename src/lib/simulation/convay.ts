@@ -1,4 +1,4 @@
-import { IVec } from '@lib/math';
+import { IVec } from "@lib/math";
 
 type MapKey = string;
 type Neighbordetection<T> = (pos: T) => T[];

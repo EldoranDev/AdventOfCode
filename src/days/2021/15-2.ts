@@ -1,8 +1,8 @@
-import { Context } from '@app/types';
-import { create } from '@lib/array2d';
-import { Vec2 } from '@lib/math';
-import { MinHeap } from '@lib/collections';
-import { Logger } from 'winston';
+import { Context } from "@app/types";
+import { create } from "@lib/array2d";
+import { Vec2 } from "@lib/math";
+import { MinHeap } from "@lib/collections";
+import { Logger } from "winston";
 
 class Node {
     public constructor(
@@ -11,7 +11,7 @@ class Node {
         public previous: Node = null,
         public routeScore: number = Number.MAX_SAFE_INTEGER,
         public path: boolean = false,
-    ) { }
+    ) {}
 
     public get id(): string {
         return this.pos.toString();
@@ -22,74 +22,63 @@ class Node {
     }
 
     public toString() {
-        return this.path ? `\u001b[31m${this.risk}\u001b[0m`: this.risk.toString();
+        return this.path ? `\u001b[31m${this.risk}\u001b[0m` : this.risk.toString();
     }
 }
 
-const NEXT = [
-    new Vec2(1, 0),
-    new Vec2(-1, 0),
-    new Vec2(0, 1),
-    new Vec2(0, -1),
-];
+const NEXT = [new Vec2(1, 0), new Vec2(-1, 0), new Vec2(0, 1), new Vec2(0, -1)];
 
 export default function (input: string[], { logger }: Context) {
     const map = create<Node>(input[0].length * 5, input.length * 5, null);
 
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[y].length; x++) {
-            let increase = ((y / input.length) | 0) +  ((x / input[0].length) | 0);
+            const increase = ((y / input.length) | 0) + ((x / input[0].length) | 0);
             let risk = Number(input[y % input.length].charAt(x % input[0].length)) + increase;
 
             if (risk > 9) {
                 risk %= 10;
                 risk++;
             }
-            map[y][x] = new Node(
-                new Vec2(x, y),
-                Math.max(
-                    1,
-                    risk,
-                )
-            );
+            map[y][x] = new Node(new Vec2(x, y), Math.max(1, risk));
         }
     }
 
-
-
     const FROM = map[0][0];
-    const TO = map[map.length-1][map[0].length - 1];
+    const TO = map[map.length - 1][map[0].length - 1];
 
     FROM.routeScore = FROM.risk;
 
-    let open = new MinHeap<Node>();
+    const open = new MinHeap<Node>();
 
     open.push(FROM, 0);
 
     while (open.length > 0) {
-        let node = open.shift();
-        
+        const node = open.shift();
+
         if (node.equals(TO)) {
             break;
-        } 
+        }
 
         NEXT.map((v: Vec2) => {
-            let d = Vec2.add(v, node.pos);
-            
-            return map[d.y] ? map[d.y][d.x] : null;
-        }).filter((v) => v != undefined).forEach((n) => {
-            let cost = node.routeScore + n.risk;
+            const d = Vec2.add(v, node.pos);
 
-            if (cost < n.routeScore) {
-                n.previous = node;
-                n.routeScore = cost;
-                
-                open.push(n, cost + n.pos.manhattan(TO.pos));
-            }
-        });
+            return map[d.y] ? map[d.y][d.x] : null;
+        })
+            .filter((v) => v != undefined)
+            .forEach((n) => {
+                const cost = node.routeScore + n.risk;
+
+                if (cost < n.routeScore) {
+                    n.previous = node;
+                    n.routeScore = cost;
+
+                    open.push(n, cost + n.pos.manhattan(TO.pos));
+                }
+            });
     }
 
-    let path: Node[] = [];
+    const path: Node[] = [];
     let current = TO;
 
     while (current != null) {
@@ -98,12 +87,10 @@ export default function (input: string[], { logger }: Context) {
         current = current.previous;
     }
 
-
     print(map, logger);
 
-
     return path.reduce((c, n) => c + n.risk, 0) - FROM.risk;
-};
+}
 
 function print(map: Node[][], logger: Logger): void {
     let output = "\n";
@@ -111,7 +98,7 @@ function print(map: Node[][], logger: Logger): void {
         for (let x = 0; x < map[y].length; x++) {
             output += map[y][x].toString();
         }
-        output += '\n';
+        output += "\n";
     }
 
     logger.debug(output);

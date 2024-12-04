@@ -1,10 +1,10 @@
-import { mapToNumber } from '@lib/input';
+import { mapToNumber } from "@lib/input";
 
 export default function (input: string[]) {
-    let program = mapToNumber(input[0].split(','));
+    const program = mapToNumber(input[0].split(","));
 
     let instr = 0;
-    let memory = [...program];
+    const memory = [...program];
 
     memory[1] = 12;
     memory[2] = 2;
@@ -12,14 +12,14 @@ export default function (input: string[]) {
     let halted = false;
 
     while (!halted) {
-        let OP = memory[instr];
+        const OP = memory[instr];
 
         switch (OP) {
             case 1:
-                memory[memory[instr+3]] = memory[memory[instr+1]] + memory[memory[instr+2]];
-            break;
+                memory[memory[instr + 3]] = memory[memory[instr + 1]] + memory[memory[instr + 2]];
+                break;
             case 2:
-                memory[memory[instr+3]] = memory[memory[instr+1]] * memory[memory[instr+2]];
+                memory[memory[instr + 3]] = memory[memory[instr + 1]] * memory[memory[instr + 2]];
                 break;
             case 99:
                 halted = true;
@@ -30,4 +30,4 @@ export default function (input: string[]) {
     }
 
     return memory[0];
-};
+}

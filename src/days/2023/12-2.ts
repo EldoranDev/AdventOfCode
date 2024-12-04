@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { memoize } from '@lib/functools';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { memoize } from "@lib/functools";
 
 interface Row {
     springs: string;
@@ -12,10 +12,13 @@ const findValidMem = memoize(findValid);
 
 export default function (input: string[], { logger }: Context) {
     const lines: Row[] = input.map((line) => {
-        const row = line.split(' ');
+        const row = line.split(" ");
 
-        const springs = Array.from({ length: 5 }, () => row[0]).join('?');
-        const groups = Array.from({ length: 5 }, () => row[1]).join(',').split(',').map((v) => parseInt(v, 10));
+        const springs = Array.from({ length: 5 }, () => row[0]).join("?");
+        const groups = Array.from({ length: 5 }, () => row[1])
+            .join(",")
+            .split(",")
+            .map((v) => parseInt(v, 10));
 
         return {
             springs,
@@ -30,12 +33,15 @@ export default function (input: string[], { logger }: Context) {
 
 function findValid(row: string, groups: number[]): number {
     // Check if this can already be evaluated
-    if (row.includes('?')) {
-        const index = row.indexOf('?');
+    if (row.includes("?")) {
+        const index = row.indexOf("?");
 
         // Reduce Search Space
-        const g = row.slice(0, index).split('.').filter((v) => v !== '');
-        const rowGroups = row.split('.').filter((v) => v !== '');
+        const g = row
+            .slice(0, index)
+            .split(".")
+            .filter((v) => v !== "");
+        const rowGroups = row.split(".").filter((v) => v !== "");
 
         // This can not turn out to be a valid configuration anymore
         if (g.length > groups.length) {
@@ -53,16 +59,22 @@ function findValid(row: string, groups: number[]): number {
             rowGroups.shift();
         }
 
-        const newString = rowGroups.join('.');
-        const newIndex = newString.indexOf('?');
+        const newString = rowGroups.join(".");
+        const newIndex = newString.indexOf("?");
 
         // Check possibilities
-        return findValidMem(`${newString.slice(0, newIndex)}.${newString.slice(newIndex + 1)}`, [...groups])
-        + findValidMem(`${newString.slice(0, newIndex)}#${newString.slice(newIndex + 1)}`, [...groups]);
+        return (
+            findValidMem(`${newString.slice(0, newIndex)}.${newString.slice(newIndex + 1)}`, [
+                ...groups,
+            ]) +
+            findValidMem(`${newString.slice(0, newIndex)}#${newString.slice(newIndex + 1)}`, [
+                ...groups,
+            ])
+        );
     }
 
     // If there is no more question marks check if its valid:
-    const g = row.split('.').filter((v) => v !== '');
+    const g = row.split(".").filter((v) => v !== "");
 
     if (g.length !== groups.length) {
         return 0;

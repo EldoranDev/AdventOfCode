@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 type Elf = Vec2;
-type Suggestion = { pos: Vec2, from: Array<Vec2> };
-type Check = { move: Vec2, conditon: Array<Vec2> };
+type Suggestion = { pos: Vec2; from: Array<Vec2> };
+type Check = { move: Vec2; conditon: Array<Vec2> };
 
 const DIR = {
     N: new Vec2(0, -1),
@@ -33,7 +33,7 @@ const map = new Map<string, Elf>();
 export default function (input: string[], { logger }: Context) {
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            if (input[y][x] === '.') {
+            if (input[y][x] === ".") {
                 continue;
             }
 

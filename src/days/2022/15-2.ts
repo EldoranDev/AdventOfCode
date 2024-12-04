@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 const E = /Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)/;
 
@@ -47,10 +47,11 @@ function getFree(row: number, sensors: Array<Sensor>): number | null {
     for (let x = MIN; x < MAX; x++) {
         const pos = new Vec2(x, row);
 
-        const index = sens
-            .map((s, i) => ({ d: pos.manhattan(s.pos), i }))
-            .filter((s) => s.d <= sens[s.i].distance)
-            .sort((a, b) => b.d - a.d)[0]?.i ?? null;
+        const index =
+            sens
+                .map((s, i) => ({ d: pos.manhattan(s.pos), i }))
+                .filter((s) => s.d <= sens[s.i].distance)
+                .sort((a, b) => b.d - a.d)[0]?.i ?? null;
 
         if (index === null) {
             return x;

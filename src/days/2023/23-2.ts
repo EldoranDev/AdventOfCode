@@ -1,18 +1,13 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import { MinHeap } from '@lib/collections';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import { MinHeap } from "@lib/collections";
 
-import fs from 'fs';
+import fs from "fs";
 
 // Neighbors
-const N = [
-    new Vec2(0, 1),
-    new Vec2(1, 0),
-    new Vec2(0, -1),
-    new Vec2(-1, 0),
-];
+const N = [new Vec2(0, 1), new Vec2(1, 0), new Vec2(0, -1), new Vec2(-1, 0)];
 
 interface Node {
     id: string;
@@ -34,7 +29,7 @@ export default function (input: string[], { logger }: Context) {
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
             const char = input[y][x];
-            if (char === '#') {
+            if (char === "#") {
                 continue;
             }
 
@@ -49,7 +44,7 @@ export default function (input: string[], { logger }: Context) {
                     continue;
                 }
 
-                if (input[np.y][np.x] === '#') {
+                if (input[np.y][np.x] === "#") {
                     continue;
                 }
 
@@ -112,7 +107,7 @@ export default function (input: string[], { logger }: Context) {
                     continue;
                 }
 
-                if (input[np.y][np.x] === '#') {
+                if (input[np.y][np.x] === "#") {
                     continue;
                 }
 
@@ -151,19 +146,21 @@ class Graph {
     public dot(): void {
         const lines: string[] = [];
 
-        lines.push('digraph G {');
+        lines.push("digraph G {");
 
         this.nodes.forEach((node) => {
             lines.push(`  "${node.pos.x}v${node.pos.y}" [label="${node.id}"];`);
         });
 
         this.edges.forEach((edge) => {
-            lines.push(`  "${edge.from.pos.x}v${edge.from.pos.y}" -> "${edge.to.pos.x}v${edge.to.pos.y}" [label="${edge.cost}"];`);
+            lines.push(
+                `  "${edge.from.pos.x}v${edge.from.pos.y}" -> "${edge.to.pos.x}v${edge.to.pos.y}" [label="${edge.cost}"];`,
+            );
         });
 
-        lines.push('}');
+        lines.push("}");
 
-        fs.writeFileSync('debug.dot', lines.join('\n'));
+        fs.writeFileSync("debug.dot", lines.join("\n"));
     }
 
     public findLongest(from: Vec2, to: Vec2): number {

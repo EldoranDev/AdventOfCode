@@ -1,8 +1,8 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
     return input.filter((line) => {
-        const split = line.split(' ');
+        const split = line.split(" ");
 
         const unique = split.filter((value, index, self) => {
             return self.indexOf(value) === index;
@@ -10,4 +10,4 @@ export default function (input: string[]) {
 
         return split.length === unique.length;
     }).length;
-};
+}

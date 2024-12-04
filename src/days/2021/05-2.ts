@@ -1,18 +1,24 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import { create } from '@lib/array2d';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import { create } from "@lib/array2d";
 
 export default function (input: string[], { logger }: Context) {
     let highestX = 0;
     let highestY = 0;
 
-    let lines = input.map((line) => {
-        let split = line.split('->');
+    const lines = input.map((line) => {
+        const split = line.split("->");
 
-        let [ sX, sY ] = split[0].trim().split(',').map(s => parseInt(s));
-        let [ eX, eY ] = split[1].trim().split(',').map(s => parseInt(s));
-        
+        const [sX, sY] = split[0]
+            .trim()
+            .split(",")
+            .map((s) => parseInt(s));
+        const [eX, eY] = split[1]
+            .trim()
+            .split(",")
+            .map((s) => parseInt(s));
+
         highestX = Math.max(highestX, sX, eX);
         highestY = Math.max(highestY, sY, eY);
 
@@ -22,18 +28,15 @@ export default function (input: string[], { logger }: Context) {
         };
     });
 
-    let map = create<number>(highestX + 1, highestY + 1, 0);
+    const map = create<number>(highestX + 1, highestY + 1, 0);
 
-    for(let line of lines) {
-        let pos = line.start.clone();
-        let diff = Vec2.sub(line.end, line.start);
+    for (const line of lines) {
+        const pos = line.start.clone();
+        const diff = Vec2.sub(line.end, line.start);
 
-        let dir = new Vec2(
-            Math.sign(diff.x),
-            Math.sign(diff.y)
-        );
+        const dir = new Vec2(Math.sign(diff.x), Math.sign(diff.y));
 
-        while(!pos.equals(line.end)) {
+        while (!pos.equals(line.end)) {
             map[pos.y][pos.x]++;
 
             pos.add(dir);
@@ -51,11 +54,11 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    let output = map.reduce((prev, row) => {
+    const output = map.reduce((prev, row) => {
         return prev + "\n" + row.join();
-    }, "")
+    }, "");
 
     logger.debug(output);
 
     return count;
-};
+}

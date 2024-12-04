@@ -1,31 +1,26 @@
-import { } from '@lib/input';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Vec2 } from "@lib/math";
 
 export default function (input: string[]) {
     const target = Number(input[0]);
 
-    let moveSeq = moveSequence();
+    const moveSeq = moveSequence();
 
     let position = new Vec2(0, 0);
 
     for (let i = 1; i < target; i++) {
-        let move = moveSeq.next().value;
+        const move = moveSeq.next().value;
 
         position = position.add(move as Vec2);
     }
 
     return position.manhattan(new Vec2(0, 0));
-};
+}
 
 function* moveSequence() {
-    const queue = [
-        new Vec2( 1,  0),
-        new Vec2( 0, -1),
-        new Vec2(-1,  0),
-        new Vec2( 0,  1),
-    ];
+    const queue = [new Vec2(1, 0), new Vec2(0, -1), new Vec2(-1, 0), new Vec2(0, 1)];
 
-    let lengths = distanceSequence();
+    const lengths = distanceSequence();
 
     let length = lengths.next().value;
 
@@ -33,7 +28,7 @@ function* moveSequence() {
         queue.push(queue.shift());
 
         for (let i = 0; i < length; i++) {
-            yield queue[queue.length-1];
+            yield queue[queue.length - 1];
         }
 
         length = lengths.next().value;

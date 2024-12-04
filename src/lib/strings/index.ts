@@ -1,1 +1,1 @@
-export { hammingDistance } from './hamming';
+export { hammingDistance } from "./hamming";

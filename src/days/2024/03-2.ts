@@ -1,9 +1,9 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 const MUL = /mul\((?<a>\d{1,3}),(?<b>\d{1,3})\)/;
 const DO = /do\(\)/;
-const DONT = /don't\(\)/
+const DONT = /don't\(\)/;
 
 export default function (input: string[], { logger }: Context) {
     let sum = 0;
@@ -18,12 +18,12 @@ export default function (input: string[], { logger }: Context) {
                 const nm = line.match(MUL);
 
                 if (nd === null && nm === null) {
-                    line = '';
+                    line = "";
                     continue;
                 }
 
                 if (nd === null || nd.index > nm.index) {
-                    sum += Number(nm.groups['a']) * Number(nm.groups['b']);
+                    sum += Number(nm.groups["a"]) * Number(nm.groups["b"]);
                     line = line.substring(nm.index + nm[0].length);
                 } else {
                     current = false;
@@ -33,7 +33,7 @@ export default function (input: string[], { logger }: Context) {
                 const nd = line.match(DO);
 
                 if (nd === null) {
-                    line = '';
+                    line = "";
                 } else {
                     current = true;
                     line = line.substring(nd.index + nd[0].length);

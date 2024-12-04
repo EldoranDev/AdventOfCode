@@ -1,20 +1,20 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    let target = Number(input[0]);
+    const target = Number(input[0]);
 
-    let lowest = {
+    const lowest = {
         id: null,
         time: null,
     };
 
     console.log(target);
-    for (let bus of input[1].split(',').map((b) => Number(b))) {
+    for (const bus of input[1].split(",").map((b) => Number(b))) {
         if (Number.isNaN(bus)) continue;
 
-        let diff = target % bus;
-        let depart = target - diff + bus;
-        let waiting = depart-target;
+        const diff = target % bus;
+        const depart = target - diff + bus;
+        const waiting = depart - target;
 
         if (lowest.time === null || lowest.time > waiting) {
             lowest.time = waiting;
@@ -23,4 +23,4 @@ export default function (input: string[]) {
     }
 
     return lowest.time * lowest.id;
-};
+}

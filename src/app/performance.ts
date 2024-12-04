@@ -1,5 +1,5 @@
-import { PerformanceObserver } from 'perf_hooks';
-import { system as logger } from './logger';
+import { PerformanceObserver } from "perf_hooks";
+import { system as logger } from "./logger";
 
 export default () => {
     const obs = new PerformanceObserver((items) => {
@@ -8,5 +8,5 @@ export default () => {
         }
     });
 
-    obs.observe({ entryTypes: ['measure'] });
+    obs.observe({ entryTypes: ["measure"] });
 };

@@ -1,20 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "downlevelIteration": true,
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "baseUrl": ".",
-        "paths": {
-            "@app/*": ["./src/app/*"],
-            "@lib/*": ["./src/lib/*"],
-            "@2019/*": ["./src/days/2019/lib/*"]
-        }
-    },
-    "ts-node": {
-        "transpileOnly": true,
-        "transpiler": "ts-node/transpilers/swc-experimental"
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@2019/*": ["./src/days/2019/lib/*"]
     }
+  },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "transpiler": "ts-node/transpilers/swc-experimental"
+  }
 }

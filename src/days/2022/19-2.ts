@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-const E = /Blueprint (\d+): Each ore robot costs (\d+) ore. Each clay robot costs (\d+) ore. Each obsidian robot costs (\d+) ore and (\d+) clay. Each geode robot costs (\d+) ore and (\d+) obsidian/;
+const E =
+    /Blueprint (\d+): Each ore robot costs (\d+) ore. Each clay robot costs (\d+) ore. Each obsidian robot costs (\d+) ore and (\d+) clay. Each geode robot costs (\d+) ore and (\d+) obsidian/;
 
 enum Resource {
     ORE = 0,
@@ -14,7 +15,7 @@ enum Resource {
 
 interface Recipe {
     output: Resource;
-    input: Storage
+    input: Storage;
 }
 
 interface Blueprint {
@@ -28,7 +29,9 @@ const BPS: Array<Blueprint> = [];
 
 export default function (input: string[], { logger }: Context) {
     for (let i = 0; i < 3 && i < input.length; i++) {
-        const [, id, oreOre, clayOre, obsOre, obsClay, geoOre, geoObsidian] = E.exec(input[i]).map((h) => Number(h));
+        const [, id, oreOre, clayOre, obsOre, obsClay, geoOre, geoObsidian] = E.exec(input[i]).map(
+            (h) => Number(h),
+        );
 
         BPS.push({
             id,
@@ -138,9 +141,7 @@ function getQualityLevel(bp: number, time: number, robots: Robots, storage: Stor
         }
 
         newBots[recipe.output] += 1;
-        candidates.push(
-            getQualityLevel(bp, time + rounds, newBots, newStroage),
-        );
+        candidates.push(getQualityLevel(bp, time + rounds, newBots, newStroage));
     }
 
     // Candiates found, so we return the greatest of them
@@ -157,5 +158,5 @@ function getQualityLevel(bp: number, time: number, robots: Robots, storage: Stor
 }
 
 function sum(n: number): number {
-    return ((n * n) + n) / 2;
+    return (n * n + n) / 2;
 }

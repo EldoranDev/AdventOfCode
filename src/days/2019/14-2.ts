@@ -1,37 +1,36 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-type Recipe = { 
-    input: { 
-        [resource: string]: number 
-    },
-    output: number,
+type Recipe = {
+    input: {
+        [resource: string]: number;
+    };
+    output: number;
 };
-
 
 export default function (input: string[], { logger }: Context) {
     const recipies: { [resource: string]: Recipe } = {};
     const production: {
         [resource: string]: {
-            required: number,
-            current: number,
-            limited: boolean,
-            available: number,
-        }
+            required: number;
+            current: number;
+            limited: boolean;
+            available: number;
+        };
     } = {};
 
     for (const line of input) {
-        const parts = line.split('=>').map(p => p.trim());
-        
-        const inputLines = parts[0].split(',').map(p => p.trim());
+        const parts = line.split("=>").map((p) => p.trim());
+
+        const inputLines = parts[0].split(",").map((p) => p.trim());
         const input = {};
 
-        for (let inp of inputLines) {
-            const parts = inp.split(' ');
+        for (const inp of inputLines) {
+            const parts = inp.split(" ");
             input[parts[1]] = Number(parts[0]);
         }
 
-        const outputParts = parts[1].split(' ');
+        const outputParts = parts[1].split(" ");
 
         recipies[outputParts[1]] = {
             input,
@@ -39,7 +38,7 @@ export default function (input: string[], { logger }: Context) {
         };
     }
 
-    for (let resource of Object.keys(recipies)) {
+    for (const resource of Object.keys(recipies)) {
         production[resource] = {
             required: 0,
             current: 0,
@@ -48,8 +47,8 @@ export default function (input: string[], { logger }: Context) {
         };
     }
 
-    production['FUEL'].required = 1;
-    production['ORE'] = {
+    production["FUEL"].required = 1;
+    production["ORE"] = {
         required: 0,
         current: 0,
         limited: true,
@@ -62,11 +61,11 @@ export default function (input: string[], { logger }: Context) {
     do {
         satisfied = true;
 
-        for (let resource of Object.keys(production)) {
-            if (resource === 'ORE') {
-                production['ORE'].current = production['ORE'].required;
-                
-                if (production['ORE'].required > production['ORE'].available) {
+        for (const resource of Object.keys(production)) {
+            if (resource === "ORE") {
+                production["ORE"].current = production["ORE"].required;
+
+                if (production["ORE"].required > production["ORE"].available) {
                     valid = false;
                     break;
                 }
@@ -74,20 +73,17 @@ export default function (input: string[], { logger }: Context) {
                 continue;
             }
 
-            let prod = production[resource];
+            const prod = production[resource];
 
             if (prod.required > prod.current) {
-                
-                let recipe = recipies[resource];
+                const recipe = recipies[resource];
 
-                let count = Math.ceil(
-                    (prod.required - prod.current)/recipe.output
-                );
+                const count = Math.ceil((prod.required - prod.current) / recipe.output);
 
                 prod.current += count * recipe.output;
 
-                for (let inpResoure of Object.keys(recipe.input)) {
-                    production[inpResoure].required += recipe.input[inpResoure] * count;    
+                for (const inpResoure of Object.keys(recipe.input)) {
+                    production[inpResoure].required += recipe.input[inpResoure] * count;
                 }
 
                 satisfied = false;
@@ -95,13 +91,12 @@ export default function (input: string[], { logger }: Context) {
         }
 
         if (satisfied) {
-            production['FUEL'].required++;
+            production["FUEL"].required++;
         }
-
     } while (valid);
 
-    logger.debug(`ORE: ${production['ORE']}`);
+    logger.debug(`ORE: ${production["ORE"]}`);
 
     // Naive non working
-    return production['FUEL'].current - 1;
-};
+    return production["FUEL"].current - 1;
+}

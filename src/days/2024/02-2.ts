@@ -1,8 +1,8 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
-    const reports = input.map((line) => line.split(' ').map((v) => Number(v)));
+    const reports = input.map((line) => line.split(" ").map((v) => Number(v)));
 
     const unsafe = reports.filter((report) => !isSafe(report) && !canBeMadeSafe(report));
 

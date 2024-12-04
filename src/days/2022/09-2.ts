@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
 
 export default function (input: string[], { logger }: Context) {
     const ROPE_LENGTH = 10;
@@ -20,7 +20,7 @@ export default function (input: string[], { logger }: Context) {
     };
 
     input.forEach((instr) => {
-        const [dir, length] = instr.split(' ');
+        const [dir, length] = instr.split(" ");
 
         for (let i = 0; i < Number(length); i++) {
             R[0].add(directions[dir]);

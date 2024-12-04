@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Graph, GraphNode } from '@lib/graph/Graph';
-import { AStar } from '@lib/graph/AStar';
-import { sum } from '@lib/math/functions';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Graph, GraphNode } from "@lib/graph/Graph";
+import { AStar } from "@lib/graph/AStar";
+import { sum } from "@lib/math/functions";
 
 interface Node extends GraphNode {
     flowRate: number;
@@ -12,7 +12,11 @@ interface Node extends GraphNode {
 
 const E = /Valve ([A-Z]{2}) has flow rate=(\d+); tunnel[s]* lead[s]? to valve[s]? ([A-Z,\W]+)/;
 const G = new Graph<Node>();
-const P = new AStar(G, () => 1, () => 1);
+const P = new AStar(
+    G,
+    () => 1,
+    () => 1,
+);
 
 const D = new Map<string, Map<string, number>>();
 
@@ -27,7 +31,7 @@ export default function (input: string[], { logger }: Context) {
             flowRate: Number(rate),
         });
 
-        valves.split(',').forEach((valve: string) => {
+        valves.split(",").forEach((valve: string) => {
             G.addConnection(id, valve.trim());
         });
     });
@@ -47,10 +51,15 @@ export default function (input: string[], { logger }: Context) {
         }
     }
 
-    return getPressure('AA', MINUTES - 1, 0, []);
+    return getPressure("AA", MINUTES - 1, 0, []);
 }
 
-function getPressure(current: string, timeLeft: number, pressure: number, open: Array<string>): number {
+function getPressure(
+    current: string,
+    timeLeft: number,
+    pressure: number,
+    open: Array<string>,
+): number {
     const pressureRate = sum(...open.map((o) => G.getNode(o).flowRate));
 
     pressure += pressureRate;
@@ -69,8 +78,13 @@ function getPressure(current: string, timeLeft: number, pressure: number, open: 
     const potentials = [];
 
     // Should this be opend ?
-    if (!open.includes(current) && node.flowRate > 0 && current !== 'AA') {
-        return getPressure(current, timeLeft - 1, pressure, [...open, current].sort((a, b) => a.localeCompare(b)));
+    if (!open.includes(current) && node.flowRate > 0 && current !== "AA") {
+        return getPressure(
+            current,
+            timeLeft - 1,
+            pressure,
+            [...open, current].sort((a, b) => a.localeCompare(b)),
+        );
     }
 
     const candidates = [...G.getNodes()].filter((n) => {

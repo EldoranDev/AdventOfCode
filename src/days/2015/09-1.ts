@@ -1,7 +1,7 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-type Path = { target: string, distance: number };
+type Path = { target: string; distance: number };
 
 const EXTRACTOR = /([a-zA-Z]*) to ([a-zA-Z]*) = (\d*)/;
 
@@ -71,14 +71,14 @@ function getDistance(state: State): number {
     const distances: Array<number> = [];
 
     for (const path of possible) {
-        distances.push(getDistance(
-            {
+        distances.push(
+            getDistance({
                 current: path.target,
                 distance: state.distance + path.distance,
                 open: new Set([...state.open.values()].filter((v) => v !== path.target)),
                 visited: new Set([...state.visited.values(), path.target]),
-            },
-        ));
+            }),
+        );
     }
 
     return Math.min(...distances);

@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec3 } from '@lib/math';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec3 } from "@lib/math";
 
 const CUBE_DIRS = [
     new Vec3(1, 0, 0),
@@ -13,7 +13,7 @@ const CUBE_DIRS = [
 
 export default function (input: string[], { logger }: Context) {
     const cubes = input.map((line) => {
-        const [x, y, z] = line.split(',').map((n) => Number(n));
+        const [x, y, z] = line.split(",").map((n) => Number(n));
 
         return new Vec3(x, y, z);
     });

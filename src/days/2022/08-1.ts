@@ -1,6 +1,6 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { create, getColumn } from '@lib/array2d';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { create, getColumn } from "@lib/array2d";
 
 const LEFT = 0b0001;
 const RIGHT = 0b0010;

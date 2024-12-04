@@ -1,8 +1,6 @@
 type Passport = Record<string, any>;
 
-const REQUIRED = [
-    'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'
-]
+const REQUIRED = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
 export default function (input: string[]) {
     let passport: Passport = {};
@@ -18,21 +16,21 @@ export default function (input: string[]) {
             passport = {};
         }
 
-        const parts = input[i].split(' ');
+        const parts = input[i].split(" ");
 
         for (const part of parts) {
-            const [ key, value ] = part.split(':');
+            const [key, value] = part.split(":");
 
             passport[key] = value;
         }
     }
 
-    if(checkValid(passport)) {
+    if (checkValid(passport)) {
         valid++;
     }
 
     return valid;
-};
+}
 
 function checkValid(passport: Passport): boolean {
     console.log(passport);

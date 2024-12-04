@@ -1,7 +1,7 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-import fs from 'fs';
+import fs from "fs";
 
 interface Cable {
     a: Node;
@@ -18,7 +18,7 @@ export default function (input: string[], { logger }: Context) {
     const nodes = new Map<string, Node>();
 
     for (const line of input) {
-        const [aId, list] = line.split(':').map((x) => x.trim());
+        const [aId, list] = line.split(":").map((x) => x.trim());
 
         if (!nodes.has(aId)) {
             nodes.set(aId, { id: aId, cables: [] });
@@ -26,7 +26,7 @@ export default function (input: string[], { logger }: Context) {
 
         const a = nodes.get(aId);
 
-        for (const bId of list.split(' ')) {
+        for (const bId of list.split(" ")) {
             if (!nodes.has(bId)) {
                 nodes.set(bId, { id: bId, cables: [] });
             }
@@ -51,18 +51,18 @@ export default function (input: string[], { logger }: Context) {
 
     // Cables found by hand by looking at the graph in debug.dot
     // dot -Tpng -Kneato graphs/2023-25-1.dot > graphs/2023-25-1.png
-    const clusterSize = countClusters(CHECK_NODE, nodes, [
-        'fch-fvh',
-        'nvg-vfj',
-        'sqh-jbz',
-    ]);
+    const clusterSize = countClusters(CHECK_NODE, nodes, ["fch-fvh", "nvg-vfj", "sqh-jbz"]);
 
     logger.info(`New cluster Size: ${clusterSize}`);
 
     return clusterSize * (NODE_COUNT - clusterSize);
 }
 
-function countClusters(nodeId: string, nodes: Map<string, Node>, removedCables: Array<string>): number {
+function countClusters(
+    nodeId: string,
+    nodes: Map<string, Node>,
+    removedCables: Array<string>,
+): number {
     const open = [nodeId];
     const seen = new Set<string>();
 
@@ -92,13 +92,13 @@ function countClusters(nodeId: string, nodes: Map<string, Node>, removedCables: 
 function dot(cables: Map<string, Cable>): void {
     const lines = [];
 
-    lines.push('digraph G {');
+    lines.push("digraph G {");
 
     for (const cable of cables.values()) {
         lines.push(`    ${cable.a.id} -> ${cable.b.id};`);
     }
 
-    lines.push('}');
+    lines.push("}");
 
-    fs.writeFileSync('graphs/2023-25-1.dot', lines.join('\n'));
+    fs.writeFileSync("graphs/2023-25-1.dot", lines.join("\n"));
 }

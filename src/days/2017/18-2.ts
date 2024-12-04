@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const queueA = [];
@@ -40,12 +40,14 @@ class SoundCard {
     ) {
         this.rom = asm.map((row) => this.parse(row));
 
-        Array.from({ length: 26 }, (_, i) => String.fromCharCode('a'.charCodeAt(0) + i)).forEach((char) => {
-            this.registers[char] = 0;
-        });
+        Array.from({ length: 26 }, (_, i) => String.fromCharCode("a".charCodeAt(0) + i)).forEach(
+            (char) => {
+                this.registers[char] = 0;
+            },
+        );
 
         // eslint-disable-next-line @typescript-eslint/dot-notation
-        this.registers['p'] = programId;
+        this.registers["p"] = programId;
     }
 
     public tick(): void {
@@ -57,34 +59,34 @@ class SoundCard {
     }
 
     private parse(asm: string): Instr {
-        const [instr, iX, iY] = asm.split(' ');
+        const [instr, iX, iY] = asm.split(" ");
 
         const X = new Parameter(iX, this);
         const Y = new Parameter(iY, this);
 
         switch (instr) {
-            case 'snd':
+            case "snd":
                 return () => {
                     this.tx++;
                     this.outQueue.unshift(X.getValue());
                 };
-            case 'set':
+            case "set":
                 return () => {
                     this.registers[iX] = Y.getValue();
                 };
-            case 'add':
+            case "add":
                 return () => {
                     this.registers[iX] += Y.getValue();
                 };
-            case 'mul':
+            case "mul":
                 return () => {
                     this.registers[iX] *= Y.getValue();
                 };
-            case 'mod':
+            case "mod":
                 return () => {
                     this.registers[iX] %= Y.getValue();
                 };
-            case 'rcv':
+            case "rcv":
                 return () => {
                     if (this.inQueue.length > 0) {
                         this.registers[iX] = this.inQueue.pop();
@@ -93,14 +95,14 @@ class SoundCard {
                         this.blocked = true;
                     }
                 };
-            case 'jgz':
+            case "jgz":
                 return () => {
                     if (X.getValue() > 0) {
                         this.PC += Y.getValue() - 1;
                     }
                 };
             default:
-                throw new Error('Unknown instruction');
+                throw new Error("Unknown instruction");
         }
     }
 }
@@ -120,6 +122,6 @@ class Parameter {
             return this.card.registers[this.value];
         }
 
-        return (Number(this.value));
+        return Number(this.value);
     }
 }

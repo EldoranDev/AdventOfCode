@@ -1,12 +1,12 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const listA: number[] = [];
     const listB: number[] = [];
 
     for (let i = 0; i < input.length; i++) {
-        const [a, b] = input[i].split('   ');
+        const [a, b] = input[i].split("   ");
 
         listA.push(Number(a));
         listB.push(Number(b));

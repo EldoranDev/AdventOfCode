@@ -1,4 +1,4 @@
-import { mapToNumber } from '@lib/input';
+import { mapToNumber } from "@lib/input";
 
 const PREAMBLE_LENGTH = 25;
 
@@ -13,11 +13,11 @@ export default function (input: string[]) {
         if (numbers[i] > number) continue;
 
         let sum = numbers[i];
-        
+
         let lowest = numbers[i];
         let highest = numbers[i];
 
-        for (let j = i+1; j < numbers.length; j++) {
+        for (let j = i + 1; j < numbers.length; j++) {
             if (sum > number) break;
 
             if (numbers[j] < lowest) {
@@ -36,9 +36,9 @@ export default function (input: string[]) {
             }
         }
     }
-    
+
     return number;
-};
+}
 
 function findFirstInvalid(numbers: number[]): number {
     const valid = [];
@@ -47,10 +47,10 @@ function findFirstInvalid(numbers: number[]): number {
         valid.push(numbers[i]);
     }
 
-    for (let i =  PREAMBLE_LENGTH; i < numbers.length; i++) {
+    for (let i = PREAMBLE_LENGTH; i < numbers.length; i++) {
         if (!canSum(valid, numbers[i])) {
             return numbers[i];
-        };
+        }
 
         valid.shift();
 
@@ -58,15 +58,14 @@ function findFirstInvalid(numbers: number[]): number {
     }
 
     throw new Error("Could not find anything");
-
 }
 
-function canSum (numbers: number[], sum: number): boolean {
+function canSum(numbers: number[], sum: number): boolean {
     for (let i = 0; i < numbers.length; i++) {
         if (numbers[i] > sum) continue;
-        for (let j= 0; j < numbers.length; j++) {
+        for (let j = 0; j < numbers.length; j++) {
             if (i === j) continue;
-            
+
             if (numbers[i] + numbers[j] === sum) {
                 return true;
             }

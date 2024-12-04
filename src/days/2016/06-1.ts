@@ -1,5 +1,5 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 export default function (input: string[], { logger }: Context) {
     const columns = [];
@@ -8,7 +8,7 @@ export default function (input: string[], { logger }: Context) {
         columns[i] = {};
     }
 
-    for (let line of input) {
+    for (const line of input) {
         for (let i = 0; i < line.length; i++) {
             if (columns[i][line[i]] == undefined) {
                 columns[i][line[i]] = 0;
@@ -24,10 +24,10 @@ export default function (input: string[], { logger }: Context) {
         let highestLetter = null;
         let highestCount = 0;
 
-        let column = columns[i];
-        let letters = Object.keys(column);
+        const column = columns[i];
+        const letters = Object.keys(column);
 
-        for (let letter of letters) {
+        for (const letter of letters) {
             if (column[letter] > highestCount) {
                 highestCount = column[letter];
                 highestLetter = letter;
@@ -38,4 +38,4 @@ export default function (input: string[], { logger }: Context) {
     }
 
     return output;
-};
+}

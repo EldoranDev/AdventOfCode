@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
-const E = /Blueprint (\d+): Each ore robot costs (\d+) ore. Each clay robot costs (\d+) ore. Each obsidian robot costs (\d+) ore and (\d+) clay. Each geode robot costs (\d+) ore and (\d+) obsidian/;
+const E =
+    /Blueprint (\d+): Each ore robot costs (\d+) ore. Each clay robot costs (\d+) ore. Each obsidian robot costs (\d+) ore and (\d+) clay. Each geode robot costs (\d+) ore and (\d+) obsidian/;
 
 enum Resource {
     ORE = 0,
@@ -14,7 +15,7 @@ enum Resource {
 
 interface Recipe {
     output: Resource;
-    input: Storage
+    input: Storage;
 }
 
 interface Blueprint {
@@ -27,25 +28,29 @@ const TIME = 24;
 const BPS: Array<Blueprint> = [];
 
 export default function (input: string[], { logger }: Context) {
-    BPS.push(...input.map((line): Blueprint => {
-        const [, id, oreOre, clayOre, obsOre, obsClay, geoOre, geoObsidian] = E.exec(line).map((h) => Number(h));
+    BPS.push(
+        ...input.map((line): Blueprint => {
+            const [, id, oreOre, clayOre, obsOre, obsClay, geoOre, geoObsidian] = E.exec(line).map(
+                (h) => Number(h),
+            );
 
-        return {
-            id,
-            recipes: [
-                { output: Resource.ORE, input: [oreOre, 0, 0, 0] },
-                { output: Resource.CLAY, input: [clayOre, 0, 0, 0] },
-                { output: Resource.OBSIDIAN, input: [obsOre, obsClay, 0, 0] },
-                { output: Resource.GEODE, input: [geoOre, 0, geoObsidian, 0] },
-            ],
-            max: [
-                Math.max(oreOre, clayOre, obsOre, geoOre),
-                obsClay,
-                geoObsidian,
-                Number.MAX_SAFE_INTEGER,
-            ],
-        };
-    }));
+            return {
+                id,
+                recipes: [
+                    { output: Resource.ORE, input: [oreOre, 0, 0, 0] },
+                    { output: Resource.CLAY, input: [clayOre, 0, 0, 0] },
+                    { output: Resource.OBSIDIAN, input: [obsOre, obsClay, 0, 0] },
+                    { output: Resource.GEODE, input: [geoOre, 0, geoObsidian, 0] },
+                ],
+                max: [
+                    Math.max(oreOre, clayOre, obsOre, geoOre),
+                    obsClay,
+                    geoObsidian,
+                    Number.MAX_SAFE_INTEGER,
+                ],
+            };
+        }),
+    );
 
     let s = 0;
     for (let i = 0; i < BPS.length; i++) {
@@ -61,7 +66,13 @@ const RR = [Resource.ORE, Resource.CLAY, Resource.OBSIDIAN, Resource.GEODE];
 
 const MAX = new Map<number, number>();
 
-function getQualityLevel(bp: number, time: number, robots: Robots, storage: Storage, history: Array<string>): number {
+function getQualityLevel(
+    bp: number,
+    time: number,
+    robots: Robots,
+    storage: Storage,
+    history: Array<string>,
+): number {
     // Reached the end so return the current amount
     if (time === TIME + 1) {
         if (!MAX.has(bp)) {
@@ -122,9 +133,7 @@ function getQualityLevel(bp: number, time: number, robots: Robots, storage: Stor
                 newStroage[rr] += robots[rr];
             }
 
-            newHistory.push(
-                `${time + i} | collecting ${robots} -> \t ${newBots} | ${newStroage}`,
-            );
+            newHistory.push(`${time + i} | collecting ${robots} -> \t ${newBots} | ${newStroage}`);
         }
 
         rounds += 1;
@@ -137,9 +146,7 @@ function getQualityLevel(bp: number, time: number, robots: Robots, storage: Stor
         }
 
         newBots[recipe.output] += 1;
-        candidates.push(
-            getQualityLevel(bp, time + rounds, newBots, newStroage, newHistory),
-        );
+        candidates.push(getQualityLevel(bp, time + rounds, newBots, newStroage, newHistory));
     }
 
     // Candiates found, so we return the greatest of them

@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { Vec2 } from '@lib/math';
-import { create } from '@lib/array2d';
-import { Grid2D } from '@lib/array2d/create';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { Vec2 } from "@lib/math";
+import { create } from "@lib/array2d";
+import { Grid2D } from "@lib/array2d/create";
 
 const BUFFER = 10;
 
@@ -18,10 +18,10 @@ export default function (input: string[], { logger }: Context) {
     for (const line of input) {
         structures.push(
             line
-                .split('->')
+                .split("->")
                 .map((p) => p.trim())
                 .map((p) => {
-                    const [x, y] = p.split(',').map((c) => Number(c));
+                    const [x, y] = p.split(",").map((c) => Number(c));
 
                     if (x > size.x) {
                         size.x = x;
@@ -56,11 +56,7 @@ export default function (input: string[], { logger }: Context) {
     return count - 1;
 }
 
-const DIRS = [
-    new Vec2(0, 1),
-    new Vec2(-1, 1),
-    new Vec2(1, 1),
-];
+const DIRS = [new Vec2(0, 1), new Vec2(-1, 1), new Vec2(1, 1)];
 
 function sim(grid: Grid): boolean {
     const current = new Vec2(500, 0);
@@ -105,7 +101,7 @@ function drawLine(from: Vec2, to: Vec2, grid: Grid): void {
 
 // #region Debugging
 function print(grid: Grid2D<number>, from: Vec2, rows?: number, cols?: number): void {
-    const DRAW = ['.', '#', 'o'];
+    const DRAW = [".", "#", "o"];
 
     if (rows === undefined) {
         rows = grid.length;
@@ -115,13 +111,13 @@ function print(grid: Grid2D<number>, from: Vec2, rows?: number, cols?: number): 
         cols = grid[0].length;
     }
 
-    let out = '';
+    let out = "";
 
     for (let { y } = from; y < from.y + rows; y++) {
         for (let { x } = from; x < from.x + cols; x++) {
             out += DRAW[grid[y][x]];
         }
-        out += '\n';
+        out += "\n";
     }
 
     console.log(out);

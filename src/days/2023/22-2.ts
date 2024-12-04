@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 /* eslint-disable no-param-reassign */
-import { } from '@lib/input';
-import { Context } from '@app/types';
+import {} from "@lib/input";
+import { Context } from "@app/types";
 
 // Switching to array instead of Ve3
 // Vec3 doesn't allow us to use JSON.parse(JSON.stringify()) to deep copy
@@ -29,10 +29,7 @@ const BRICKS: Array<Brick> = [];
 
 export default function (input: string[], { logger }: Context) {
     for (let i = 0; i < input.length; i++) {
-        BRICKS.push(parse(
-            input[i],
-            String.fromCharCode(65 + i),
-        ));
+        BRICKS.push(parse(input[i], String.fromCharCode(65 + i)));
     }
 
     BRICKS.sort((a, b) => a.from[VEC.Z] - b.from[VEC.Z]);
@@ -58,7 +55,10 @@ export default function (input: string[], { logger }: Context) {
 
         const nb = JSON.parse(JSON.stringify(BRICKS)) as Array<Brick>;
 
-        nb.splice(nb.findIndex((b) => b.id === brick.id), 1);
+        nb.splice(
+            nb.findIndex((b) => b.id === brick.id),
+            1,
+        );
 
         sim(nb);
 
@@ -132,7 +132,10 @@ function sim(bricks: Array<Brick>): void {
 }
 
 function parse(line: string, id: string): Brick {
-    const [x1, y1, z1, x2, y2, z2] = /(-?\d+),(-?\d+),(-?\d+)~(-?\d+),(-?\d+),(-?\d+)/.exec(line)!.slice(1).map(Number);
+    const [x1, y1, z1, x2, y2, z2] = /(-?\d+),(-?\d+),(-?\d+)~(-?\d+),(-?\d+),(-?\d+)/
+        .exec(line)!
+        .slice(1)
+        .map(Number);
 
     return {
         id,
@@ -165,11 +168,11 @@ function getSaveBricks(bricks: Array<Brick>): Set<string> {
 // AABB intersection between cubes
 function intersect(a: Brick, b: Brick): boolean {
     return (
-        a.from[VEC.X] <= b.to[VEC.X]
-        && a.to[VEC.X] >= b.from[VEC.X]
-        && a.from[VEC.Y] <= b.to[VEC.Y]
-        && a.to[VEC.Y] >= b.from[VEC.Y]
-        && a.from[VEC.Z] <= b.to[VEC.Z]
-        && a.to[VEC.Z] >= b.from[VEC.Z]
+        a.from[VEC.X] <= b.to[VEC.X] &&
+        a.to[VEC.X] >= b.from[VEC.X] &&
+        a.from[VEC.Y] <= b.to[VEC.Y] &&
+        a.to[VEC.Y] >= b.from[VEC.Y] &&
+        a.from[VEC.Z] <= b.to[VEC.Z] &&
+        a.to[VEC.Z] >= b.from[VEC.Z]
     );
 }

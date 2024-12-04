@@ -1,12 +1,12 @@
-import { } from '@lib/input';
-import { Context } from '@app/types';
-import { intersection, group } from '@lib/array';
+import {} from "@lib/input";
+import { Context } from "@app/types";
+import { intersection, group } from "@lib/array";
 
 const A = 65;
 const a = 96;
 
 export default function (input: string[], { logger }: Context) {
-    const backpacks = input.map((line) => line.split(''));
+    const backpacks = input.map((line) => line.split(""));
 
     const groups = group<string[]>(backpacks, 3);
     const inters = groups.map((r) => intersection(...r)[0]);

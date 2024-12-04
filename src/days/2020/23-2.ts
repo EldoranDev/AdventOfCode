@@ -1,23 +1,23 @@
-import { } from '@lib/input';
+import {} from "@lib/input";
 
 export default function (input: string[]) {
-    let cups = input[0].split('').map(c => Number(c));
+    const cups = input[0].split("").map((c) => Number(c));
 
     let orderdCups = [...cups].sort((a, b) => a - b);
 
-    for (let i = orderdCups[orderdCups.length-1] + 1; i <= 1000000; i++) {
+    for (let i = orderdCups[orderdCups.length - 1] + 1; i <= 1000000; i++) {
         cups.push(i);
     }
-    
+
     orderdCups = [...cups].sort((a, b) => a - b);
 
-    let circle = new LinkedList<number>();
-    let reverse: ListNode<number>[] = new Array(cups.length);
+    const circle = new LinkedList<number>();
+    const reverse: ListNode<number>[] = new Array(cups.length);
 
     let last: ListNode<number> = null;
 
-    for (let label of cups) {
-        let cup = new ListNode(label);
+    for (const label of cups) {
+        const cup = new ListNode(label);
 
         if (last !== null) {
             last.next = cup;
@@ -39,31 +39,31 @@ export default function (input: string[]) {
 
         // circle.print();
 
-        let pickup = circle.splice(3);
-        let pickupValues = getValuesOfList(pickup);       
+        const pickup = circle.splice(3);
+        const pickupValues = getValuesOfList(pickup);
 
         let destinationLabel = current.data;
-        
-        do  {
+
+        do {
             destinationLabel--;
 
             if (destinationLabel < orderdCups[0]) {
-                destinationLabel = orderdCups[orderdCups.length-1];
+                destinationLabel = orderdCups[orderdCups.length - 1];
             }
         } while (pickupValues.includes(destinationLabel));
 
-        let destination = reverse[destinationLabel];
+        const destination = reverse[destinationLabel];
         circle.head = destination;
 
         circle.insert(pickup);
-        
-       current = current.next;
+
+        current = current.next;
     }
 
-    let one = reverse[1];
+    const one = reverse[1];
 
     return one.next.data * one.next.next.data;
-};
+}
 
 class LinkedList<T> {
     public head: ListNode<T>;
@@ -73,10 +73,10 @@ class LinkedList<T> {
     }
 
     public splice(count: number): ListNode<T> {
-        let splice = this.head.next;
+        const splice = this.head.next;
         let current = this.head.next;
 
-        for (let i = 0; i < count-1; i++) {
+        for (let i = 0; i < count - 1; i++) {
             current = current.next;
         }
 
@@ -87,7 +87,7 @@ class LinkedList<T> {
     }
 
     public insert(node: ListNode<T>): void {
-        let end = this.head.next;
+        const end = this.head.next;
 
         this.head.next = node;
 
@@ -101,7 +101,7 @@ class LinkedList<T> {
 
     public print() {
         process.stdout.write(`(${this.head.data}) `);
-        
+
         let current = this.head.next;
         while (current !== this.head) {
             process.stdout.write(`${current.data} `);
@@ -114,15 +114,11 @@ class LinkedList<T> {
 class ListNode<T> {
     public next: ListNode<T>;
 
-    constructor(
-        public data: T
-    ) {
-
-    }
+    constructor(public data: T) {}
 }
 
 function getValuesOfList<T>(node: ListNode<T>): T[] {
-    let res: T[] = [];
+    const res: T[] = [];
 
     let current = node;
 

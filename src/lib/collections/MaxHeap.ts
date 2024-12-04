@@ -1,4 +1,4 @@
-import { Heap, Node } from './Heap';
+import { Heap, Node } from "./Heap";
 
 export class MaxHeap<T> extends Heap<T> {
     public push(value: T, prio: number) {

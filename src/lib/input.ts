@@ -5,12 +5,12 @@ export function mapToNumber(input: string[]): number[] {
 export function getLineGroups(input: string[]): string[][] {
     const groups: string[][] = [];
 
-    input.push('');
+    input.push("");
 
     let group: string[] = [];
 
     for (const line of input) {
-        if (line.trim() === '') {
+        if (line.trim() === "") {
             groups.push(group);
             group = [];
             continue;
