@@ -2,7 +2,7 @@
 import yargs from "yargs";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import * as clipboard from "clipboardy";
+import clipboard from "clipboardy";
 import { performance } from "perf_hooks";
 
 import { Context } from "src/app/types";
@@ -251,6 +251,7 @@ yargs(process.argv.slice(2))
             try {
                 module(lines, {
                     logger: implLogger,
+                    test: args.test ? true : false,
                 });
             } catch (e) {
                 logger.error(e);

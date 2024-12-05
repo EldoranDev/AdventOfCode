@@ -2,7 +2,7 @@
   "name": "adventofcode",
   "version": "1.0.0",
   "description": "Advent of Code solutions and library",
-  "main": "index.ts",
+  "main": "aoc.ts",
   "type": "module",
   "scripts": {
     "prepare": "husky install",
@@ -28,7 +28,6 @@
   "homepage": "https://github.com/EldoranDev/AdventOfCode#readme",
   "devDependencies": {
     "@eslint/js": "^9.16.0",
-    "@types/clipboardy": "^2.0.1",
     "@types/node": "^18.11.10",
     "@types/yargs": "^17.0.15",
     "@vitest/coverage-v8": "^2.1.6",
@@ -44,7 +43,7 @@
   },
   "dependencies": {
     "bignumber.js": "^9.1.2",
-    "clipboardy": "^2.3.0",
+    "clipboardy": "^4.0.0",
     "deepcopy": "^2.1.0",
     "winston": "^3.17.0",
     "yargs": "^17.7.2",
