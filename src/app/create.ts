@@ -4,6 +4,9 @@ import { writeFileSync, accessSync, mkdirSync } from "fs";
 import { system as logger } from "./logger";
 import provideInput from "./provider/input";
 
+// eslint-disable-next-line
+const __dirname = new URL(".", import.meta.url).pathname;
+
 const template = `import { } from '@lib/input';
 import { Context } from '@app/types';
 

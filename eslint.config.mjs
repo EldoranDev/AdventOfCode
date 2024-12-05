@@ -7,7 +7,7 @@ export default tseslint.config(
   tseslint.configs.recommended,
   eslintConfigPrettier,
   {
-    files: ["src/lib/**/*.ts"],
+    files: ["**/*.ts"],
     rules: {
       "@typescript-eslint/no-unused-vars": [
         "warn",

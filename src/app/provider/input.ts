@@ -2,6 +2,9 @@ import { resolve } from "path";
 import { WritableStream } from "node:stream/web";
 import { createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync } from "fs";
 
+// eslint-disable-next-line
+const __dirname = new URL(".", import.meta.url).pathname;
+
 export default async (year: number, day: number) => {
     const session = readFileSync(resolve(__dirname, "..", "..", "..", ".session"));
 
