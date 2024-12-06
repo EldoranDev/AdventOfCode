@@ -10,8 +10,8 @@ const FREE = ".";
 export default function (input: string[], { logger }: Context) {
     const grid: Grid2D<string> = input.map((line) => line.split(""));
     const start = getStartPosition(grid);
+    const options = getPOI(grid, start);
 
-    const options = getPath(grid, start);
     let loops = 0;
 
     for (const option of options) {
@@ -21,7 +21,7 @@ export default function (input: string[], { logger }: Context) {
 
         grid[option.y][option.x] = BLOCKER;
 
-        if (getPath(grid, start) === null) {
+        if (hasLoop(grid, start)) {
             loops++;
         }
 
@@ -31,12 +31,39 @@ export default function (input: string[], { logger }: Context) {
     return loops;
 }
 
-function getPath(grid: Grid2D<string>, start: Vec2): Vec2[] | null {
+function getPOI(grid: Grid2D<string>, start: Vec2): Vec2[] {
     let guard = start.clone();
-    const direction = new Vec2(0, -1);
 
+    const direction = new Vec2(0, -1);
+    const points = [];
+
+    const set = new Set<string>();
+
+    for (;;) {
+        const np = Vec2.add(guard, direction);
+
+        if (np.x < 0 || np.y < 0 || np.y >= grid.length || np.x >= grid[np.y].length) {
+            return points;
+        }
+
+        if (grid[np.y][np.x] !== BLOCKER) {
+            if (!set.has(np.toString())) {
+                set.add(np.toString());
+                points.push(np.clone());
+            }
+
+            guard = np;
+        } else {
+            direction.rotate(90, "deg");
+        }
+    }
+}
+
+function hasLoop(grid: Grid2D<string>, start: Vec2): boolean {
+    let guard = start.clone();
+
+    const direction = new Vec2(0, -1);
     const loopMap = new Set<string>();
-    const map = new Map<string, Vec2>();
 
     for (;;) {
         const np = Vec2.add(guard, direction);
@@ -46,22 +73,18 @@ function getPath(grid: Grid2D<string>, start: Vec2): Vec2[] | null {
         }
 
         if (loopMap.has(`${np.toString()}-${direction.toString()}`)) {
-            return null;
+            return true;
         }
 
         if (grid[np.y][np.x] !== BLOCKER) {
-            if (!map.has(np.toString())) {
-                map.set(np.toString(), np.clone());
-                loopMap.add(`${np.toString()}-${direction.toString()}`);
-            }
-
+            loopMap.add(`${np.toString()}-${direction.toString()}`);
             guard = np;
         } else {
             direction.rotate(90, "deg");
         }
     }
 
-    return [...map.values()];
+    return false;
 }
 
 function getStartPosition(grid: Grid2D<string>): Vec2 {

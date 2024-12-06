@@ -1,9 +1,9 @@
 #!/usr/bin/env -S npx tsx
 import yargs from "yargs";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import clipboard from "clipboardy";
-import { performance } from "perf_hooks";
+import { performance } from "node:perf_hooks";
 
 import { Context } from "src/app/types";
 import answerProvider from "@app/provider/answer";
@@ -84,7 +84,7 @@ yargs(process.argv.slice(2))
         },
         async (args) => {
             if (args.perf) {
-                observerPerformance();
+                await observerPerformance();
             }
 
             if (!args.verbose) {
