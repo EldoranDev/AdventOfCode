@@ -1,4 +1,4 @@
-import IVec from "./IVec";
+import IVec from "@lib/math/IVec";
 
 export default class Vec2 implements IVec {
     constructor(
