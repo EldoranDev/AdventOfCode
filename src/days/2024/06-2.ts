@@ -3,6 +3,8 @@ import { Context } from "@app/types";
 import { Grid2D } from "@lib/array2d";
 import { Vec2 } from "@lib/math";
 
+const INFINITY = 200;
+
 const GUARD = "^";
 const BLOCKER = "#";
 
@@ -12,62 +14,58 @@ export default function (input: string[], { logger }: Context) {
     const grid: Grid2D<string> = input.map((line) => line.split(""));
     const map = buildAbstractMap(grid);
 
-    const options = getPOI(grid, map.start);
-
     let loops = 0;
 
-    for (const option of options) {
-        if (option.equals(map.start)) {
+    for (const [poi, [start, dir]] of getPOI(grid, map.start)) {
+        if (poi.equals(map.start)) {
             continue;
         }
 
-        if (!map.rows.has(option.y)) {
-            map.rows.set(option.y, []);
+        if (!map.rows.has(poi.y)) {
+            map.rows.set(poi.y, []);
         }
 
-        if (!map.columns.has(option.x)) {
-            map.columns.set(option.x, []);
+        if (!map.columns.has(poi.x)) {
+            map.columns.set(poi.x, []);
         }
 
-        const row = map.rows.get(option.y);
-        const col = map.columns.get(option.x);
+        const row = map.rows.get(poi.y);
+        const col = map.columns.get(poi.x);
 
-        row.push(option.x);
-        col.push(option.y);
+        row.push(poi.x);
+        col.push(poi.y);
 
         row.sort((a, b) => a - b);
         col.sort((a, b) => a - b);
 
-        if (hasLoop(map)) {
+        if (hasLoop(map, start, dir)) {
             loops++;
         }
 
-        row.splice(row.indexOf(option.x), 1);
-        col.splice(col.indexOf(option.y), 1);
+        row.splice(row.indexOf(poi.x), 1);
+        col.splice(col.indexOf(poi.y), 1);
     }
 
     return loops;
 }
 
-function getPOI(grid: Grid2D<string>, start: Vec2): Vec2[] {
+function* getPOI(grid: Grid2D<string>, start: Vec2): Generator<[Vec2, [Vec2, Vec2]]> {
     let guard = start.clone();
 
     const direction = new Vec2(0, -1);
-    const points = [];
-
     const set = new Set<string>();
 
     for (;;) {
         const np = Vec2.add(guard, direction);
 
-        if (np.x < 0 || np.y < 0 || np.y >= grid.length || np.x >= grid[np.y].length) {
-            return points;
-        }
-
         if (grid[np.y][np.x] !== BLOCKER) {
             if (!set.has(np.toString())) {
                 set.add(np.toString());
-                points.push(np.clone());
+                yield [np.clone(), [guard.clone(), direction.clone()]];
+            }
+
+            if (np.x < 0 || np.y < 0 || np.y >= grid.length || np.x >= grid[np.y].length) {
+                break;
             }
 
             guard = np;
@@ -77,15 +75,13 @@ function getPOI(grid: Grid2D<string>, start: Vec2): Vec2[] {
     }
 }
 
-function hasLoop(map: AbstractMap): boolean {
-    const guard = map.start.clone();
-
-    const direction = new Vec2(0, -1);
-    const loopMap = new Set<string>();
+function hasLoop(map: AbstractMap, start: Vec2, dir: Vec2): boolean {
+    const guard = start.clone();
+    const direction = dir.clone();
 
     let nn: number | null = null;
 
-    for (;;) {
+    for (let i = 0; i < INFINITY; i++) {
         if (direction.y !== 0) {
             nn = getNext(map.columns.get(guard.x), guard.y, direction.y);
 
@@ -108,14 +104,10 @@ function hasLoop(map: AbstractMap): boolean {
             guard.x = nn;
         }
 
-        if (loopMap.has(`${guard.toString()}-${direction.toString()}`)) {
-            return true;
-        }
-
-        loopMap.add(`${guard.toString()}-${direction.toString()}`);
-
         direction.rotate(90, "deg");
     }
+
+    return true;
 }
 
 function getNext(haystack: number[] | null, cur: number, direction: number): number | null {
