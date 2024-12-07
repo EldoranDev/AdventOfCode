@@ -60,26 +60,31 @@ function getPOI(grid: Grid2D<string>, start: Vec2): Vec2[] {
 }
 
 function hasLoop(grid: Grid2D<string>, start: Vec2): boolean {
-    let guard = start.clone();
+    const guard = start.clone();
 
     const direction = new Vec2(0, -1);
     const loopMap = new Set<string>();
 
     for (;;) {
-        const np = Vec2.add(guard, direction);
+        guard.add(direction);
 
-        if (np.x < 0 || np.y < 0 || np.y >= grid.length || np.x >= grid[np.y].length) {
+        if (
+            guard.x < 0 ||
+            guard.y < 0 ||
+            guard.y >= grid.length ||
+            guard.x >= grid[guard.y].length
+        ) {
             break;
         }
 
-        if (loopMap.has(`${np.toString()}-${direction.toString()}`)) {
+        if (loopMap.has(`${guard.toString()}-${direction.toString()}`)) {
             return true;
         }
 
-        if (grid[np.y][np.x] !== BLOCKER) {
-            loopMap.add(`${np.toString()}-${direction.toString()}`);
-            guard = np;
+        if (grid[guard.y][guard.x] !== BLOCKER) {
+            loopMap.add(`${guard.toString()}-${direction.toString()}`);
         } else {
+            guard.sub(direction);
             direction.rotate(90, "deg");
         }
     }
