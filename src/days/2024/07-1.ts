@@ -13,9 +13,7 @@ export default function (input: string[], { logger }: Context) {
     let sum = 0;
 
     for (const [target, numbers] of equations) {
-        const start = numbers.shift();
-
-        if (solve(start, numbers, target)) {
+        if (solve(numbers[0], numbers, 1, target)) {
             sum += target;
         }
     }
@@ -23,15 +21,18 @@ export default function (input: string[], { logger }: Context) {
     return sum;
 }
 
-function solve(current: number, array: number[], target: number): boolean {
-    if (array.length === 0) {
+function solve(current: number, array: number[], index: number, target: number): boolean {
+    if (array.length === index) {
         return target === current;
     }
 
-    const next = array.shift();
+    // Can do bigger-equals as from here on we'll only add
+    if (current >= target) {
+        return false;
+    }
 
     for (const op of OP) {
-        if (solve(op(current, next), [...array], target)) {
+        if (solve(op(current, array[index]), array, index + 1, target)) {
             return true;
         }
     }
