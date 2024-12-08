@@ -6,5 +6,6 @@ import group from "./group";
 export { unique } from "./unique";
 export { intersect } from "./intersect";
 export { permutator } from "./permutator";
+export { pairs } from "./pairs";
 
-export { equals, elementsEqual, group, intersection };
+export { equals, elementsEqual, group, intersection, pairs };
