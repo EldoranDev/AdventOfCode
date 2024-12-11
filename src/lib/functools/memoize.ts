@@ -7,7 +7,7 @@ export function memoize<K extends Function>(fn: K): K {
     CACHE.set(FN_CACHE_KEY, new Map());
 
     return <any>function (...args) {
-        const CACHE_KEY = args.reduce((prev, cur) => prev + JSON.stringify(cur), "");
+        const CACHE_KEY = args.reduce((prev, cur) => `${prev}-${JSON.stringify(cur)}`, "");
 
         const cache = CACHE.get(FN_CACHE_KEY);
 
