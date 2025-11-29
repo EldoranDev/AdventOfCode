@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { performance } from "node:perf_hooks";
+import { fileURLToPath } from "node:url";
 
 import yargs from "yargs";
 import clipboard from "clipboardy";
@@ -15,7 +16,7 @@ import { system as logger, implementation as implLogger } from "@app/logger";
 type Implementation = (input: string[], context: Context) => string;
 
 // eslint-disable-next-line
-const __dirname = new URL(".", import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 yargs(process.argv.slice(2))

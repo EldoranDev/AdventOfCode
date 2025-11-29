@@ -1,11 +1,12 @@
-import { resolve } from "path";
-import { writeFileSync, accessSync, mkdirSync } from "fs";
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
+import { writeFileSync, accessSync, mkdirSync } from "node:fs";
 
 import { system as logger } from "./logger";
 import provideInput from "./provider/input";
 
 // eslint-disable-next-line
-const __dirname = new URL(".", import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const template = `import { } from '@lib/input';
 import { Context } from '@app/types';

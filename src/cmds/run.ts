@@ -58,7 +58,7 @@ export class RunCommand implements CommandModule {
             module = (
                 await import(
                     resolve(
-                        import.meta.dir,
+                        import.meta.dirname,
                         "..",
                         "days",
                         args.year.toString(),
@@ -82,7 +82,7 @@ export class RunCommand implements CommandModule {
 
         try {
             input = await readFile(
-                resolve(import.meta.dir, "..", "..", "inputs", args.year.toString(), file),
+                resolve(import.meta.dirname, "..", "..", "inputs", args.year.toString(), file),
                 "utf-8",
             );
         } catch (error) {
