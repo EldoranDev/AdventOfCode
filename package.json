@@ -5,12 +5,12 @@
   "main": "aoc.ts",
   "type": "module",
   "scripts": {
-    "prepare": "husky install",
     "start": "tsx aoc.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint ./src/lib",
-    "lint:fix": "eslint ./src/lib --fix"
+    "lint:fix": "eslint ./src/lib --fix",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -29,27 +29,27 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.10.2",
-    "@types/yargs": "^17.0.33",
-    "@vitest/coverage-v8": "^2.1.8",
-    "eslint": "^9.17.0",
+    "@types/yargs": "^17.0.35",
+    "@vitest/coverage-v8": "^4.0.14",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
-    "prettier": "3.4.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.2",
-    "vitest": "^2.1.8"
+    "prettier": "3.7.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "vitest": "^4.0.4"
   },
   "dependencies": {
-    "bignumber.js": "^9.1.2",
+    "bignumber.js": "^9.3.1",
     "clipboardy": "^4.0.0",
     "deepcopy": "^2.1.0",
-    "winston": "^3.17.0",
-    "yargs": "^17.7.2",
-    "z3-solver": "^4.13.4"
+    "winston": "^3.18.3",
+    "yargs": "^18.0.0",
+    "z3-solver": "^4.15.4"
   },
   "volta": {
-    "node": "23.4.0"
+    "node": "24.10.1"
   }
 }
