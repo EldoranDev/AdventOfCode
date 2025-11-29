@@ -1,14 +1,16 @@
 #!/usr/bin/env -S npx tsx
-import yargs from "yargs";
+
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import clipboard from "clipboardy";
 import { performance } from "node:perf_hooks";
+
+import yargs from "yargs";
+import clipboard from "clipboardy";
 
 import { Context } from "src/app/types";
 import answerProvider from "@app/provider/answer";
-import observerPerformance from "./src/app/performance";
-import { system as logger, implementation as implLogger } from "./src/app/logger";
+import observerPerformance from "@app/performance";
+import { system as logger, implementation as implLogger } from "@app/logger";
 
 type Implementation = (input: string[], context: Context) => string;
 
@@ -28,6 +30,7 @@ yargs(process.argv.slice(2))
         "Create scaffolding for a new AoC day",
         (y) => {
             y.positional("day", {
+                type: "number",
                 describe: "Day to create scaffolding for",
                 default: new Date().getDay() + 1,
             });
@@ -44,6 +47,7 @@ yargs(process.argv.slice(2))
         "Get input for day",
         (y) => {
             y.positional("day", {
+                type: "number",
                 describe: "Day to execute",
                 default: new Date().getDay() + 1,
             });
@@ -257,4 +261,5 @@ yargs(process.argv.slice(2))
                 logger.error(e);
             }
         },
-    ).argv;
+    )
+    .parse();

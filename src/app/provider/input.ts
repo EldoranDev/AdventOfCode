@@ -1,9 +1,10 @@
-import { resolve } from "path";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { WritableStream } from "node:stream/web";
 import { createWriteStream, readFileSync, writeFileSync, accessSync, mkdirSync } from "fs";
 
 // eslint-disable-next-line
-const __dirname = new URL(".", import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 export default async (year: number, day: number) => {
     const session = readFileSync(resolve(__dirname, "..", "..", "..", ".session"));
