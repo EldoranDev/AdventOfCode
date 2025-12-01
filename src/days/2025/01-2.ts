@@ -1,11 +1,6 @@
 import {} from "@lib/input";
 import { Context } from "@app/types";
 
-const OP = {
-    L: (a) => a + 99,
-    R: (a) => a,
-};
-
 const LOCK_SIZE = 100;
 
 export default function (input: string[], { logger }: Context) {
@@ -45,20 +40,7 @@ export default function (input: string[], { logger }: Context) {
         }
 
         count += c;
-
-        console.log(`Dial rotated ${rot.dir}${rot.amount} to point at ${dial} -- ${c}`);
     }
 
     return count;
-}
-
-function mod(a: number, b: number): number {
-    a %= b;
-
-    while (a < 0) {
-        a += b;
-        a %= b;
-    }
-
-    return a;
 }
