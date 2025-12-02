@@ -27,7 +27,7 @@ export default function (input: string[], { logger }: Context) {
 function repeats(num: number): boolean {
     const str = num.toString();
 
-    for (let l = 1; l <= Math.floor(str.length / 2); l++) {
+    for (let l = Math.floor(str.length / 2); l > 0; l--) {
         const s = str.substring(0, l);
         let match = true;
         let i = l;
