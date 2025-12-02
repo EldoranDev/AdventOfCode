@@ -1,6 +1,5 @@
 import {} from "@lib/input";
 import { Context } from "@app/types";
-import deepcopy from "deepcopy";
 
 type SnailNumber = [SnailNumber | number, SnailNumber | number];
 
@@ -22,8 +21,8 @@ export default function (input: string[], { logger }: Context) {
         const B = numbers.shift();
 
         const N: TreeNode = {
-            left: deepcopy(A),
-            right: deepcopy(B),
+            left: structuredClone(A),
+            right: structuredClone(B),
         };
 
         (N.left as TreeNode).parent = N;
