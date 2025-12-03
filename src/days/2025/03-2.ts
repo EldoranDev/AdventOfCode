@@ -1,6 +1,5 @@
 import {} from "@lib/input";
 import { Context } from "@app/types";
-import { Tuple } from "@lib/array/pairs";
 
 const NUM_BATERIES = 12;
 
