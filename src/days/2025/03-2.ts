@@ -1,5 +1,6 @@
 import {} from "@lib/input";
 import { Context } from "@app/types";
+import { Tuple } from "@lib/array/pairs";
 
 const NUM_BATERIES = 12;
 
@@ -9,26 +10,25 @@ export default function (input: string[], { logger }: Context) {
     let sum = 0;
 
     for (const bank of banks) {
-        sum += findHighest(bank, "", NUM_BATERIES, NUM_BATERIES);
+        sum += findHighest(bank, "");
     }
 
     return sum;
 }
 
-function findHighest(inp: number[], num: string, left: number, length: number): number {
-    if (left === 0) {
+function findHighest(inp: number[], num: string): number {
+    if (num.length === NUM_BATERIES) {
         return Number(num);
     }
 
-    let highest = 0;
-    let highestIdx = 0;
+    const highest = [0, 0];
 
-    for (let i = 0; i <= inp.length - left; i++) {
-        if (highest < inp[i]) {
-            highest = inp[i];
-            highestIdx = i;
+    for (let i = 0; i <= inp.length - (NUM_BATERIES - num.length); i++) {
+        if (highest[0] < inp[i]) {
+            highest[0] = inp[i];
+            highest[1] = i;
         }
     }
 
-    return findHighest(inp.slice(highestIdx + 1), `${num}${highest}`, left - 1, length);
+    return findHighest(inp.slice(highest[1] + 1), `${num}${highest[0]}`);
 }
