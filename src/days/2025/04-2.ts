@@ -36,7 +36,7 @@ export default function (input: string[], { logger }: Context) {
 
         for (let y = 0; y < input.length; y++) {
             for (let x = 0; x < input[y].length; x++) {
-                if (grid[y][x] === "@" && getNeighbors(x, y, grid) < 4) {
+                if (grid[y][x] === "@" && getNeighbours(x, y, grid) < 4) {
                     count++;
                     remove.push(new Vec2(x, y));
                 }
@@ -47,7 +47,7 @@ export default function (input: string[], { logger }: Context) {
     return count;
 }
 
-function getNeighbors(x: number, y: number, grid: Grid2D<string>): number {
+function getNeighbours(x: number, y: number, grid: Grid2D<string>): number {
     let count = 0;
     for (const p of POS) {
         const t = Vec2.add(new Vec2(x, y), p);
