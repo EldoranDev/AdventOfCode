@@ -15,10 +15,8 @@ import { system as logger, implementation as implLogger } from "@app/logger";
 
 type Implementation = (input: string[], context: Context) => string;
 
-// eslint-disable-next-line
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 yargs(process.argv.slice(2))
     .strict()
     .help()
@@ -188,78 +186,6 @@ yargs(process.argv.slice(2))
                 }
             } catch (e) {
                 console.error(e);
-            }
-        },
-    )
-    .command(
-        "vis [day]",
-        "Run visualization of day",
-        (y) => {
-            y.positional("day", {
-                describe: "Day to execute",
-                default: new Date().getDay() + 1,
-            }).option("test", {
-                boolean: true,
-                default: false,
-            });
-        },
-        async (args) => {
-            const day = args.day.toString().padStart(2, "0");
-
-            let module: Implementation;
-
-            try {
-                module = (await import(`./src/visuals/${args.year}/${day}`))
-                    .default as Implementation;
-            } catch (e) {
-                switch (e.code) {
-                    case "MODULE_NOT_FOUND":
-                        logger.error("Day has no visuals yet");
-                        break;
-                    default:
-                        console.error(e);
-                }
-                return;
-            }
-
-            let file = `${day}.in`;
-
-            if (args.test) {
-                file += "-test";
-                args.submit = false;
-            }
-
-            let input: string;
-
-            try {
-                input = readFileSync(resolve(__dirname, "inputs", args.year.toString(), file), {
-                    encoding: "utf-8",
-                });
-            } catch (e) {
-                switch (e.code) {
-                    case "ENOENT":
-                        logger.error("Input file for day is missing");
-                        break;
-                    default:
-                        console.error(e);
-                        break;
-                }
-                return;
-            }
-
-            let lines = input.split("\n");
-
-            if (lines[lines.length - 1].trim().length === 0) {
-                lines = lines.slice(0, lines.length - 1);
-            }
-
-            try {
-                module(lines, {
-                    logger: implLogger,
-                    test: args.test ? true : false,
-                });
-            } catch (e) {
-                logger.error(e);
             }
         },
     )
