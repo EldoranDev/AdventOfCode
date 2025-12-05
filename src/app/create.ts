@@ -5,7 +5,6 @@ import { writeFileSync, accessSync, mkdirSync } from "node:fs";
 import { system as logger } from "./logger";
 import provideInput from "./provider/input";
 
-// eslint-disable-next-line
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const template = `import { } from '@lib/input';

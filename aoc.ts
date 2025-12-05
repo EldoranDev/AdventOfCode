@@ -1,23 +1,11 @@
 #!/usr/bin/env -S npx tsx
-
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
-import { performance } from "node:perf_hooks";
-import { fileURLToPath } from "node:url";
-
 import yargs from "yargs";
-import clipboard from "clipboardy";
+import { hideBin } from "yargs/helpers";
 
-import { Context } from "src/app/types";
-import answerProvider from "@app/provider/answer";
-import observerPerformance from "@app/performance";
-import { system as logger, implementation as implLogger } from "@app/logger";
+import { BenchCommand } from "src/cmds/bench";
+import { RunCommand } from "src/cmds/run";
 
-type Implementation = (input: string[], context: Context) => string;
-
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-
-yargs(process.argv.slice(2))
+yargs(hideBin(process.argv))
     .strict()
     .help()
     .option("year", {
@@ -56,137 +44,6 @@ yargs(process.argv.slice(2))
             await cmd.get(args);
         },
     )
-    .command(
-        "run [day] [part]",
-        "Run implementation of day",
-        (y) => {
-            y.positional("day", {
-                describe: "Day to execute",
-                default: new Date().getDay() + 1,
-            })
-                .positional("part", {
-                    describe: "Part of day to execute",
-                    default: 1,
-                })
-                .option("test", {
-                    boolean: true,
-                    default: false,
-                })
-                .option("perf", {
-                    boolean: true,
-                    default: false,
-                })
-                .option("verbose", {
-                    boolean: true,
-                    default: false,
-                })
-                .option("submit", {
-                    boolean: true,
-                    default: false,
-                });
-        },
-        async (args) => {
-            if (args.perf) {
-                await observerPerformance();
-            }
-
-            if (!args.verbose) {
-                implLogger.level = "info";
-            }
-
-            performance.mark("start-exec");
-
-            const day = args.day.toString().padStart(2, "0");
-
-            let module: Implementation;
-
-            performance.mark("mod-load-start");
-
-            try {
-                module = (await import(`./src/days/${args.year}/${day}-${args.part}`))
-                    .default as Implementation;
-            } catch (e) {
-                switch (e.code) {
-                    case "MODULE_NOT_FOUND":
-                        logger.error("Day has no implementation yet");
-                        break;
-                    default:
-                        console.error(e);
-                }
-                return;
-            }
-
-            performance.mark("mod-load-end");
-
-            performance.mark("input-start");
-            let file = `${day}.in`;
-
-            if (args.test) {
-                file += "-test";
-                args.submit = false;
-            }
-
-            let input: string;
-
-            try {
-                input = readFileSync(resolve(__dirname, "inputs", args.year.toString(), file), {
-                    encoding: "utf-8",
-                });
-            } catch (e) {
-                switch (e.code) {
-                    case "ENOENT":
-                        logger.error("Input file for day is missing");
-                        break;
-                    default:
-                        console.error(e);
-                        break;
-                }
-                return;
-            }
-
-            let lines = input.split("\n");
-
-            if (lines[lines.length - 1].trim().length === 0) {
-                lines = lines.slice(0, lines.length - 1);
-            }
-
-            performance.mark("input-end");
-
-            performance.mark("exec-start");
-            try {
-                let result = module(lines, {
-                    logger: implLogger,
-                    test: args.test as boolean,
-                });
-                performance.mark("exec-end");
-
-                result = await Promise.resolve(result);
-
-                // eslint-disable-next-line eqeqeq
-                if (result == undefined) {
-                    logger.error("No result returned");
-                    return;
-                }
-
-                await clipboard.write(result.toString());
-
-                performance.measure("Module Loading", "mod-load-start", "mod-load-end");
-                performance.measure("Input Loading", "input-start", "input-end");
-                performance.measure("Execution", "exec-start", "exec-end");
-
-                logger.info(`💬 Result: ${result.toString()}`);
-
-                if (args.submit) {
-                    answerProvider(
-                        args.year,
-                        args.day as number,
-                        args.part as number,
-                        result.toString(),
-                    );
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        },
-    )
+    .command(new RunCommand())
+    .command(new BenchCommand())
     .parse();

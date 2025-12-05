@@ -1,7 +1,11 @@
-import { readFile } from "fs/promises";
-import { resolve } from "path";
-import { Logger } from "winston";
 import { Arguments, Argv, CommandModule } from "yargs";
+import clipboard from "clipboardy";
+
+import answerProvider from "@app/provider/answer";
+import observerPerformance from "@app/performance";
+import { system as logger, implementation as implLogger } from "@app/logger";
+import { getImplementation } from "@app/implementation";
+import { getInput } from "@app/input";
 
 export interface RunArguments extends Arguments {
     year: number;
@@ -12,28 +16,28 @@ export interface RunArguments extends Arguments {
     submit: boolean;
 }
 
-type Implementation = (input: string[], context: any) => string;
-
 export class RunCommand implements CommandModule {
     command = "run [day] [part]";
-
-    constructor(private logger: Logger) {}
 
     builder(args: Argv): Argv {
         return args
             .positional("day", {
-                describe: "The day to run",
+                describe: "Day to execute",
                 default: new Date().getDay() + 1,
             })
             .positional("part", {
-                describe: "The part to run",
+                describe: "Part of day to execute",
                 default: 1,
             })
-            .option("verbose", {
+            .option("test", {
                 boolean: true,
                 default: false,
             })
-            .option("test", {
+            .option("perf", {
+                boolean: true,
+                default: false,
+            })
+            .option("verbose", {
                 boolean: true,
                 default: false,
             })
@@ -43,66 +47,71 @@ export class RunCommand implements CommandModule {
             });
     }
 
-    async handler(raw: Arguments, exitProcess = true) {
-        const args = raw as RunArguments;
+    async handler(rawArgs: Arguments) {
+        const args = rawArgs as RunArguments;
 
-        if (args.verbose) {
-            this.logger.level = "debug";
+        if (args.perf) {
+            await observerPerformance();
         }
 
-        const day = args.day.toString().padStart(2, "0");
-
-        let module: Implementation;
-
-        try {
-            module = (
-                await import(
-                    resolve(
-                        import.meta.dirname,
-                        "..",
-                        "days",
-                        args.year.toString(),
-                        `${day}-${args.part}`,
-                    )
-                )
-            ).default as Implementation;
-        } catch (e) {
-            console.log(e);
-            return;
+        if (!args.verbose) {
+            implLogger.level = "info";
         }
-
-        let file = `${day}.in`;
 
         if (args.test) {
-            file += "-test";
             args.submit = false;
         }
 
-        let input: string;
+        performance.mark("start-exec");
 
+        const day = args.day.toString().padStart(2, "0");
+
+        performance.mark("mod-load-start");
+
+        const module = await getImplementation(args.year, day, args.part);
+
+        performance.mark("mod-load-end");
+
+        performance.mark("input-start");
+
+        const lines = getInput(args.year, day, args.test as boolean);
+
+        performance.mark("input-end");
+
+        performance.mark("exec-start");
         try {
-            input = await readFile(
-                resolve(import.meta.dirname, "..", "..", "inputs", args.year.toString(), file),
-                "utf-8",
-            );
-        } catch (error) {
-            console.log(error);
-            return;
-        }
+            let result = module(lines, {
+                logger: implLogger,
+                test: args.test as boolean,
+            });
 
-        const lines = input.split("\n");
+            performance.mark("exec-end");
 
-        if (lines[lines.length - 1].trim().length === 0) {
-            lines.pop();
-        }
+            result = await Promise.resolve(result);
 
-        try {
-            const result = module(lines, {});
+            if (result == undefined) {
+                logger.error("No result returned");
+                return;
+            }
 
-            console.log(Promise.resolve(result));
-        } catch (error) {
-            console.log(error);
-            return;
+            await clipboard.write(result.toString());
+
+            performance.measure("Module Loading", "mod-load-start", "mod-load-end");
+            performance.measure("Input Loading", "input-start", "input-end");
+            performance.measure("Execution", "exec-start", "exec-end");
+
+            logger.info(`💬 Result: ${result.toString()}`);
+
+            if (args.submit) {
+                answerProvider(
+                    args.year,
+                    args.day as number,
+                    args.part as number,
+                    result.toString(),
+                );
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 }
