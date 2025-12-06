@@ -15,33 +15,13 @@ export default function (input: string[], { logger }: Context) {
 
     for (const range of ranges) {
         for (let i = range.from; i <= range.to; i++) {
-            if (repeats(i)) {
+            const s = i.toString();
+
+            if ((s + s).slice(1, -1).includes(s)) {
                 sum += i;
             }
         }
     }
 
     return sum;
-}
-
-function repeats(num: number): boolean {
-    const str = num.toString();
-
-    for (let l = Math.floor(str.length / 2); l > 0; l--) {
-        const s = str.substring(0, l);
-        let match = true;
-        let i = l;
-        for (; i <= str.length - l; i += l) {
-            if (str.substring(i, i + l) !== s) {
-                match = false;
-                break;
-            }
-        }
-
-        if (match && i === str.length) {
-            return true;
-        }
-    }
-
-    return false;
 }
