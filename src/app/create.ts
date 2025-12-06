@@ -15,12 +15,12 @@ export default function (input: string[], { logger }: Context) {
 }
 `;
 
-export async function create(args) {
-    const dayPadded = args.day.toString().padStart(2, "0");
+export async function create(year: number, day: number) {
+    const dayPadded = day.toString().padStart(2, "0");
 
-    await provideInput(args.year, args.day);
+    await provideInput(year, day);
 
-    const path = resolve(__dirname, "..", "days", args.year.toString());
+    const path = resolve(__dirname, "..", "days", year.toString());
 
     try {
         accessSync(path);
@@ -36,5 +36,5 @@ export async function create(args) {
         encoding: "utf-8",
     });
 
-    logger.info(`Created solution files for ${args.day} of year ${args.year}`);
+    logger.info(`Created solution files for ${day} of year ${year}`);
 }
