@@ -18,6 +18,14 @@ npm run start -- run [day] [part]
 ```
 
 ```bash
+# Benchmark part of day
+# will run the code for the specified part of day [count] amount of times
+# and calculate average and top times of the execution -- only actuall exec
+# time will be meassured
+npm run start -- bench [day] [part] [count]
+```
+
+```bash
 # Fetch input of day
 # As the inputs are not shared with this repo (see below)
 # this command can be used to fetch the input for a given day
