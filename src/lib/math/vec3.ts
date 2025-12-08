@@ -39,6 +39,14 @@ export default class Vec3 implements IVec {
         return Math.abs(this.x - b.x) + Math.abs(this.y - b.y) + Math.abs(this.z - b.z);
     }
 
+    public distance(b: Vec3): number {
+        return Math.sqrt(this.distanceSquared(b));
+    }
+
+    public distanceSquared(b: Vec3): number {
+        return (this.x - b.x) ** 2 + (this.y - b.y) ** 2 + (this.z - b.z) ** 2;
+    }
+
     public clone(): Vec3 {
         return new Vec3(this.x, this.y, this.z);
     }
