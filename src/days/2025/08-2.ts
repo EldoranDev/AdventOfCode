@@ -14,7 +14,7 @@ interface box {
 }
 
 export default function (input: string[], { logger }: Context) {
-    let circuits: Array<box[]> = [];
+    const circuits: Array<box[]> = [];
 
     const boxes = input.map((l): box => {
         const [x, y, z] = l.split(",").map(Number);
@@ -45,23 +45,18 @@ export default function (input: string[], { logger }: Context) {
 
     connections.sort((a, b) => a.dist - b.dist);
 
-    let last: connection = connections[0];
+    let i = 0;
 
-    for (let i = 0; circuits.length > 1; i++) {
+    for (; circuits.length > 1; i++) {
         if (connections[i].a.circuit == connections[i].b.circuit) continue;
 
-        last = connections[i];
-
-        connections[i].a.circuit.push(...connections[i].b.circuit);
-
-        const b = connections[i].b.circuit.splice(0, connections[i].b.circuit.length);
-
-        for (const box of b) {
+        for (const box of connections[i].b.circuit) {
             box.circuit = connections[i].a.circuit;
+            connections[i].a.circuit.push(box);
         }
 
-        circuits = circuits.filter((c) => c.length > 0);
+        circuits.splice(circuits.indexOf(connections[i].b.circuit), 1);
     }
 
-    return last.a.vec.x * last.b.vec.x;
+    return connections[i - 1].a.vec.x * connections[i - 1].b.vec.x;
 }
