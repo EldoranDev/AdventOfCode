@@ -53,6 +53,10 @@ export default class Vec2 implements IVec {
         return `V2(${this.x}|${this.y})`;
     }
 
+    public toArray(): [number, number] {
+        return [this.x, this.y];
+    }
+
     public rotate(rotation: number, mode: "rad" | "deg" = "deg") {
         let rads = rotation;
 
