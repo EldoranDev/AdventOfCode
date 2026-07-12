@@ -1,0 +1,52 @@
+version: '3'
+
+vars:
+  YEAR: '2025'
+
+tasks:
+  run:
+    desc: "Run a day's solution: task run -- 1 1 [--test]"
+    cmds:
+      - >
+        odin run {{.YEAR}}/day{{printf "%02d" (index .CLI_ARGS 0 | int)}}
+        -collection:aoclib=./aoclib
+        -- {{index .CLI_ARGS 1}} {{if eq (len .CLI_ARGS) 3}}{{index .CLI_ARGS 2}}{{end}}
+
+  bench:
+    desc: "Benchmark a day: task bench -- 1 1"
+    cmds:
+      - >
+        odin build {{.YEAR}}/day{{printf "%02d" (index .CLI_ARGS 0 | int)}}
+        -collection:aoclib=./aoclib
+        -out:/tmp/aocday -o:speed
+      - hyperfine -w 2 "/tmp/aocday {{index .CLI_ARGS 1}}"
+
+  test:
+    desc: "Test a day: task test -- 1  (omit args to test all days)"
+    cmds:
+      - task: test:one
+        vars: { DAY: '{{index .CLI_ARGS 0}}' }
+    status:
+      - test -z "{{.CLI_ARGS}}"
+
+  test:one:
+    internal: true
+    cmds:
+      - odin test {{.YEAR}}/day{{printf "%02d" (.DAY | int)}} -collection:aoclib=./aoclib
+
+  test:all:
+    desc: "Run every day's tests"
+    cmds:
+      - for d in {{.YEAR}}/day*/; do odin test "$d" -collection:aoclib=./aoclib; done
+
+  new:
+    desc: "Scaffold a new day: task new -- 3"
+    cmds:
+      - ./scripts/new_day.sh {{index .CLI_ARGS 0}} {{.YEAR}}
+
+  get:
+    desc: "Fetch puzzle input: task get -- 3"
+    cmds:
+      - ./scripts/fetch_input.sh {{index .CLI_ARGS 0}} {{.YEAR}}
+    requires:
+      vars: [AOC_SESSION]
