@@ -10,14 +10,17 @@ read_input :: proc(
 	test: bool,
 	allocator := context.allocator,
 ) -> ([]string, bool) {
-	data, err := os.read_entire_file(
-		fmt.aprintf(
-			"inputs/%d/%02d/input.txt",
-			year,
-			day,
-		),
-		allocator
+	postfix := test ? ".test" : ""
+	path := fmt.aprintf(
+		"inputs/%d/%02d/input%s.txt",
+		year,
+		day,
+		postfix,
+		allocator = allocator,
 	)
+	defer delete(path, allocator)
+
+	data, err := os.read_entire_file(path, allocator)
 
 	if err != nil {
 		fmt.eprintf("%v", err)
@@ -29,7 +32,11 @@ read_input :: proc(
 
 	it := string(data)
 	for line in strings.split_lines_iterator(&it) {
-		append(&lines, line)
+		append(&lines, strings.clone(line, allocator))
+	}
+
+	if lines[len(lines) - 1] == "" {
+		pop_dynamic_array(&lines)
 	}
 
 	return lines[:], true
