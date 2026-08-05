@@ -13,8 +13,8 @@ part2 :: proc(input: []string) -> string {
 
 main :: proc() {
 	result := aoc.run_day(
-		2025,
-		1,
+		{{year}},
+		{{day}},
 		part1,
 		part2,
 	)

@@ -42,7 +42,7 @@ tasks:
   new:
     desc: "Scaffold a new day: task new -- 3"
     cmds:
-      - ./scripts/new_day.sh {{index .CLI_ARGS 0}} {{.YEAR}}
+      - ./scripts/new_day.sh {{ .CLI_ARGS }} {{.YEAR}}
 
   get:
     desc: "Fetch puzzle input: task get -- 3"
