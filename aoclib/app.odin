@@ -1,5 +1,6 @@
 package aoclib
 
+import "core:strings"
 import "core:fmt"
 import "core:os"
 import "core:strconv"
@@ -10,6 +11,8 @@ run_day :: proc (
 	part1: proc([]string) -> string,
 	part2: proc([]string) -> string,
 ) -> string {
+	defer free_all(context.temp_allocator)
+
 	part := len(os.args) > 1 ? (strconv.parse_int(os.args[1]) or_else 1) : 1
     test := len(os.args) > 2 && os.args[2] == "--test"
 
@@ -26,5 +29,5 @@ run_day :: proc (
 
     result := part == 1 ? part1(input) : part2(input)
 
-    return result
+    return strings.clone(result)
 }
