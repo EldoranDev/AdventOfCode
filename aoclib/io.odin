@@ -10,9 +10,9 @@ read_input :: proc(
 	test: bool,
 	allocator := context.allocator,
 ) -> ([]string, bool) {
-	postfix := test ? ".test" : ""
+	postfix := test ? "in-test" : "in"
 	path := fmt.aprintf(
-		"inputs/%d/%02d/input%s.txt",
+		"inputs/%d/%02d.%s",
 		year,
 		day,
 		postfix,
