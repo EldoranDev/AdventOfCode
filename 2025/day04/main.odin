@@ -5,9 +5,21 @@ import aoc "../../aoclib"
 
 import aocmath "../../aoclib/math"
 
-Floor :: [][]bool
+Floor :: struct {
+	data: []bool,
+	w, h: int,
+	dw, dh: int,
+}
 
-Directions :: []aocmath.Point2 {
+index :: #force_inline proc(f: Floor, x, y: int) -> int {
+	return (y+1) * f.w + (x+1)
+}
+
+at :: #force_inline proc(f: Floor, x, y: int) -> bool {
+	return f.data[index(f, x, y)]
+}
+
+Directions :: [8]aocmath.Point2 {
 	{0, -1},
 	{0, 1},
 	{1, -1},
@@ -19,51 +31,47 @@ Directions :: []aocmath.Point2 {
 }
 
 build_floor :: proc (input: []string) -> Floor {
-	floor := make([][]bool, len(input), context.temp_allocator)
+	dw := len(input[0])
+	dh := len(input)
+	w := dw + 2
+	h := dh + 2
+
+	data := make([]bool, w * h, context.temp_allocator)
 
 	for line, y in input {
-		row := make([]bool, len(line), context.temp_allocator)
-
-		for slot, c in line {
-			row[c] = slot == '@'
+		for slot, x in line {
+			data[(x+1) + (y+1)*h] = slot == '@'
 		}
-
-		floor[y] = row
 	}
 
-	return floor
+	return Floor{data, w, h, dw, dh}
 }
 
-get_accessible :: proc(floor: Floor) -> []aocmath.Point2 {
-	list: [dynamic]aocmath.Point2
-
-	sum := 0
-
+get_accessible :: proc(floor: Floor, list: ^[dynamic]aocmath.Point2) -> []aocmath.Point2 {
 	pos := aocmath.Point2{}
 
-	for row, y in floor {
-		pos.y = y
-		for col, x in row {
-			pos.x = x
+	slot: bool
+	count := 0
 
-			if !col {
+	for y in 0..<floor.dh {
+		for x in 0..<floor.dw {
+			pos := aocmath.Point2{x, y}
+
+			slot := at(floor, x, y)
+
+			if !slot {
 				continue
 			}
 
-			count := 0
+			count = 0
 
 			for dir in Directions {
 				p := dir + pos
-
-				if p.x < 0 || p.x >= len(row) || p.y < 0 || p.y >= len(floor) {
-					continue
-				}
-
-				count += floor[p.y][p.x] ? 1 : 0
+				count += int(at(floor, p.x, p.y))
 			}
 
 			if count < 4 {
-				append(&list, aocmath.Point2{pos.x, pos.y})
+				append(list, aocmath.Point2{pos.x, pos.y})
 			}
 		}
 	}
@@ -74,22 +82,25 @@ get_accessible :: proc(floor: Floor) -> []aocmath.Point2 {
 part1 :: proc(input: []string) -> string {
 	floor := build_floor(input);
 
-	list := get_accessible(floor)
+	list : [dynamic]aocmath.Point2
 	defer delete(list)
+
+	get_accessible(floor, &list)
 
     return fmt.aprintf("%d", len(list), allocator = context.temp_allocator)
 }
 
 part2 :: proc(input: []string) -> string {
 	floor := build_floor(input);
-
-	found := true
-
 	sum := 0
 
+	list: [dynamic]aocmath.Point2
+	defer delete(list)
+
 	for {
-		list := get_accessible(floor)
-		defer delete(list)
+		clear(&list)
+
+		get_accessible(floor, &list)
 
 		if len(list) == 0 {
 			break
@@ -98,7 +109,7 @@ part2 :: proc(input: []string) -> string {
 		sum += len(list)
 
 		for p in list {
-			floor[p.y][p.x] = false
+			floor.data[index(floor, p.x, p.y)] = false
 		}
 	}
 
