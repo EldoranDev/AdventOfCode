@@ -44,6 +44,23 @@ read_input :: proc(
 
 get_input_groups :: proc (
 	input: []string,
-) -> ([][]string, bool) {
-	return {}, false
+	allocator := context.allocator,
+) -> [][]string {
+	groups := make([dynamic][]string, allocator = allocator)
+	group := make([dynamic]string, allocator = allocator)
+
+	for line in input {
+		if len(line) == 0 {
+			append(&groups, group[:])
+
+			group = make([dynamic]string, allocator = allocator)
+			continue
+		}
+
+		append(&group, line)
+	}
+
+	append(&groups, group[:])
+
+	return groups[:]
 }
