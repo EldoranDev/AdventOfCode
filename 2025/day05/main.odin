@@ -1,6 +1,5 @@
 package main
 
-import "core:math"
 import "core:slice"
 import "core:strconv"
 import "core:strings"
@@ -51,16 +50,15 @@ part2 :: proc(input: []string) -> string {
 	ranges, _ := parse_input(input)
 
 	slice.sort_by_cmp(ranges, proc (a, b: Range) -> slice.Ordering {
-		if a.from > b.from {
-			return .Greater
-		}
+		if a.from == b.from do return .Equal
+		if a.from > b.from do return .Greater
 
 		return .Less
 	})
 
 	count := 0
 
-	rngs := slice.to_dynamic(ranges)
+	rngs := slice.to_dynamic(ranges, context.temp_allocator)
 
 	for i := 0; i < len(rngs); i += 1 {
 		for {
@@ -68,7 +66,7 @@ part2 :: proc(input: []string) -> string {
 				break
 			}
 
-			rngs[i].to = math.max(rngs[i+1].to, rngs[i].to)
+			rngs[i].to = max(rngs[i+1].to, rngs[i].to)
 			ordered_remove(&rngs, i+1)
 		}
 
