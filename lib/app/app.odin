@@ -1,9 +1,11 @@
-package aoclib
+package app
 
 import "core:strings"
 import "core:fmt"
 import "core:os"
 import "core:strconv"
+
+import "aoc:io"
 
 run_day :: proc (
 	year: int,
@@ -16,7 +18,7 @@ run_day :: proc (
 	part := len(os.args) > 1 ? (strconv.parse_int(os.args[1]) or_else 1) : 1
     test := len(os.args) > 2 && os.args[2] == "--test"
 
-    input, ok := read_input(year, day, test)
+    input, ok := io.read_input(year, day, test)
     if !ok {
         fmt.eprintln("could not read input")
         os.exit(1)

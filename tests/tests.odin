@@ -1,4 +1,3 @@
 package tests
 
-@require import "aoclib"
-@require import "aoclib/math"
+@require import "lib/math"

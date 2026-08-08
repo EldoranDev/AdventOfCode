@@ -1,9 +1,7 @@
 package main
 
-import "core:strings"
-import "core:strconv"
 import "core:fmt"
-import aoc "../../aoclib"
+import aoc "aoc:app"
 
 findHighest :: proc(inp: []int, num_batteries: int, acc := 0, taken := 0) -> int {
 	if taken == num_batteries {
@@ -40,10 +38,6 @@ parse_input :: proc(input: []string) -> [][]int {
 
 part1 :: proc(input: []string) -> string {
 	banks := parse_input(input)
-	defer {
-		for bank in banks do delete(bank)
-		delete(banks)
-	}
 
 	sum := 0
 

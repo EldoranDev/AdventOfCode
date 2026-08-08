@@ -3,8 +3,8 @@ package main
 import "core:simd"
 import "base:intrinsics"
 import "core:fmt"
-import aoc "../../aoclib"
-import aocmath "../../aoclib/math"
+import aoc "aoc:app"
+import m "aoc:math"
 
 // How many bytes/cells we process per SIMD instruction.
 // 32 lanes of u8 = one 256-bit vector register (e.g. AVX2 on x86,
@@ -63,7 +63,7 @@ index :: #force_inline proc(f: Floor, x, y: int) -> int {
 	return row_offset(f, y) + x
 }
 
-Directions :: [8]aocmath.Point2 {
+Directions :: [8]m.Point2 {
 	{0, -1}, {0, 1}, {1, -1}, {1, 0},
 	{1, 1}, {-1, 0}, {-1, 1}, {-1, -1},
 }
@@ -110,7 +110,7 @@ simd_load :: #force_inline proc(p: [^]u8) -> #simd[LANES]u8 {
 	return intrinsics.unaligned_load((^#simd[LANES]u8)(p))
 }
 
-get_accessible :: proc(floor: Floor, list: ^[dynamic]aocmath.Point2) -> []aocmath.Point2 {
+get_accessible :: proc(floor: Floor, list: ^[dynamic]m.Point2) -> []m.Point2 {
 	for y in 0 ..< floor.h {
 		// Get raw, UNCHECKED pointers to the start of three rows:
 		// the one we're evaluating, and the ones directly above/below.
@@ -185,7 +185,7 @@ get_accessible :: proc(floor: Floor, list: ^[dynamic]aocmath.Point2) -> []aocmat
 			arr := simd.to_array(hit)
 			for i in 0 ..< LANES {
 				if arr[i] != 0 {
-					append(list, aocmath.Point2{x + i, y})
+					append(list, m.Point2{x + i, y})
 				}
 			}
 		}
@@ -197,7 +197,7 @@ get_accessible :: proc(floor: Floor, list: ^[dynamic]aocmath.Point2) -> []aocmat
 part1 :: proc(input: []string) -> string {
 	floor := build_floor(input);
 
-	list : [dynamic]aocmath.Point2
+	list : [dynamic]m.Point2
 	defer delete(list)
 
 	get_accessible(floor, &list)
@@ -209,7 +209,7 @@ part2 :: proc(input: []string) -> string {
 	floor := build_floor(input);
 	sum := 0
 
-	list: [dynamic]aocmath.Point2
+	list: [dynamic]m.Point2
 	defer delete(list)
 
 	for {

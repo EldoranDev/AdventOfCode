@@ -2,7 +2,7 @@ package main
 
 import "core:fmt"
 import "core:strconv"
-import aoc "../../aoclib"
+import aoc "aoc:app"
 
 LockSize :: 100
 

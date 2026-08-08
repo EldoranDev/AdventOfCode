@@ -1,4 +1,4 @@
-package aoclib
+package aoc_io
 
 import "core:os"
 import "core:strings"

@@ -9,6 +9,7 @@ vars:
     sh: date +%d
   DAY_PADDED:
     sh: "printf '%02d' \"$((10#{{.DAY}}))\""
+  COLLECTION: -collection:aoc=./lib
 
 tasks:
   run:
@@ -16,6 +17,7 @@ tasks:
     cmds:
       - >
         odin run ./{{.YEAR}}/day{{.DAY_PADDED}}
+        {{ .COLLECTION }}
         -- {{.CLI_ARGS}}
 
   bench:
@@ -29,7 +31,7 @@ tasks:
 
   test:
     desc: "Run the tests for the aoclib"
-    cmd: odin test ./tests -all-packages
+    cmd: odin test ./tests -all-packages {{ .COLLECTION }} -strict-style
 
   new:
     desc: "Scaffold a new day"

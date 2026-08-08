@@ -3,7 +3,7 @@ package main
 import "core:strings"
 import "core:strconv"
 import "core:fmt"
-import aoc "../../aoclib"
+import aoc "aoc:app"
 
 Range :: [2]i64
 

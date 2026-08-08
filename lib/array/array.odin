@@ -1,4 +1,4 @@
-package aoclib
+package array
 
 import "core:strconv"
 
