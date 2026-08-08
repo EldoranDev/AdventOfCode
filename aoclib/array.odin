@@ -1,6 +1,5 @@
 package aoclib
 
-import "core:fmt"
 import "core:strconv"
 
 map_to :: proc (input: []string, f: proc(string) -> $T, allocator := context.temp_allocator) -> []T {

@@ -9,58 +9,41 @@ vars:
     sh: date +%d
 
 tasks:
-  test2:
-    cmds:
-      - echo {{.YEAR}}
-      - echo {{.DAY}}
-      - echo "{{.AOC_SESSION}}"
-
   run:
-    desc: "Run a day's solution: task run -- 1 [--test]"
+    desc: "Run a day's solution"
     cmds:
       - >
         odin run ./{{.YEAR}}/day{{.DAY}}
         -- {{.CLI_ARGS}}
 
   bench:
-    desc: "Benchmark a day: task bench -- 1 1"
+    desc: "Benchmark a given day using hyperfine"
     cmds:
       - >
-        odin build {{.YEAR}}/day{{printf "%02d" (index .CLI_ARGS 0 | int)}}
-        -collection:aoclib=./aoclib
-        -out:/tmp/aocday -o:speed
-      - hyperfine -w 2 "/tmp/aocday {{index .CLI_ARGS 1}}"
+        odin build {{ .YEAR }}/day{{ .DAY }}
+        -out:./aocday-bench -o:speed
+      - defer: rm ./aocday-bench
+      - hyperfine -w 2 -N "./aocday-bench {{ .CLI_ARGS }}"
 
   test:
-    desc: "Test a day: task test -- 1  (omit args to test all days)"
-    cmds:
-      - task: test:one
-        vars: { DAY: '{{index .CLI_ARGS 0}}' }
-    status:
-      - test -z "{{.CLI_ARGS}}"
-
-  test:one:
-    internal: true
-    cmds:
-      - odin test {{.YEAR}}/day{{printf "%02d" (.DAY | int)}} -collection:aoclib=./aoclib
-
-  test:all:
-    desc: "Run every day's tests"
-    cmds:
-      - for d in {{.YEAR}}/day*/; do odin test "$d" -collection:aoclib=./aoclib; done
+    desc: "Run the tests for the aoclib"
+    cmd: odin test ./tests -all-packages
 
   new:
-    desc: "Scaffold a new day: task new -- 3"
+    desc: "Scaffold a new day"
+    status:
+      - test -f ./{{.YEAR}}/day{{.DAY}}/main.odin
     cmds:
-      - ./scripts/new_day.sh {{ .CLI_ARGS }} {{.YEAR}}
+      - ./scripts/new_day.sh {{.YEAR}} {{.DAY}}
+      - task: get
 
   get:
-    desc: "Fetch puzzle input: task get -- 3"
+    desc: "Fetch puzzle input"
     vars:
       AOC_SESSION:
         secret: true
         sh: echo $AOC_SESSION
+    status:
+      - test -f ./inputs/{{.YEAR}}/{{.DAY}}.in
     cmds:
        - ./scripts/fetch_input.sh {{.YEAR}} {{.DAY}} {{.AOC_SESSION}}
-    requires:
-      vars: [AOC_SESSION]
