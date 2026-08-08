@@ -7,20 +7,22 @@ vars:
     sh: date +%Y
   DAY:
     sh: date +%d
+  DAY_PADDED:
+    sh: "printf '%02d' \"$((10#{{.DAY}}))\""
 
 tasks:
   run:
     desc: "Run a day's solution"
     cmds:
       - >
-        odin run ./{{.YEAR}}/day{{.DAY}}
+        odin run ./{{.YEAR}}/day{{.DAY_PADDED}}
         -- {{.CLI_ARGS}}
 
   bench:
     desc: "Benchmark a given day using hyperfine"
     cmds:
       - >
-        odin build {{ .YEAR }}/day{{ .DAY }}
+        odin build {{ .YEAR }}/day{{ .DAY_PADDED }}
         -out:./aocday-bench -o:speed
       - defer: rm ./aocday-bench
       - hyperfine -w 2 -N "./aocday-bench {{ .CLI_ARGS }}"
@@ -32,9 +34,9 @@ tasks:
   new:
     desc: "Scaffold a new day"
     status:
-      - test -f ./{{.YEAR}}/day{{.DAY}}/main.odin
+      - test -f ./{{.YEAR}}/day{{.DAY_PADDED/main.odin
     cmds:
-      - ./scripts/new_day.sh {{.YEAR}} {{.DAY}}
+      - ./scripts/new_day.sh {{.YEAR}} {{.DAY_PADDED}}
       - task: get
 
   get:
@@ -44,6 +46,6 @@ tasks:
         secret: true
         sh: echo $AOC_SESSION
     status:
-      - test -f ./inputs/{{.YEAR}}/{{.DAY}}.in
+      - test -f ./inputs/{{.YEAR}}/{{.DAY_PADDED}}.in
     cmds:
-       - ./scripts/fetch_input.sh {{.YEAR}} {{.DAY}} {{.AOC_SESSION}}
+       - ./scripts/fetch_input.sh {{.YEAR}} {{.DAY_PADDED}} {{.AOC_SESSION}}
