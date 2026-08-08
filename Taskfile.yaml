@@ -36,7 +36,7 @@ tasks:
   new:
     desc: "Scaffold a new day"
     status:
-      - test -f ./{{.YEAR}}/day{{.DAY_PADDED/main.odin
+      - test -f ./{{.YEAR}}/day{{.DAY_PADDED}}/main.odin
     cmds:
       - ./scripts/new_day.sh {{.YEAR}} {{.DAY_PADDED}}
       - task: get
