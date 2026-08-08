@@ -1,5 +1,7 @@
 # Advent of Code Solutions
 
+Solutions for Advent of Code written in Odin, for typescript solutions for years 2015-2025 check the [typescript branch](https://github.com/EldoranDev/AdventOfCode/tree/typescript).
+
 ## Commands
 
 Commands are ran using [go-task](https://taskfile.dev/)
