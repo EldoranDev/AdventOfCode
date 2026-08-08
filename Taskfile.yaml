@@ -1,16 +1,26 @@
 version: '3'
 
+dotenv: ['.env']
+
 vars:
-  YEAR: '2025'
+  YEAR:
+    sh: date +%Y
+  DAY:
+    sh: date +%d
 
 tasks:
+  test2:
+    cmds:
+      - echo {{.YEAR}}
+      - echo {{.DAY}}
+      - echo "{{.AOC_SESSION}}"
+
   run:
-    desc: "Run a day's solution: task run -- 1 1 [--test]"
+    desc: "Run a day's solution: task run -- 1 [--test]"
     cmds:
       - >
-        odin run {{.YEAR}}/day{{printf "%02d" (index .CLI_ARGS 0 | int)}}
-        -collection:aoclib=./aoclib
-        -- {{index .CLI_ARGS 1}} {{if eq (len .CLI_ARGS) 3}}{{index .CLI_ARGS 2}}{{end}}
+        odin run ./{{.YEAR}}/day{{.DAY}}
+        -- {{.CLI_ARGS}}
 
   bench:
     desc: "Benchmark a day: task bench -- 1 1"
@@ -46,7 +56,11 @@ tasks:
 
   get:
     desc: "Fetch puzzle input: task get -- 3"
+    vars:
+      AOC_SESSION:
+        secret: true
+        sh: echo $AOC_SESSION
     cmds:
-      - ./scripts/fetch_input.sh {{index .CLI_ARGS 0}} {{.YEAR}}
+       - ./scripts/fetch_input.sh {{.YEAR}} {{.DAY}} {{.AOC_SESSION}}
     requires:
       vars: [AOC_SESSION]
