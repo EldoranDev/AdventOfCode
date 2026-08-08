@@ -4,7 +4,9 @@ import "core:slice"
 import "core:strconv"
 import "core:strings"
 import "core:fmt"
-import aoc "../../aoclib"
+import aoc "aoc:app"
+import a "aoc:array"
+import i "aoc:io"
 
 Range :: struct {
 	from: int,
@@ -21,10 +23,10 @@ parse_range :: proc (line: string) -> Range {
 }
 
 parse_input :: proc (input: []string) -> ([]Range, []int) {
-	groups := aoc.get_input_groups(input)
+	groups := i.get_input_groups(input)
 
-	ranges := aoc.map_to(groups[0], parse_range)
-	ids := aoc.map_to_int(groups[1])
+	ranges := a.map_to(groups[0], parse_range)
+	ids := a.map_to_int(groups[1])
 
 	return ranges, ids
 }
