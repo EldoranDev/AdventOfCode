@@ -1,5 +1,6 @@
 package aoc_array2d
 
+import "core:slice"
 import "core:fmt"
 import "core:strings"
 import "core:mem"
@@ -62,6 +63,20 @@ rotate_cw :: proc(a: Grid($T), allocator := context.temp_allocator) -> Grid(T) {
 	}
 
 	return b
+}
+
+flip_horizontal :: proc(a: Grid($T), allocator := context.temp_allocator) -> Grid(T) {
+	g := Grid(T){
+		height = a.height,
+		width = a.width,
+		allocator = allocator,
+
+		data = slice.clone(a.data)
+	}
+
+	slice.reverse(g.data)
+
+	return g
 }
 
 get_column :: proc(a: Grid($T), collumn: int, allocator := context.temp_allocator) -> []T{
