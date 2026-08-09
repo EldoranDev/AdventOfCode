@@ -4,3 +4,4 @@ inputs/
 .DS_Store
 .env
 ./aocday-bench
+./bench

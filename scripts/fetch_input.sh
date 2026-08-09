@@ -4,7 +4,11 @@ set -euo pipefail
 
 trap 'echo "Error on line $LINENO"' ERR
 
-INPUT="./inputs/$1/$2.in"
+folder="./inputs/$1"
+
+INPUT="$folder/$2.in"
+
+mkdir -p $folder
 
 curl --silent \
     -o "./inputs/$1/$2.in" \

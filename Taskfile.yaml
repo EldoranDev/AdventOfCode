@@ -20,14 +20,24 @@ tasks:
         {{ .COLLECTION }}
         -- {{.CLI_ARGS}}
 
-  bench:
+  bench:day:
     desc: "Benchmark a given day using hyperfine"
     cmds:
       - >
         odin build {{ .YEAR }}/day{{ .DAY_PADDED }}
+        {{ .COLLECTION }}
         -out:./aocday-bench -o:speed
       - defer: rm ./aocday-bench
       - hyperfine -w 2 -N "./aocday-bench {{ .CLI_ARGS }}"
+
+  bench:
+    desc: "Compare all binaries in the bench folder"
+    silent: true
+    cmd: './scripts/bench-all.sh {{ .CLI_ARGS }}'
+
+  bench:clean:
+    desc: "Clean the bench directory"
+    cmd: rm -r ./bench
 
   test:
     desc: "Run the tests for the aoclib"
