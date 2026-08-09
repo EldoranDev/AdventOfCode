@@ -15,7 +15,10 @@ Operation :: enum {
 	Add,
 }
 
-parse_input_p1 :: proc(input: []string) -> (problems: a2d.Grid(int), operations: []Operation) {
+part1 :: proc(input: []string) -> string {
+	problems : a2d.Grid(int)
+	operations : []Operation
+
 	firstLine := strings.fields(input[0], context.temp_allocator)
 	inp := a2d.make_grid(string, len(firstLine), len(input))
 
@@ -42,18 +45,12 @@ parse_input_p1 :: proc(input: []string) -> (problems: a2d.Grid(int), operations:
 		a2d.set_row(&problems, line, array.map_to_int(a2d.row(m, line)[1:]))
 	}
 
-	return
-}
-
-part1 :: proc(input: []string) -> string {
-	problems, ops := parse_input_p1(input)
-
 	res := 0
 	for i in 0..<problems.height {
 		problem := a2d.row(problems, i)
 
 		context.user_index = i
-		context.user_ptr = &ops
+		context.user_ptr = &operations
 		res += slice.reduce(
 			problem[1:],
 			problem[0],
