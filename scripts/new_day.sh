@@ -9,4 +9,4 @@ dir="${year}/day${day}"
 mkdir -p "$dir"
 sed -e "s/{{day}}/$((day))/g" -e "s/{{year}}/${year}/g" templates/day_template.odin > "$dir/main.odin"
 
-echo "Created $dir"
+echo "Created $dir/main.odin"

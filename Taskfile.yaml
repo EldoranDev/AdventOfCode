@@ -41,7 +41,7 @@ tasks:
 
   test:
     desc: "Run the tests for the aoclib"
-    cmd: odin test ./tests -all-packages {{ .COLLECTION }} -strict-style
+    cmd: odin test ./tests -all-packages {{ .COLLECTION }} -vet -strict-style
 
   new:
     desc: "Scaffold a new day"

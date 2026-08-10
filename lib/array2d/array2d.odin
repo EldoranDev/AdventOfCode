@@ -39,6 +39,31 @@ make_grid_from :: proc(a: [][]$T, allocator := context.temp_allocator) -> Grid(T
 	return grid
 }
 
+input_to_grid :: proc(input: []string, allocator := context.temp_allocator) -> Grid(string) {
+	assert(len(input) > 0, "Empty input given")
+
+	height := len(input)
+	width := len(input[0])
+
+	data := make([]string, width * height, allocator)
+	grid := Grid(string) {
+		height = height,
+		width = width,
+		data = data,
+		allocator = allocator,
+	}
+
+	for row, y in input {
+		set_row(&grid, y, strings.split(row, "", allocator = allocator))
+	}
+
+	return grid
+}
+
+is_save :: #force_inline proc(g: Grid($T), x, y: int) -> bool {
+	return x >= 0 && y >= 0 && x < g.width && y < g.height
+}
+
 destroy :: proc(g: ^Grid($T)) {
 	delete(g.data)
 	g.data, g.width, g.height = nil, 0, 0
