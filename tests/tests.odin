@@ -1,3 +1,4 @@
 package tests
 
-@require import "lib/math"
+@require import "array2d"
+@require import "math"

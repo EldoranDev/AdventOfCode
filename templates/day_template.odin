@@ -1,7 +1,7 @@
 package main
 
 import "core:fmt"
-import aoc "../../aoclib"
+import aoc "aoc:app"
 
 part1 :: proc(input: []string) -> string {
     return "not implemented"
