@@ -29,7 +29,7 @@ part1 :: proc(input: []string) -> string {
 	m := a2d.rotate_cw(inp)
 
 	operations = array.map_to(
-		a2d.get_column(m, 0),
+		a2d.clone_column(m, 0),
 		proc (l: string) -> Operation {
 			if l == "*" {
 				return .Multiply
@@ -79,8 +79,7 @@ part2 :: proc(input: []string) -> string {
 		a2d.set_row(&inp, i, strings.split(strings.left_justify(line, inp.width, " ", allocator = context.temp_allocator), ""))
 	}
 
-	m := a2d.rotate_cw(inp)
-	m = a2d.flip_horizontal(m)
+	m := a2d.rotate_ccw(inp)
 
 	lines := make([dynamic]string, context.temp_allocator)
 
