@@ -6,7 +6,6 @@ import aoc "aoc:app"
 import a2d "aoc:array2d"
 import am "aoc:math"
 
-
 part1 :: proc(input: []string) -> string {
 	grid := a2d.input_to_grid(input)
 	start := strings.index(input[0], "S")
@@ -51,8 +50,50 @@ part1 :: proc(input: []string) -> string {
 	return fmt.aprintf("%d", count, allocator = context.temp_allocator)
 }
 
+p2_grid : a2d.Grid(string)
+p2_cache : map[am.Point2]int
+
 part2 :: proc(input: []string) -> string {
-    return "not implemented"
+	p2_grid = a2d.input_to_grid(input)
+	p2_cache = make(map[am.Point2]int, context.temp_allocator)
+
+	start := am.Point2{
+		strings.index(input[0], "S"),
+		0,
+	}
+
+	a2d.set(&p2_grid, start.x, start.y, ".")
+
+	res := count(start)
+
+    return fmt.aprintf("%d", res, allocator = context.temp_allocator)
+}
+
+count :: proc (start: am.Point2) -> int {
+	cnt, ok := p2_cache[start]
+	if ok {
+		return cnt
+	}
+
+	pos := start
+
+	for {
+		if !a2d.is_save(p2_grid, pos.x, pos.y){
+			p2_cache[start] = 1
+			return 1
+		}
+
+		if a2d.get(p2_grid, pos.x, pos.y) == "." {
+			pos += am.Point2{0, 1}
+			continue
+		}
+
+		if a2d.get(p2_grid, pos.x, pos.y) == "^" {
+			cnt = count(pos + am.Point2{-1, 0}) + count(pos + am.Point2{1, 0})
+			p2_cache[start] = cnt
+			return cnt
+		}
+	}
 }
 
 main :: proc() {
